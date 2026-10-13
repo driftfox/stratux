@@ -1,0 +1,38 @@
+{
+  "(38.890100,-77.032000)": {
+    "Lat": 38.8901,
+    "Lng": -77.032,
+    "Signal_strength_now": -42.5,
+    "Signal_strength_max": -19.2,
+    "Energy_last_minute": 184723,
+    "Signal_strength_last_minute": -46.1,
+    "Messages_last_minute": 412
+  },
+  "(38.710400,-77.215800)": {
+    "Lat": 38.7104,
+    "Lng": -77.2158,
+    "Signal_strength_now": -61.8,
+    "Signal_strength_max": -33.4,
+    "Energy_last_minute": 48291,
+    "Signal_strength_last_minute": -64.2,
+    "Messages_last_minute": 96
+  },
+  "(39.041200,-76.889100)": {
+    "Lat": 39.0412,
+    "Lng": -76.8891,
+    "Signal_strength_now": -72.3,
+    "Signal_strength_max": -58.7,
+    "Energy_last_minute": 9213,
+    "Signal_strength_last_minute": -74.0,
+    "Messages_last_minute": 21
+  },
+  "(38.941200,-77.451900)": {
+    "Lat": 38.9412,
+    "Lng": -77.4519,
+    "Signal_strength_now": -80.1,
+    "Signal_strength_max": -71.2,
+    "Energy_last_minute": 1822,
+    "Signal_strength_last_minute": -81.6,
+    "Messages_last_minute": 4
+  }
+}

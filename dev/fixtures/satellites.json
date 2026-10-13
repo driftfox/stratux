@@ -1,0 +1,18 @@
+{
+  "G3":  { "SatelliteNMEA": 3,  "SatelliteID": "G3",  "Elevation": 62, "Azimuth": 118, "Signal": 74, "Type": 0, "InSolution": true },
+  "G7":  { "SatelliteNMEA": 7,  "SatelliteID": "G7",  "Elevation": 24, "Azimuth": 41,  "Signal": 61, "Type": 0, "InSolution": true },
+  "G11": { "SatelliteNMEA": 11, "SatelliteID": "G11", "Elevation": 71, "Azimuth": 265, "Signal": 82, "Type": 0, "InSolution": true },
+  "G13": { "SatelliteNMEA": 13, "SatelliteID": "G13", "Elevation": 38, "Azimuth": 197, "Signal": 55, "Type": 0, "InSolution": true },
+  "G17": { "SatelliteNMEA": 17, "SatelliteID": "G17", "Elevation": 12, "Azimuth": 322, "Signal": 31, "Type": 0, "InSolution": false },
+  "G19": { "SatelliteNMEA": 19, "SatelliteID": "G19", "Elevation": 55, "Azimuth": 76,  "Signal": 68, "Type": 0, "InSolution": true },
+  "G22": { "SatelliteNMEA": 22, "SatelliteID": "G22", "Elevation": 8,  "Azimuth": 154, "Signal": 12, "Type": 0, "InSolution": false },
+  "G26": { "SatelliteNMEA": 26, "SatelliteID": "G26", "Elevation": 47, "Azimuth": 349, "Signal": 59, "Type": 0, "InSolution": true },
+  "G31": { "SatelliteNMEA": 31, "SatelliteID": "G31", "Elevation": 29, "Azimuth": 231, "Signal": 44, "Type": 0, "InSolution": true },
+  "S138":{ "SatelliteNMEA": 38, "SatelliteID": "S138","Elevation": 66, "Azimuth": 288, "Signal": 77, "Type": 3, "InSolution": true },
+  "S122":{ "SatelliteNMEA": 44, "SatelliteID": "S122","Elevation": 51, "Azimuth": 95,  "Signal": 70, "Type": 3, "InSolution": true },
+  "E2":  { "SatelliteNMEA": 2,  "SatelliteID": "E2",  "Elevation": 34, "Azimuth": 178, "Signal": 52, "Type": 2, "InSolution": true },
+  "E8":  { "SatelliteNMEA": 8,  "SatelliteID": "E8",  "Elevation": 19, "Azimuth": 256, "Signal": 38, "Type": 2, "InSolution": false },
+  "E12": { "SatelliteNMEA": 12, "SatelliteID": "E12", "Elevation": 64, "Azimuth": 17,  "Signal": 66, "Type": 2, "InSolution": true },
+  "C14": { "SatelliteNMEA": 14, "SatelliteID": "C14", "Elevation": 42, "Azimuth": 301, "Signal": 27, "Type": 1, "InSolution": false },
+  "C21": { "SatelliteNMEA": 21, "SatelliteID": "C21", "Elevation": 15, "Azimuth": 63,  "Signal": 0,  "Type": 1, "InSolution": false }
+}

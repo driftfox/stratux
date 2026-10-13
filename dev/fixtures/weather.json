@@ -1,0 +1,20 @@
+[
+  { "Type": "METAR", "Location": "KBOS", "_ageMinutes": 6,  "Data": "KBOS 131753Z 27012KT 10SM SCT200 18/10 A3012 RMK AO2 SLP196" },
+  { "Type": "METAR", "Location": "KATL", "_ageMinutes": 4,  "Data": "KATL 131752Z 18008KT 5SM BKN012 OVC025 19/15 A2996 RMK AO2 SLP145" },
+  { "Type": "METAR", "Location": "KORD", "_ageMinutes": 9,  "Data": "KORD 131751Z 34015G24KT 2SM -RA BKN008 OVC015 12/11 A2989 RMK AO2 SLP121" },
+  { "Type": "METAR", "Location": "KLAX", "_ageMinutes": 3,  "Data": "KLAX 131753Z 25006KT 10SM SCT040 21/14 A2999 RMK AO2 SLP158" },
+  { "Type": "METAR", "Location": "KDCA", "_ageMinutes": 2,  "Data": "KDCA 131752Z 29010KT 10SM FEW150 BKN200 17/09 A3011 RMK AO2 SLP192" },
+  { "Type": "METAR", "Location": "KIAD", "_ageMinutes": 7,  "Data": "KIAD 131752Z 31007KT 7SM BKN035 16/08 A3010 RMK AO2 SLP190" },
+  { "Type": "SPECI", "Location": "KBOS", "_ageMinutes": 14, "Data": "SPECI KBOS 131711Z 26014KT 3SM BR BKN006 OVC012 16/15 A3014 RMK AO2 SLP198" },
+  { "Type": "TAF",   "Location": "KBOS", "_ageMinutes": 22, "Data": "TAF KBOS 131720Z 1318/1424 28012KT P6SM BKN200 FM140000 32008KT P6SM SCT100" },
+  { "Type": "TAF",   "Location": "KORD", "_ageMinutes": 18, "Data": "TAF KORD 131720Z 1318/1418 35018G28KT 4SM -RA BR BKN009 OVC020 TEMPO 1320/1323 2SM RA BR BKN005" },
+  { "Type": "TAF.AMD","Location":"KLAX", "_ageMinutes": 25, "Data": "AMD TAF KLAX 131630Z 1318/1424 24008KT P6SM FEW015 SCT060 FM140600 VRB03KT P6SM SKC" },
+  { "Type": "PIREP", "Location": "KDCA", "_ageMinutes": 11, "Data": "PIREP UER13 MOD TURB BTN 4000 AND 8000 FT OVC VIS MOD CHOP BTN FL240 AND FL340" },
+  { "Type": "METAR", "Location": "KJFK", "_ageMinutes": 5,  "Data": "KJFK 131751Z 05011KT 10SM SCT045 BKN120 15/09 A3008 RMK AO2 SLP187" },
+  { "Type": "METAR", "Location": "KDEN", "_ageMinutes": 8,  "Data": "KDEN 131753Z 36009KT 10SM FEW120 SCT180 14/02 A3021 RMK AO2 SLP205" },
+  { "Type": "METAR", "Location": "KSEA", "_ageMinutes": 13, "Data": "KSEA 131753Z 19006KT 4SM BR OVC008 12/11 A3008 RMK AO2 SLP021" },
+  { "Type": "METAR", "Location": "KMIA", "_ageMinutes": 16, "Data": "KMIA 131753Z 09012KT 10SM FEW025 SCT200 29/23 A3001 RMK AO2 SLP161" },
+  { "Type": "METAR", "Location": "KDFW", "_ageMinutes": 21, "Data": "KDFW 131753Z 17014KT 6SM BKN030 24/18 A2994 RMK AO2 SLP133" },
+  { "Type": "METAR", "Location": "KPHX", "_ageMinutes": 27, "Data": "KPHX 131751Z 26006KT 10SM SKC 31/07 A2996 RMK AO2 SLP132" },
+  { "Type": "METAR", "Location": "KSFO", "_ageMinutes": 24, "Data": "KSFO 131756Z 25018KT 6SM BKN012 17/12 A3004 RMK AO2 SLP005" }
+]
