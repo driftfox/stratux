@@ -44,6 +44,35 @@ assert.equal(
 );
 assert.equal(cssBannedHits('a{color:red}').length, 0);
 
+// cssBannedHits: flex `gap` is banned even when display:flex and gap are split
+// across separate rules / at-rules with the same (normalised) selector.
+assert.equal(cssBannedHits('.sx-field{display:flex;flex-wrap:wrap} .sx-field{gap:4px}').length, 1, 'split rules, same selector');
+assert.equal(
+  cssBannedHits('.sx-title-row{display:flex;align-items:center} @media(max-width:800px){.sx-title-row{align-items:start;gap:15px;flex-direction:column}}').length,
+  1,
+  'split across at-rule, same selector',
+);
+assert.equal(
+  cssBannedHits('@media(max-width:800px){.z{display:flex}} .z{gap:1px}').length,
+  1,
+  'display:flex in media, gap outside',
+);
+assert.equal(
+  cssBannedHits('.grid{display:grid;gap:8px}').length,
+  0,
+  'grid gap still permitted',
+);
+assert.equal(
+  cssBannedHits('.noflex{gap:4px}').length,
+  0,
+  'gap without display:flex is not flagged',
+);
+assert.equal(
+  cssBannedHits('.sx-title-row{display:flex} @media(max-width:800px){.title-row{gap:15px}}').length,
+  0,
+  'lexically different selectors are not matched',
+);
+
 // appcacheMissing compares manifest entries (relative to web/, often written
 // with a leading slash) with on-disk paths (repo-relative, web/...). The two
 // spellings of the same file are equal; a genuine gap is reported verbatim.

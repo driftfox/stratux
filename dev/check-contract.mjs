@@ -21,14 +21,47 @@ export function cssBannedHits(css) {
   const hits = [];
 
   // Flex containers may not use `gap` (2015 floor). Grid `gap` is allowed.
-  for (const m of src.matchAll(/\{[^{}]*\}/g)) {
-    const block = m[0];
-    if (/\bdisplay\s*:\s*(?:[^;{}]*\s)?(?:inline-)?flex\b/i.test(block) === false) {
-      // fall through to the explicit multi-display form handled below
+  // A selector is flagged when it declares `display:flex` anywhere in the file
+  // (including inside @media) and `gap` anywhere under the same selector text.
+  const flexSelectors = new Set();
+  const gapRules = [];
+  const walkRules = (text) => {
+    let pos = 0;
+    while (true) {
+      const open = text.indexOf('{', pos);
+      if (open === -1) break;
+      const header = text.slice(pos, open).trim();
+      let depth = 1;
+      let close = open + 1;
+      while (close < text.length && depth > 0) {
+        if (text[close] === '{') depth += 1;
+        else if (text[close] === '}') depth -= 1;
+        close += 1;
+      }
+      const block = text.slice(open + 1, close - 1);
+      if (header.startsWith('@')) {
+        walkRules(block);
+      } else if (header) {
+        const selector = header.replace(/\s+/g, ' ').trim();
+        if (/\bdisplay\s*:\s*[^;{}]*?(?:inline-)?flex\b/i.test(block)) {
+          for (const part of selector.split(',')) {
+            const normalized = part.replace(/\s+/g, ' ').trim();
+            if (normalized) flexSelectors.add(normalized);
+          }
+        }
+        if (/\bgap\s*:/i.test(block)) {
+          gapRules.push(selector);
+        }
+      }
+      pos = close;
     }
-    const hasFlex = /\bdisplay\s*:\s*[^;{}]*?(?:inline-)?flex\b/i.test(block);
-    const hasGap = /\bgap\s*:/i.test(block);
-    if (hasFlex && hasGap) hits.push('flex-gap');
+  };
+  walkRules(src);
+  for (const selector of gapRules) {
+    const parts = selector.split(',').map((part) => part.replace(/\s+/g, ' ').trim());
+    if (parts.some((part) => flexSelectors.has(part))) {
+      hits.push('flex-gap');
+    }
   }
 
   // Other §5.1.2 browser-floor bans.
@@ -231,7 +264,7 @@ function plateChecks() {
     let text = readText(`web/plates/${name}.html`);
     const jsRel = `web/plates/js/${name}.js`;
     const jsAbs = path.join(ROOT, jsRel);
-    if (fs.existsSync(jsAbs)) text += '\\n' + readText(jsRel);
+    if (fs.existsSync(jsAbs)) text += '\n' + readText(jsRel);
     const missing = missingFrom(text, required);
     if (missing.length) failures.push(`FAIL plates/${name}.html: ${missing.join(', ')}`);
   }
