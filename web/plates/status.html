@@ -89,7 +89,7 @@
 					<strong>{{OGN_noise_db}}<small> dB</small></strong>
 					<span>range loss: {{OGN_range_loss_factor}}x</span>
 				</div>
-				<div class="sx-subtle">Noise @ gain 50 · half range for each 6 dB noise · 0–25 dB</div>
+				<div class="sx-subtle" ng-show="visible_ogn" ng-class="{'section_invisible': !visible_ogn}">Noise @ gain 50 · half range for each 6 dB noise · 0–25 dB</div>
 			</div>
 		</section>
 
