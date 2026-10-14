@@ -243,6 +243,32 @@ const developerRequired = [
   'postDeleteLog', 'postDownloadAHRSLogs', 'postDeleteAHRSLogs', 'postDownloadDB',
 ];
 
+// §6.8: operational content each help partial must keep through the restyle.
+const helpRequired = [
+  ['traffic', [
+    '{{esStyleColor}}', '{{uatStyleColor}}', '[--N/A--]',
+    '&#128745; ADSB1090 (ea)', '&#128745; ADSR1090 (er)', '&#x1f4e1; TISB1090 (et)',
+    '&#128745; ADSB978 (ua)', '&#128745; ADSR978 (ur)', '&#x1f4e1; TISB978 (ut)', '&#128674; AIS (beta)',
+    'medium blue background', 'light cyan background', 'light tan background', 'gold background',
+  ]],
+  ['gps', [
+    'prefixed with "G"', 'prefixed with "S"', 'prefixed with "R"', '&#x2705;', 'used in the current position solution',
+    'for reference only and must not be used for flight operations',
+  ]],
+  ['settings', [
+    'Set AHRS Sensor Orientation', 'direction of gravity', 'You only have to do this once',
+    'Minimum fan duty cycle %', 'Start with a value of 50%', 'lowest RPM',
+    'G Limits', 'Commands', 'WiFi Settings', 'Hardware', 'Diagnostics', 'Configuration',
+  ]],
+  ['radar', ['green circle', 'rough estimation', 'whenever an aircraft is within the inner circle']],
+  ['status', ['60-second rolling total', 'maximum 60-second total']],
+];
+// §5.8 defect 2: names that never matched a rendered Settings heading or button.
+const helpForbidden = [
+  'Calibrate AHRS Sensors', 'GLoad Limits', '<strong>System</strong> section', '<strong>WiFi</strong> section',
+];
+const helpPartials = ['developer', 'gps', 'logs', 'radar', 'settings', 'status', 'towers', 'traffic', 'weather'];
+
 const indexRequiredStrings = [
   '<body ng-app="stratux" ng-controller="MainCtrl" ui-prevent-touchmove-defaults>',
   'id="themeStylesheet"',
@@ -291,6 +317,22 @@ function plateChecks() {
   if (missingHtml.length) failures.push(`FAIL plates/settings.html: ${missingHtml.join(', ')}`);
   const forbidden = settingsHtmlForbidden.filter((s) => settingsHtml.includes(s));
   if (forbidden.length) failures.push(`FAIL plates/settings.html: must not contain ${forbidden.join(', ')}`);
+
+  // Help partials (rendered into the help drawer by ng-include="helppage").
+  for (const [name, required] of helpRequired) {
+    const missing = missingFrom(readText(`web/plates/${name}-help.html`), required);
+    if (missing.length) failures.push(`FAIL plates/${name}-help.html: ${missing.join(', ')}`);
+  }
+  for (const name of helpPartials) {
+    const help = readText(`web/plates/${name}-help.html`);
+    const stale = helpForbidden.filter((s) => help.includes(s));
+    if (stale.length) failures.push(`FAIL plates/${name}-help.html: must not contain ${stale.join(', ')}`);
+  }
+  // Every settings-help section heading must name a panel settings.html renders.
+  const panelHeads = new Set([...settingsHtml.matchAll(/<h2>([^<]*)<\/h2>/g)].map((m) => m[1]));
+  const helpHeads = [...readText('web/plates/settings-help.html').matchAll(/<h3[^>]*>([^<]*)<\/h3>/g)].map((m) => m[1]);
+  const unmatched = helpHeads.filter((h) => !panelHeads.has(h));
+  if (unmatched.length) failures.push(`FAIL plates/settings-help.html: headings not in settings.html ${unmatched.join(', ')}`);
 
   // Shell (index.html).
   const indexHtml = readText('web/index.html');
