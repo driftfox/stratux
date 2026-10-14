@@ -1558,6 +1558,28 @@ td {
   right:0;
 }
 
+/* mobile-angular-ui docks the left sidebar from 992px; keep it a push drawer
+   at every width, like the right one. */
+@media (min-width:992px) {
+  .sx-drawer.sx-left {
+    display:none;
+  }
+
+  .sidebar-left-visible .sx-drawer.sx-left {
+    display:block;
+  }
+
+  .has-sidebar-left .sx-app,
+  .sidebar-left-in .sx-app {
+    margin-left:0;
+  }
+
+  .sidebar-left-in .sx-app {
+    -webkit-transform:translate3d(300px,0,0)!important;
+    transform:translate3d(300px,0,0)!important;
+  }
+}
+
 .sx-drawer-head {
   height:68px;
   border-bottom:1px solid var(--line);
