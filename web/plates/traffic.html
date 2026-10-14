@@ -44,16 +44,16 @@
 								</span>
 							</td>
 							<td ng-hide="showSquawk">
-								<span style="font-size:80%">{{aircraft.icao}}<span style="font-size:50%">{{aircraft.addr_type == 3 ? "&nbsp;(TFID)" : ""}}</span></span>
+								<span>{{aircraft.icao}}<span>{{aircraft.addr_type == 3 ? "&nbsp;(TFID)" : ""}}</span></span>
 							</td>
 							<td ng-show="showSquawk">
 								<span ng-show="aircraft.squawk < 1000">0</span><span ng-show="aircraft.squawk < 100">0</span><span ng-show="aircraft.squawk < 10">0</span>{{aircraft.squawk}}
 							</td>
 							<td ng-show="showCategory">
-								<span style="font-size:80%">{{aircraft.category}}</span>
+								<span>{{aircraft.category}}</span>
 							</td>
 							<td ng-hide="GPS_connected && RelDist">{{aircraft.lat}} {{aircraft.lon}}</td>
-							<td ng-show="GPS_connected && RelDist">{{aircraft.dist.toFixed(1)}}<span style="font-size:50%">NM</span></td>
+							<td ng-show="GPS_connected && RelDist">{{aircraft.dist.toFixed(1)}} NM</td>
 							<td ng-show="GPS_connected && RelDist">{{aircraft.bearing}}&deg;</td>
 							<td>{{aircraft.alt}} ft</td>
 							<td>
@@ -62,10 +62,10 @@
 									<span ng-show="aircraft.vspeed < 0"><span class="fa fa-descent"></span>{{0-aircraft.vspeed}}</span>
 								</span>
 							</td>
-							<td>{{aircraft.speed}}<span style="font-size:50%">KTS</span></td>
+							<td>{{aircraft.speed}} KTS</td>
 							<td><span ng-show="aircraft.heading < 10">0</span><span ng-show="aircraft.heading < 100">0</span>{{aircraft.heading}}&deg;</td>
-							<td>{{aircraft.signal.toFixed(2)}}<span style="font-size:50%">dB</span></td>
-							<td>{{aircraft.Age.toFixed(1)}}<span style="font-size:50%">s</span></td>
+							<td>{{aircraft.signal.toFixed(2)}} dB</td>
+							<td>{{aircraft.Age.toFixed(1)}} s</td>
 						</tr>
 					</tbody>
 				</table>
@@ -99,11 +99,11 @@
 							<td>
 								<span class="sx-callout" ng-style="{'background-color': aircraft.trafficColor}">{{aircraft.addr_symb}}<strong>&nbsp;{{showReg ? aircraft.reg : aircraft.tail}}</strong></span>
 							</td>
-							<td style="font-size:80%">{{aircraft.icao}}<span style="font-size:50%">{{aircraft.addr_type == 3 ? "&nbsp;(TFID)" : ""}}</span></td>
+							<td>{{aircraft.icao}}<span>{{aircraft.addr_type == 3 ? "&nbsp;(TFID)" : ""}}</span></td>
 							<td ng-show="showCategory">
-								<span style="font-size:80%">{{aircraft.category}}</span>
+								<span>{{aircraft.category}}</span>
 							</td>
-							<td>{{aircraft.distEst.toFixed(1)}}<span style="font-size:50%">NM</span></td>
+							<td>{{aircraft.distEst.toFixed(1)}} NM</td>
 							<td><span ng-show="aircraft.squawk < 1000">0</span><span ng-show="aircraft.squawk < 100">0</span><span ng-show="aircraft.squawk < 10">0</span>{{aircraft.squawk}}</td>
 							<td>{{aircraft.alt}} ft</td>
 							<td>
@@ -112,10 +112,10 @@
 									<span ng-show="aircraft.vspeed < 0"><span class="fa fa-descent"></span>{{0-aircraft.vspeed}}</span>
 								</span>
 							</td>
-							<td>{{aircraft.speed}}<span style="font-size:50%">KTS</span></td>
+							<td>{{aircraft.speed}} KTS</td>
 							<td><span ng-show="aircraft.heading < 10">0</span><span ng-show="aircraft.heading < 100">0</span>{{aircraft.heading}}&deg;</td>
-							<td>{{aircraft.signal.toFixed(2)}}<span style="font-size:50%">dB</span></td>
-							<td>{{aircraft.Age.toFixed(1)}}<span style="font-size:50%">s</span></td>
+							<td>{{aircraft.signal.toFixed(2)}} dB</td>
+							<td>{{aircraft.Age.toFixed(1)}} s</td>
 						</tr>
 					</tbody>
 				</table>
@@ -126,33 +126,24 @@
 			</p>
 		</section>
 
-		<section class="sx-panel">
-			<div class="sx-section-head">
-				<h2>Display options</h2>
-			</div>
-			<div class="sx-switch-list">
-				<label class="sx-switch-row">
-					<span>Show Tail Number</span>
-					<input type="checkbox" ng-model="showReg"/>
-					<span class="sx-switch"></span>
-				</label>
-				<label class="sx-switch-row">
-					<span>Show Squawk</span>
-					<input type="checkbox" ng-model="showSquawk"/>
-					<span class="sx-switch"></span>
-				</label>
-				<label class="sx-switch-row">
-					<span>Show Category</span>
-					<input type="checkbox" ng-model="showCategory"/>
-					<span class="sx-switch"></span>
-				</label>
-				<label class="sx-switch-row">
-					<span ng-show="GPS_connected">Show Distance</span>
-					<span ng-hide="GPS_connected" class="sx-subtle">Show Distance N/A</span>
-					<input type="checkbox" ng-model="RelDist"/>
-					<span class="sx-switch"></span>
-				</label>
-			</div>
-		</section>
+		<div class="sx-toggle-strip">
+			<label>
+				<span>Show Tail Number</span>
+				<input type="checkbox" ng-model="showReg"/>
+			</label>
+			<label>
+				<span>Show Squawk</span>
+				<input type="checkbox" ng-model="showSquawk"/>
+			</label>
+			<label>
+				<span>Show Category</span>
+				<input type="checkbox" ng-model="showCategory"/>
+			</label>
+			<label>
+				<span ng-show="GPS_connected">Show Distance</span>
+				<span ng-hide="GPS_connected">Show Distance N/A</span>
+				<input type="checkbox" ng-model="RelDist"/>
+			</label>
+		</div>
 	</div>
 </div>

@@ -23,8 +23,10 @@
 					<h2>AHRS</h2>
 				</div>
 				<div class="sx-rows">
-					<button class="sx-wide-button sx-primary" ui-turn-on="modalCalibrateForward"
-						ng-disabled="!IMU_Sensor_Enabled">Set AHRS Sensor Orientation</button>
+					<div>
+						<button class="sx-wide-button sx-primary" ui-turn-on="modalCalibrateForward"
+							ng-disabled="!IMU_Sensor_Enabled">Set AHRS Sensor Orientation</button>
+					</div>
 					<form class="sx-field" name="GLimitForm" ng-submit="updateGLimits()" novalidate>
 						<label>G Limits</label>
 						<input type="text" g-limits-input ng-model="GLimits"
@@ -41,10 +43,10 @@
 					<h2>Commands</h2>
 				</div>
 				<div class="sx-single sx-rows">
-					<div class="sx-flush">
+					<div>
 						<!-- The transparent file input sits over the fake button so the
 						     native picker opens on tap without a visible file control. -->
-						<div ng-show="update_files == '' && !uploading_update" style="position:relative; overflow:hidden;">
+						<div ng-show="update_files == '' && !uploading_update" style="position:relative; overflow:hidden; display:inline-block;">
 							<div class="sx-wide-button">Click to select System Update file</div>
 							<input style="opacity:0.0; position:absolute; top:0; right:0; width:100%; height:100%;"
 								type="file" name="update_file"
@@ -60,7 +62,7 @@
 						</div>
 					</div>
 					<div class="sx-button-row">
-						<button class="sx-wide-button" ui-turn-on="modalReboot">Reboot</button>
+						<button class="sx-wide-button sx-danger" ui-turn-on="modalReboot">Reboot</button>
 						<button class="sx-wide-button sx-danger" ui-turn-on="modalShutdown">Shutdown</button>
 					</div>
 				</div>
@@ -304,8 +306,10 @@
 						<hr>
 					</div>
 
-					<button class="sx-primary" ng-click="updateWiFi()">Submit WiFi
-						Changes</button>
+					<div>
+						<button class="sx-primary" ng-click="updateWiFi()">Submit WiFi
+							Changes</button>
+					</div>
 				</form>
 			</section>
 		</div>

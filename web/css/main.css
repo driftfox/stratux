@@ -713,14 +713,6 @@ button,input {
   margin:0 18px;
 }
 
-.sx-panel .sx-rows > .sx-flush {
-  padding:0;
-}
-
-.sx-flush .sx-wide-button {
-  padding:18px;
-}
-
 .sx-metrics {
   display:grid;
   gap:14px;
@@ -1007,9 +999,17 @@ td {
   padding:15px 4px;
 }
 
+.sx-toggle-strip label {
+  display:flex;
+  align-items:center;
+  min-height:44px;
+  margin-bottom:0;
+  font-weight:normal;
+}
+
 .sx-toggle-strip input {
   accent-color:var(--accent);
-  margin-left:6px;
+  margin:0 3px 0 6px;
 }
 
 .sx-avionics-grid {
@@ -1236,6 +1236,24 @@ td {
 .sx-danger {
   color:#e2747d!important;
   border-color:#a8444d!important;
+}
+
+/* Settings actions share one size and stay inset from the panel edge,
+   however deeply each one is nested. */
+.sx-settings-grid .sx-wide-button,
+.sx-settings-grid .sx-primary {
+  display:inline-block;
+  -ms-flex-item-align:start;
+  align-self:flex-start;
+  width:auto;
+  min-height:44px;
+  padding:10px 16px;
+  font-size:14px;
+  line-height:22px;
+}
+
+.sx-settings-grid .sx-primary {
+  border:1px solid transparent;
 }
 
 .sx-switch-list {
