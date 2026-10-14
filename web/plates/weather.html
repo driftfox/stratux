@@ -5,8 +5,6 @@
 			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
 			<h1>Weather</h1>
 		</div>
-		<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">&#9679; {{ConnectState}}</span>
-		<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">&#9679; {{ConnectState}}</span>
 	</div>
 
 	<div class="sx-single" ui-state="weatherAccordion" ui-default="1">
@@ -14,6 +12,8 @@
 		<section class="sx-panel">
 			<div class="sx-section-head" ui-set="{'weatherAccordion':1}">
 				<h2>Watching <span class="sx-subtle">{{watching}}</span> ({{watch_count}})</h2>
+				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">&#9679; {{ConnectState}}</span>
+				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">&#9679; {{ConnectState}}</span>
 			</div>
 
 			<div class="sx-report-list" ui-if="weatherAccordion == 1">

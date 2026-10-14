@@ -170,7 +170,8 @@
 				</div>
 				<div class="sx-metric">
 					<span>Accuracy</span>
-					<strong>{{GPS_position_accuracy}}</strong>
+					<!-- status.js formats this as ", 1.4 m" for the original inline "3D GPS, 1.4 m". -->
+					<strong>{{GPS_position_accuracy.replace(', ', '').replace(' m', '')}}<small ng-show="GPS_position_accuracy"> m</small></strong>
 				</div>
 				<div class="sx-metric">
 					<span>Satellites locked</span>

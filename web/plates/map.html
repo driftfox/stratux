@@ -7,7 +7,9 @@
 		</div>
 
 		<div class="panel-body-fullsize sx-map-body">
-			<div id="map_display" class="sx-map-fill" style="width: 100%; height: 100%"></div>
+			<!-- The empty swipe handlers claim horizontal swipes, so panning the map
+			     does not also open or close the menu (index.html binds swipes on .app). -->
+			<div id="map_display" class="sx-map-fill" style="width: 100%; height: 100%" ui-swipe-left="" ui-swipe-right=""></div>
 		</div>
 	</div>
 </div>
