@@ -1,83 +1,76 @@
-<div class="col-sm-12">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<span class="panel_label">Weather</span>
-			<span ng-show="ConnectState == 'Connected'" class="label label-success">{{ConnectState}}</span>
-			<span ng-hide="ConnectState == 'Connected'" class="label label-danger">{{ConnectState}}</span>
+<div class="sx-content">
+	<div class="sx-title-row">
+		<div>
+			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
+			<h1>Weather</h1>
 		</div>
+		<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
+		<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
 	</div>
 
-	<div class="panel-group" ui-state="weatherAccordion" ui-default="1">
-		<div class="panel panel-default">
-			<div class="panel-heading" ui-set="{'weatherAccordion':1}">
-				<div class="panel-title">Watching <span class="text-normal">{{watching}}</span> ({{watch_count}})</div>
+	<div class="sx-single" ui-state="weatherAccordion" ui-default="1">
+		<!-- Watch list: configured stations, newest report time first. -->
+		<section class="sx-panel">
+			<div class="sx-section-head" ui-set="{'weatherAccordion':1}">
+				<h2>Watching <span class="sx-subtle">{{watching}}</span> ({{watch_count}})</h2>
 			</div>
-			<div ui-if="weatherAccordion == 1">
-				<div class="panel-body weather-page">
-					<div class="row">
-						<div class="col-sm-6">
-							<span class="col-xs-3"><strong>Location</strong></span>
-							<span class="col-xs-3">Type</span>
-							<span class="col-xs-6 text-right">Time</span>
-						</div>
-						<div class="col-sm-6">
-							<span class="col-xs-2">&nbsp;</span>
-							<span class="col-xs-10">Report</span>
-						</div>
+
+			<div class="sx-report-list" ui-if="weatherAccordion == 1">
+				<div class="sx-report" ng-repeat="weather in watch_list | orderBy: -age">
+					<div class="sx-report-top">
+						<b>{{weather.location}}</b>
+						<span class="sx-flight"
+							ng-class="{
+								'flight_condition_VFR': weather.flight_condition == 'VFR',
+								'flight_condition_MVFR': weather.flight_condition == 'MVFR',
+								'flight_condition_IFR': weather.flight_condition == 'IFR',
+								'flight_condition_LIFR': weather.flight_condition == 'LIFR',
+								'report_TAF': !weather.flight_condition && weather.type == 'TAF',
+								'report_PIREP': !weather.flight_condition && weather.type == 'PIREP',
+								'report_WINDS': !weather.flight_condition && weather.type == 'WINDS'}">{{weather.flight_condition || weather.type}}</span>
+						<span class="sx-type" ng-show="weather.flight_condition">{{weather.type}}</span>
+						<!-- Age chip is coloured by staleness: sx-ok while the report is
+						     within one issuance cycle of the newest report received in this
+						     list, sx-danger once it is older. The window is type aware
+						     because TAFs are issued every 6 hours while METAR/SPECI are
+						     hourly and PIREP/WINDS have no published cycle. -->
+						<time class="sx-badge"
+							ng-class="weather.age > watch_list[0].age - (weather.type == 'TAF' ? 360 : (weather.type == 'PIREP' || weather.type == 'WINDS' ? 90 : 60)) * 60000 ? 'sx-ok' : 'sx-danger'"
+							ng-style="{'background-color': weather.backcolor}">{{weather.time}}</time>
 					</div>
-					<div class="row" ng-repeat="weather in watch_list | orderBy: -age">
-						<div class="separator"></div>
-						<div class="col-sm-12">
-							<span class="col-xs-3"><strong>{{weather.location}}</strong></span>
-                            <span class="col-xs-3" align="center">
-							<div align="center" ng-class="weather.flight_condition ? ' label label-success flight_condition_{{weather.flight_condition}}' : 'label label-success report_{{weather.type}}'">{{weather.type}}</div>
-                            </span>
-                            <span class="col-xs-4">&nbsp;</span>
-							<span class="col-xs-2 text-right" style="background-color: {{weather.backcolor}}">{{weather.time}}</span>
-						</div>
-						<div class="col-sm-12">
-							<span class="col-xs-10">{{weather.data}}</span>
-						</div>
-					</div>
+					<code>{{weather.data}}</code>
 				</div>
 			</div>
-		</div>
+		</section>
 
-		<div class="panel panel-default">
-			<div class="panel-heading" ui-set="{'weatherAccordion':2}">
-				<div class="panel-title">Recent Reports ({{data_count}})</div>
+		<!-- Rolling report log, capped at MAX_DATALIST entries by weather.js. -->
+		<section class="sx-panel">
+			<div class="sx-section-head" ui-set="{'weatherAccordion':2}">
+				<h2>Recent Reports ({{data_count}})</h2>
 			</div>
-			<div ui-if="weatherAccordion == 2">
-				<div class="panel-body weather-page">
-					<div class="row">
-						<div class="col-sm-6">
-							<span class="col-xs-3"><strong>Location</strong></span>
-							<span class="col-xs-3">Type</span>
-							<span class="col-xs-6 text-right">Time</span>
-						</div>
-						<div class="col-sm-6">
-							<span class="col-xs-2">&nbsp;</span>
-							<span class="col-xs-10">Report</span>
-						</div>
-					</div>
 
-					<div class="row" ng-repeat="weather in data_list | orderBy: -age">
-						<div class="separator"></div>
-						<div class="col-sm-12">
-							<span class="col-xs-3"><strong>{{weather.location}}</strong></span>
-                            <span class="col-xs-3" align="center">
-							<div align="center" ng-class="weather.flight_condition ? ' label label-success flight_condition_{{weather.flight_condition}}' : 'label label-success report_{{weather.type}}'">{{weather.type}}</div>
-                            </span>
-                            <span class="col-xs-4">&nbsp;</span>
-							<span class="col-xs-2 text-right" style="background-color: {{weather.backcolor}}">{{weather.time}}</span>
-						</div>
-						<div class="col-sm-12">
-							<span class="col-xs-10">{{weather.data}}</span>
-						</div>
+			<div class="sx-report-list" ui-if="weatherAccordion == 2">
+				<div class="sx-report" ng-repeat="weather in data_list | orderBy: -age">
+					<div class="sx-report-top">
+						<b>{{weather.location}}</b>
+						<span class="sx-flight"
+							ng-class="{
+								'flight_condition_VFR': weather.flight_condition == 'VFR',
+								'flight_condition_MVFR': weather.flight_condition == 'MVFR',
+								'flight_condition_IFR': weather.flight_condition == 'IFR',
+								'flight_condition_LIFR': weather.flight_condition == 'LIFR',
+								'report_TAF': !weather.flight_condition && weather.type == 'TAF',
+								'report_PIREP': !weather.flight_condition && weather.type == 'PIREP',
+								'report_WINDS': !weather.flight_condition && weather.type == 'WINDS'}">{{weather.flight_condition || weather.type}}</span>
+						<span class="sx-type" ng-show="weather.flight_condition">{{weather.type}}</span>
+						<time class="sx-badge"
+							ng-class="weather.age > data_list[0].age - (weather.type == 'TAF' ? 360 : (weather.type == 'PIREP' || weather.type == 'WINDS' ? 90 : 60)) * 60000 ? 'sx-ok' : 'sx-danger'"
+							ng-style="{'background-color': weather.backcolor}">{{weather.time}}</time>
 					</div>
+					<code>{{weather.data}}</code>
 				</div>
 			</div>
-		</div>
+		</section>
 	</div>
 </div>
 <!--
