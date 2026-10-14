@@ -7,10 +7,10 @@
 //
 //   node dev/check-contract.tests.mjs
 //
-// Only the three exported helpers are covered here. The full contract run is
+// Only the exported helpers are covered here. The full contract run is
 // exercised by running the checker itself against the tree.
 import assert from 'node:assert';
-import { missingFrom, cssBannedHits, appcacheMissing } from './check-contract.mjs';
+import { missingFrom, cssBannedHits, appcacheMissing, duplicateFormNames } from './check-contract.mjs';
 
 // missingFrom returns the subset of `required` absent from `text`.
 assert.deepEqual(missingFrom('<div ng-model="DarkMode">', ['DarkMode']), []);
@@ -81,5 +81,12 @@ assert.deepEqual(appcacheMissing(['web/css/main.css'], ['/css/main.css']), []);
 assert.deepEqual(appcacheMissing(['web/css/main.css'], ['css/main.css']), []);
 assert.deepEqual(appcacheMissing(['./web/css/main.css'], ['/css/main.css']), []);
 assert.deepEqual(appcacheMissing(['web/css/x.css'], ['/css/y.css']), ['web/css/x.css']);
+
+// §5.8 defect 9: two forms sharing a name collide on the scope as one
+// FormController. Only <form name> counts; inputs may legitimately share names.
+assert.deepEqual(duplicateFormNames('<form name="a"></form><form name="b"></form>'), []);
+assert.deepEqual(duplicateFormNames('<form name="a"></form><form class="x" name="a" novalidate></form>'), ['a']);
+assert.deepEqual(duplicateFormNames('<input name="a"><input name="a"><form name="a"></form>'), []);
+assert.deepEqual(duplicateFormNames("<form\n  name='a'></form><form name=\"a\"></form>"), ['a']);
 
 console.log('check-contract primitives: all assertions passed');

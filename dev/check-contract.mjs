@@ -92,6 +92,15 @@ export function cssBannedHits(css) {
   return hits;
 }
 
+// Returns each <form name> that occurs more than once in `html`.
+export function duplicateFormNames(html) {
+  const counts = new Map();
+  for (const m of String(html ?? '').matchAll(/<form\b[^>]*?\sname\s*=\s*["']([^"']*)["']/gi)) {
+    counts.set(m[1], (counts.get(m[1]) || 0) + 1);
+  }
+  return [...counts].filter(([, n]) => n > 1).map(([name]) => name);
+}
+
 // Returns on-disk entries (verbatim) that are not present in the manifest list.
 export function appcacheMissing(onDisk, listed) {
   const norm = (p) => {
@@ -267,6 +276,8 @@ function plateChecks() {
     if (fs.existsSync(jsAbs)) text += '\n' + readText(jsRel);
     const missing = missingFrom(text, required);
     if (missing.length) failures.push(`FAIL plates/${name}.html: ${missing.join(', ')}`);
+    const dupForms = duplicateFormNames(readText(`web/plates/${name}.html`));
+    if (dupForms.length) failures.push(`FAIL plates/${name}.html: duplicate form name ${dupForms.join(', ')}`);
   }
 
   // Shell (index.html).
