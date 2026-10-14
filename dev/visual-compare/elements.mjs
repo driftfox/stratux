@@ -82,8 +82,8 @@ export const ELEMENTS = {
     fixed('traffic.modes.th', 'panel:Basic Mode S and no-position messages >> thead th', 'panel:Basic Mode S and No-Position Messages >> thead th'),
     fixed('traffic.modes.row', 'panel:Basic Mode S and no-position messages >> tbody tr', 'panel:Basic Mode S and No-Position Messages >> tbody tr', below('traffic.modes.thead')),
     fixed('traffic.modes.td', 'panel:Basic Mode S and no-position messages >> tbody td', 'panel:Basic Mode S and No-Position Messages >> tbody td'),
-    fixed('traffic.toggles', '.toggle-strip', 'panel:Display options', below('traffic.modes')),
-    fixed('traffic.toggle', '.toggle-strip label', 'panel:Display options >> .sx-switch-row'),
+    fixed('traffic.toggles', '.toggle-strip', '.sx-toggle-strip', below('traffic.modes')),
+    fixed('traffic.toggle', '.toggle-strip label', '.sx-toggle-strip label'),
   ],
 
   towers: [

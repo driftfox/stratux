@@ -55,7 +55,7 @@
   "NightMode": false,
   "OGN_noise_db": 7.4,
   "OGN_gain_db": 33.0,
-  "OGN_tx_enabled": false,
+  "OGN_tx_enabled": true,
   "OGNPrevRandomAddr": "ABC123",
   "Pong_Heartbeats": 0
 }
