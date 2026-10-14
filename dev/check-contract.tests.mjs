@@ -10,7 +10,9 @@
 // Only the exported helpers are covered here. The full contract run is
 // exercised by running the checker itself against the tree.
 import assert from 'node:assert';
-import { missingFrom, cssBannedHits, appcacheMissing, duplicateFormNames } from './check-contract.mjs';
+import {
+  missingFrom, cssBannedHits, appcacheMissing, duplicateFormNames, inertSectionInvisible,
+} from './check-contract.mjs';
 
 // missingFrom returns the subset of `required` absent from `text`.
 assert.deepEqual(missingFrom('<div ng-model="DarkMode">', ['DarkMode']), []);
@@ -88,5 +90,19 @@ assert.deepEqual(duplicateFormNames('<form name="a"></form><form name="b"></form
 assert.deepEqual(duplicateFormNames('<form name="a"></form><form class="x" name="a" novalidate></form>'), ['a']);
 assert.deepEqual(duplicateFormNames('<input name="a"><input name="a"><form name="a"></form>'), []);
 assert.deepEqual(duplicateFormNames("<form\n  name='a'></form><form name=\"a\"></form>"), ['a']);
+
+// An ng-class that only adds .section_invisible cannot hide an element whose
+// own class sets `display` later in the stylesheet (same specificity, later
+// source wins). ng-show/ng-hide/ng-if hide it regardless.
+const visCss = '.a{display:flex} .section_invisible{display:none} .b{display:flex} .c{color:red} .d{display:none}';
+assert.deepEqual(inertSectionInvisible('<form class="b" ng-class="{ \'section_invisible\': (!x)}"></form>', visCss), ['b']);
+assert.deepEqual(inertSectionInvisible('<div class="z b" ng-class="{\'section_invisible\': !x}">', visCss), ['b']);
+assert.deepEqual(inertSectionInvisible('<form class="b" ng-show="x" ng-class="{ \'section_invisible\': (!x)}">', visCss), []);
+assert.deepEqual(inertSectionInvisible('<div class="b" ng-hide="!x" ng-class="{\'section_invisible\': !x}">', visCss), []);
+assert.deepEqual(inertSectionInvisible('<div class="a" ng-class="{\'section_invisible\': !x}">', visCss), [], 'declared before');
+assert.deepEqual(inertSectionInvisible('<div class="c" ng-class="{\'section_invisible\': !x}">', visCss), [], 'no display');
+assert.deepEqual(inertSectionInvisible('<div class="d" ng-class="{\'section_invisible\': !x}">', visCss), [], 'display:none');
+assert.deepEqual(inertSectionInvisible('<div ng-class="{\'section_invisible\': !x}">', visCss), [], 'no class');
+assert.deepEqual(inertSectionInvisible('<div class="b">', visCss), [], 'no ng-class');
 
 console.log('check-contract primitives: all assertions passed');

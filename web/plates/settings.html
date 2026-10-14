@@ -197,7 +197,7 @@
 							<option value="49.6" ng-selected="Dump1090Gain.toFixed(1)==49.6">49.6</option>
 						</select>
 					</form>
-					<form class="sx-field" ng-class="{ 'section_invisible': (!visible_serialout)}" name="baudForm" ng-submit="updateBaud()" novalidate>
+					<form class="sx-field" ng-show="visible_serialout" ng-class="{ 'section_invisible': (!visible_serialout)}" name="baudForm" ng-submit="updateBaud()" novalidate>
 						<label>Serial Output Baudrate</label>
 						<!-- type="number" not supported except on mobile -->
 						<input type="number" ng-model="Baud" placeholder="integer"

@@ -101,6 +101,38 @@ export function duplicateFormNames(html) {
   return [...counts].filter(([, n]) => n > 1).map(([name]) => name);
 }
 
+// Returns the classes on elements in `html` that toggle .section_invisible via
+// ng-class but carry no ng-show/ng-hide/ng-if, where `css` gives that class a
+// visible `display` after the .section_invisible rule (equal specificity, so
+// the later rule wins and the element never hides).
+export function inertSectionInvisible(html, css) {
+  const src = String(css ?? '');
+  const at = src.indexOf('.section_invisible');
+  const overriding = new Set();
+  if (at !== -1) {
+    for (const m of src.slice(at).matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      if (!/\bdisplay\s*:\s*(?!none\b)/i.test(m[2])) continue;
+      for (const sel of m[1].split(',')) {
+        const s = sel.trim();
+        if (/^\.[\w-]+$/.test(s)) overriding.add(s.slice(1));
+      }
+    }
+  }
+  const hits = [];
+  for (const tag of String(html ?? '').matchAll(/<[a-z][\w-]*((?:\s+[\w:-]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*)\s*\/?>/gi)) {
+    const attrs = {};
+    for (const a of tag[1].matchAll(/([\w:-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'))?/g)) {
+      attrs[a[1].toLowerCase()] = a[2] ?? a[3] ?? '';
+    }
+    if (!(attrs['ng-class'] || '').includes('section_invisible')) continue;
+    if ('ng-show' in attrs || 'ng-hide' in attrs || 'ng-if' in attrs) continue;
+    for (const cls of (attrs.class || '').split(/\s+/)) {
+      if (overriding.has(cls)) hits.push(cls);
+    }
+  }
+  return hits;
+}
+
 // Returns on-disk entries (verbatim) that are not present in the manifest list.
 export function appcacheMissing(onDisk, listed) {
   const norm = (p) => {
@@ -317,6 +349,8 @@ function plateChecks() {
   if (missingHtml.length) failures.push(`FAIL plates/settings.html: ${missingHtml.join(', ')}`);
   const forbidden = settingsHtmlForbidden.filter((s) => settingsHtml.includes(s));
   if (forbidden.length) failures.push(`FAIL plates/settings.html: must not contain ${forbidden.join(', ')}`);
+  const inert = inertSectionInvisible(settingsHtml, readText('web/css/main.css'));
+  if (inert.length) failures.push(`FAIL plates/settings.html: section_invisible overridden by ${inert.join(', ')}`);
 
   // Help partials (rendered into the help drawer by ng-include="helppage").
   for (const [name, required] of helpRequired) {
