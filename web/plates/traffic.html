@@ -68,6 +68,26 @@
 					</tbody>
 				</table>
 			</div>
+
+			<div class="sx-toggle-strip">
+				<label>
+					<span>Show Tail Number</span>
+					<input type="checkbox" ng-model="showReg"/>
+				</label>
+				<label>
+					<span>Show Squawk</span>
+					<input type="checkbox" ng-model="showSquawk"/>
+				</label>
+				<label>
+					<span>Show Category</span>
+					<input type="checkbox" ng-model="showCategory"/>
+				</label>
+				<label>
+					<span ng-show="GPS_connected">Show Distance</span>
+					<span ng-hide="GPS_connected" class="sx-subtle">Show Distance N/A</span>
+					<input type="checkbox" ng-model="RelDist"/>
+				</label>
+			</div>
 		</section>
 
 		<section class="sx-panel">
@@ -123,25 +143,5 @@
 				Stratux has not received valid ADS-B position transmissions from the aircraft in this section. They will only appear estimated on the Radar or if your EFB is able to display bearingless targets. See help page for details.
 			</p>
 		</section>
-
-		<div class="sx-toggle-strip">
-			<label>
-				<span>Show Tail Number</span>
-				<input type="checkbox" ng-model="showReg"/>
-			</label>
-			<label>
-				<span>Show Squawk</span>
-				<input type="checkbox" ng-model="showSquawk"/>
-			</label>
-			<label>
-				<span>Show Category</span>
-				<input type="checkbox" ng-model="showCategory"/>
-			</label>
-			<label>
-				<span ng-show="GPS_connected">Show Distance</span>
-				<span ng-hide="GPS_connected" class="sx-subtle">Show Distance N/A</span>
-				<input type="checkbox" ng-model="RelDist"/>
-			</label>
-		</div>
 	</div>
 </div>

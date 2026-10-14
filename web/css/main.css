@@ -560,15 +560,10 @@ button,input {
   letter-spacing:.14em;
 }
 
-.sx-brand-mark {
-  width:27px;
-  height:27px;
-  border:2px solid var(--accent);
-  color:var(--accent);
-  display:grid;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
+.sx-brand-logo {
+  display:block;
+  width:24px;
+  height:24px;
 }
 
 .sx-header .sx-header-actions {
@@ -926,6 +921,21 @@ button,input {
   padding:0!important;
 }
 
+.sx-wrap-table {
+  min-width:0;
+}
+
+.sx-wrap-table th,.sx-wrap-table td {
+  white-space:normal;
+}
+
+@media (max-width:480px) {
+  .sx-wrap-table th,.sx-wrap-table td {
+    padding-left:8px;
+    padding-right:8px;
+  }
+}
+
 table {
   border-collapse:collapse;
   width:100%;
@@ -988,6 +998,11 @@ td {
   color:var(--muted);
   font-size:11px;
   padding:15px 4px;
+}
+
+.sx-panel > .sx-toggle-strip {
+  padding-top:4px;
+  padding-bottom:4px;
 }
 
 .sx-toggle-strip label {
@@ -1808,21 +1823,13 @@ td {
   border-left:3px solid var(--accent);
 }
 
-.sx-drawer-head .sx-brand-mark {
+.sx-drawer-head .sx-brand-logo {
   margin-right:9px;
 }
 
 .sx-help-copy {
   padding:30px 24px;
   color:var(--muted);
-}
-
-.sx-help-copy:before {
-  content:"\f059";
-  display:block;
-  font:24px/1 FontAwesome;
-  color:var(--accent);
-  margin-bottom:28px;
 }
 
 .sx-help-copy h2 {
