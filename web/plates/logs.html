@@ -1,20 +1,24 @@
-<div class="list-group text-center">
-    <div class="list-group-item list-group-item-home">
-        <h2>Logs</h2>
-    </div>
-    <div class="list-group-item list-group-item-home">
-        <div>
-            <i class="fa fa-cloud feature-icon text-primary"></i>
-        </div>
-        <div>
-            <a target="_blank" href="../logs/stratux.log">stratux.log</a>
-        </div>
-        <div>
-                <a target="_blank" href="../logs/">System, AHRS, and replay logs</a>
-        </div>
-    </div>
-</div>
-<div class="col-sm-6">
-    <pre>{{userAgent}}</pre>
-    <pre>{{deviceViewport}}</pre>
+<div class="sx-single sx-narrow">
+	<section class="sx-panel">
+		<div class="sx-section-head">
+			<h2>Logs</h2>
+		</div>
+
+		<!-- Both anchors are served straight off the device by the management
+		     interface and open in a new tab; the hrefs are part of the screen
+		     contract and must resolve. -->
+		<a class="sx-file-link" target="_blank" href="../logs/stratux.log">stratux.log
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+		</a>
+		<a class="sx-file-link" target="_blank" href="../logs/">System, AHRS, and replay logs
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+		</a>
+
+		<!-- Environment strings for bug reports. These were hard-coded in the
+		     prototype; the real values come from LogsCtrl. -->
+		<div class="sx-debug">
+			<span>User agent <b>{{userAgent}}</b></span>
+			<span>Viewport <b>{{deviceViewport}}</b></span>
+		</div>
+	</section>
 </div>
