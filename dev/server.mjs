@@ -478,7 +478,10 @@ const server = http.createServer(async (req, res) => {
     // `{}` so map.js runs its tileset callback - that is where it attaches the
     // aircraft layers. A 404 here leaves the map with no aircraft at all.
     if (pathname === '/tiles/tilesets') return sendJson(res, {});
-    if (pathname === '/develmodetoggle') return sendJson(res, {});
+    if (pathname === '/develmodetoggle') {
+      settings.DeveloperMode = !settings.DeveloperMode;
+      return sendJson(res, {});
+    }
     if (pathname === '/updatePong') return sendJson(res, {});
 
     if (pathname === '/logs/' || pathname === '/logs') {

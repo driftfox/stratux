@@ -650,7 +650,7 @@ func handleDeleteAHRSLogFiles(w http.ResponseWriter, r *http.Request) {
 
 func handleDevelModeToggle(w http.ResponseWriter, r *http.Request) {
 	log.Printf("handleDevelModeToggle called!!!\n")
-	globalSettings.DeveloperMode = true
+	globalSettings.DeveloperMode = !globalSettings.DeveloperMode
 	saveSettings()
 }
 
