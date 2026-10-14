@@ -6,6 +6,13 @@
 		</div>
 	</div>
 
+	<section class="sx-panel" ui-if="rebooting" ui-state="rebooting" style="margin-bottom:16px;">
+		<p>Stratux is rebooting. You may need to reconnect WiFi once it reboots.</p>
+	</section>
+	<section class="sx-panel" ui-if="shuttingdown" ui-state="shuttingdown" style="margin-bottom:16px;">
+		<p>Stratux is shutting down. You may disconnect power.</p>
+	</section>
+
 	<div class="sx-settings-grid">
 		<!-- Left column -->
 		<div class="sx-single">
@@ -310,411 +317,294 @@
 			</section>
 		</div>
 	</div>
-</div>
-<!-- Developer mode area -->
-<div ng-show="DeveloperMode" class="col-sm-12" >
-    <!-- Begin Left Col -->
-    <div class="col-sm-6">
-        <!-- Hardware Settings -->
-        <div class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Hardware</div>
-                <div class="panel-body">
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">GPS</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='GPS_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
 
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">978 Mhz (UAT)</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='UAT_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">1090 Mhz (ADS-B/Mode-S ES)</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='ES_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">868 Mhz (OGN, ADS-L)</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='OGN_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">162 MHz (AIS)</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='AIS_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">Internet (OGN APRS)</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='APRS_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">AHRS Sensor</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='IMU_Sensor_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">Baro Sensor</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='BMP_Sensor_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group" ng-show="IMU_Sensor_Enabled">
-                        <label class="control-label col-xs-5">Minimum fan duty cycle %</label>
-                        <div class="col-xs-7">
-                            <form name="PWMDutyMinForm" ng-submit="updatePWMDutyMin()" novalidate>
-                                <!-- type="number" not supported except on mobile -->
-                                <input class="col-xs-7" type="number" ng-model="PWMDutyMin" placeholder="0-100" min="0"
-                                    max="100" ng-change="updatePWMDutyMin()" />
-                            </form>
-                        </div>
-                    </div>
+	<!-- Developer mode area -->
+	<div ng-show="DeveloperMode" style="margin-top:16px;">
+		<div class="sx-settings-grid">
+			<!-- Hardware Settings -->
+			<section class="sx-panel">
+				<div class="sx-section-head">
+					<h2>Hardware</h2>
+				</div>
+				<div>
+					<div class="sx-switch-list">
+						<label class="sx-switch-row">
+							<span>GPS</span>
+							<input type="checkbox" ng-model="GPS_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>978 Mhz (UAT)</span>
+							<input type="checkbox" ng-model="UAT_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>1090 Mhz (ADS-B/Mode-S ES)</span>
+							<input type="checkbox" ng-model="ES_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>868 Mhz (OGN, ADS-L)</span>
+							<input type="checkbox" ng-model="OGN_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>162 MHz (AIS)</span>
+							<input type="checkbox" ng-model="AIS_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>Internet (OGN APRS)</span>
+							<input type="checkbox" ng-model="APRS_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>AHRS Sensor</span>
+							<input type="checkbox" ng-model="IMU_Sensor_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>Baro Sensor</span>
+							<input type="checkbox" ng-model="BMP_Sensor_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+					</div>
+					<form class="sx-field" ng-show="IMU_Sensor_Enabled" name="PWMDutyMinForm" ng-submit="updatePWMDutyMin()" novalidate>
+						<label>Minimum fan duty cycle %</label>
+						<!-- type="number" not supported except on mobile -->
+						<input type="number" ng-model="PWMDutyMin" placeholder="0-100" min="0"
+							max="100" ng-change="updatePWMDutyMin()" />
+					</form>
+					<!-- Ping and Pong share one serial port, so each locks the other out. -->
+					<div class="sx-switch-list">
+						<label class="sx-switch-row" ng-style="{opacity: Pong_Enabled ? 0.4 : 1}">
+							<span>Ping ADS-B</span>
+							<input type="checkbox" ng-model="Ping_Enabled" ng-disabled="Pong_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row" ng-style="{opacity: Ping_Enabled ? 0.4 : 1}">
+							<span>Pong ADS-B Receiver</span>
+							<input type="checkbox" ng-model="Pong_Enabled" ng-disabled="Ping_Enabled" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>OGN Transmission via I&#178;C/GPIO HAT</span>
+							<input type="checkbox" ng-model="OGNI2CTXEnabled" />
+							<span class="sx-switch"></span>
+						</label>
+					</div>
+				</div>
+			</section>
 
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">Ping ADS-B</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='Ping_Enabled' ng-disabled='Pong_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
+			<!-- Diagnostics Values -->
+			<section ng-show="DeveloperMode" class="sx-panel">
+				<div class="sx-section-head">
+					<h2>Diagnostics</h2>
+				</div>
+				<div>
+					<div class="sx-switch-list">
+						<label class="sx-switch-row">
+							<span>Show Traffic Source in Callsign</span>
+							<input type="checkbox" ng-model="DisplayTrafficSource" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>Verbose Message Log</span>
+							<input type="checkbox" ng-model="DEBUG" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>Record Replay Logs</span>
+							<input type="checkbox" ng-model="ReplayLog" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>Record Trace Logs</span>
+							<input type="checkbox" ng-model="TraceLog" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>Record AHRS Logs</span>
+							<input type="checkbox" ng-model="AHRSLog" />
+							<span class="sx-switch"></span>
+						</label>
+						<label class="sx-switch-row">
+							<span>Persistent logging<br />
+								<small class="sx-subtle">Write logs to micro SD instead of RAM</small></span>
+							<input type="checkbox" ng-model="PersistentLogging" ui-turn-on="modalRebootRequired" />
+							<span class="sx-switch"></span>
+						</label>
+					</div>
+					<div class="sx-field" ng-show="Pong_Enabled">
+						<label>Pong Firmware Update</label>
+						<input type="file" id="pongfile" accept=".zip" onchange="angular.element(this).scope().setPongUploadFile(this.files)"
+							placeholder="Pong Fimrware Update" />
+						<div ng-show="pong_update_files != '' && !uploading_pong_update">
+							<button class="sx-wide-button" onclick="angular.element(this).scope().uploadPongFile()">
+								Install {{pong_update_files[0].name}}</button>
+						</div>
+						<div ng-show="pong_update_files != '' && uploading_pong_update">
+							<button class="sx-wide-button">
+								Uploading {{pong_update_files[0].name}}. Please wait...</button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
 
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">Pong ADS-B Receiver</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='Pong_Enabled' ng-disabled='Ping_Enabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">OGN Transmission via I&#178;C/GPIO HAT</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='OGNI2CTXEnabled' settings-change></ui-switch>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Left Col -->
-    <!-- Begin Right Col -->
-    <div class="col-sm-6">
-        <!-- Diagnostics Values -->
-        <div ng-show="DeveloperMode" class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Diagnostics</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">Show Traffic Source in Callsign</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='DisplayTrafficSource' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">Verbose Message Log</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='DEBUG' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">Record Replay Logs</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='ReplayLog' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">Record Trace Logs</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='TraceLog' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">Record AHRS Logs</label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='AHRSLog' settings-change></ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-5">Persistent logging<br />
-                            <small>Write logs to micro SD instead of RAM</small></label>
-                        <div class="col-xs-7">
-                            <ui-switch ng-model='PersistentLogging' ui-turn-on="modalRebootRequired" settings-change>
-                            </ui-switch>
-                        </div>
-                    </div>
-                    <div class="form-group" ng-show="Pong_Enabled">
-                        <label class="control-label col-xs-5">Pong Firmware Update<br /></label>
-                        <div class="col-xs-7">
-                            <input class="col-xs-7" type="file" id="pongfile" accept=".zip" onchange="angular.element(this).scope().setPongUploadFile(this.files)"
-                            placeholder="Pong Fimrware Update" />
-                        </div>
-                        <span ng-show="pong_update_files != '' && !pong_uploading_update">
-                            <!-- once selected, btn to upload -->
-                            <button class="btn btn-block" onclick="angular.element(this).scope().uploadPongFile()">
-                                Install {{pong_update_files[0].name}}</button>
-                        </span>
-                        <span ng-show="pong_update_files != '' && pong_uploading_update">
-                            <!-- "uploading.." -->
-                            <button class="btn btn-block">
-                                Uploading {{pong_update_files[0].name}}. Please wait...</button>
-                        </span>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Right Col -->
-    <div class="col-sm-12">
-        <div class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Raw Configuration</div>
-                <div class="panel-body">
-                    <p>stratux.conf:</p>
-                    <pre>{{rawSettings}}</pre>
-                </div>
-            </div>
-        </div>
-    </div>
+		<section class="sx-panel" style="margin-top:16px;">
+			<div class="sx-section-head">
+				<h2>Raw Configuration</h2>
+			</div>
+			<div>
+				<p class="sx-subtle">stratux.conf:</p>
+				<pre>{{rawSettings}}</pre>
+			</div>
+		</section>
+	</div>
 </div>
 
 
 <!-- ############################################## -->
 <!--                    Modal popups                -->
 <!-- ############################################## -->
-<!-- Messages Modal -->
-<div class="col-sm-12">
-    <h3 ui-if="rebooting" ui-state="rebooting">Stratux is rebooting. You may need to reconnect WiFi once it reboots.
-    </h3>
-    <h3 ui-if="shuttingdown" ui-state="shuttingdown">Stratux is shutting down. You may disconnect power.</h3>
-    <h3 ui-if="WiFiRestart" ui-state="WiFiRestart">Stratux WiFi is Restarting Services. You may need to reconnect WiFi
-        once services are restored.</h3>
-</div>
-
+<!-- The .modal class stays on each root: mobile-angular-ui's `modal` directive keys on it to
+     add `has-modal`, which blocks taps on the app behind the dialog. Centering and the dim
+     backdrop are inline because the stylesheet is frozen for this pass, and they avoid
+     `inset` and #rrggbbaa colours, which the 2015 tablet floor does not parse. Tapping the
+     backdrop closes the dialog, standing in for the old header close button. -->
 <div ui-content-for="modals">
-    <!-- Reboot Config Modal -->
-    <div class="modal" ui-if="modalReboot" ui-state="modalReboot">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalReboot"></button>
-                        <h4 class="modal-title">Are you really sure?</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Do you wish to reboot the Stratux?</p>
-                        <p>Note that the system will reboot immediately and it will stop responding during the
-                            reboot</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalReboot" class="btn btn-default">Cancel</a>
-                        <a ng-click="postReboot()" ui-turn-off="modalReboot" ui-turn-on="rebooting"
-                            class="btn btn-primary">Reboot</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Reboot required due to settings change Modal -->
-    <div class="modal" ui-if="modalRebootRequired" ui-state="modalRebootRequired">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalRebootRequired"></button>
-                        <h4 class="modal-title">Reboot required</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>For this change to take effect, a reboot of the Stratux is required.</p>
-                        <p>Do you want to reboot now? You can also reboot manually later.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalRebootRequired" class="btn btn-default">Cancel</a>
-                        <a ng-click="postReboot()" ui-turn-off="modalRebootRequired" ui-turn-on="rebooting"
-                            class="btn btn-primary">Reboot</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Shutdown Modal -->
-    <div class="modal" ui-if="modalShutdown" ui-state="modalShutdown">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalShutdown"></button>
-                        <h4 class="modal-title">Are you really sure?</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Do you wish to shutdown the Stratux?</p>
-                        <p>Note that the system will shutdown immediately. Please disconnect the power after the
-                            shutdown.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalShutdown" class="btn btn-default">Cancel</a>
-                        <a ng-click="postShutdown()" ui-turn-off="modalShutdown" ui-turn-on="shuttingdown"
-                            class="btn btn-primary">Shutdown</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Calibrate Forward Modal -->
-    <div class="modal" ui-if="modalCalibrateForward" ui-state="modalCalibrateForward">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalCalibrateForward"></button>
-                        <h4 class="modal-title">Set AHRS Sensor Orientation: Forward Direction</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Point the Stratux so that the end that will be pointing toward the
-                            <strong>nose</strong> of the airplane is pointing toward the sky and press the
-                            <strong>Set Forward Direction</strong> button.
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalCalibrateForward" class="btn btn-default">Cancel</a>
-                        <a ng-click="setOrientation('forward')" ui-turn-off="modalCalibrateForward"
-                            ui-turn-on="modalCalibrateDone" class="btn btn-default btn-primary">Set Forward
-                            Direction</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Calibration Success Modal -->
-    <div class="modal" ui-if="modalCalibrateDone" ui-state="modalCalibrateDone">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalCalibrateDone"></button>
-                        <h4 class="modal-title">Set AHRS Sensor Orientation: Finished</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>The sensor orientation is set. These settings will be saved for future flights.
-                            Place the Stratux in its in-flight orientation and keep it stationary for 5 seconds
-                            after you press the <strong>Done</strong> button.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ng-click="setOrientation('done')" ui-turn-off="modalCalibrateDone"
-                            class="btn btn-default btn-primary">Done</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Calibration Failed Modal -->
-    <div class="modal" ui-if="modalCalibrateFailed" ui-state="modalCalibrateFailed">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalCalibrateFailed"></button>
-                        <h4 class="modal-title">Set AHRS Sensor Orientation: Failed!</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>There was an error: {{Orientation_Failure_Message}}</p>
-                        <p>
-                        <div id="orientationFailureMessage"></div>
-                        </p>
-                        <p>The orientation failed. Please try again.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalCalibrateFailed" class="btn btn-default btn-primary">OK</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- WiFi Success Modal -->
-    <div class="modal" ui-if="modalSuccessWiFi" ui-state="modalSuccessWiFi" id="WiFiSuccessModal">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalSuccessWiFi"></button>
-                        <h4 class="modal-title">Your WiFi settings were successfully changed.</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>WiFi Mode: <b>{{wifiModeStr()}}</b></p>
-                        <p>WiFi Country: <b>{{WiFiCountry || "Unspecified"}}</b></p>
-                        <p>WiFi SSID: <b>{{WiFiSSID}}</b></p>
-                        <p>WiFi Security: <b>{{WiFiSecurityEnabled}}</b></p>
-                        <p>WiFi Passphrase: <b>{{WiFiPassphrase}}</b></p>
-                        <p ng-if="WiFiMode==1">WiFi-Direct PIN: <b>{{WiFiDirectPin}}</b></p>
-                        <p>WiFi Channel: <b>{{WiFiChannel}}</b></p>
-                        <p>Stratux IP: <b>{{WiFiIPAddress}}</b></p>
-                        <p>Your Stratux's WiFi services are now restarting to apply the new settings. This could
-                            take up to 30 seconds.<br />
-                            You might have to reconnect to your new WiFi SSID. </p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalSuccessWiFi" class="btn btn-primary btn-default">Close</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- WiFi Error Modal -->
-    <div class="modal" ui-if="modalErrorWiFi" ui-state="modalErrorWiFi">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalErrorWiFi"></button>
-                        <h4 class="modal-title">Errors in your WiFi Settings</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div>{{WiFiErrors.WiFiSSID}}</div>
-                        <div>{{WiFiErrors.WiFiPassphrase}}</div>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalErrorWiFi" ng-click="resetSettings()" class="btn btn-default">Close</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- WiFi Canceled Modal -->
-    <div class="modal" ui-if="modalCancelWiFi" ui-state="modalCancelWiFi">
-        <div class="modal-overlay "></div>
-        <div class="vertical-alignment-helper center-block">
-            <div class="modal-dialog vertical-align-center">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" ui-turn-off="modalCancelWiFi"></button>
-                        <h4 class="modal-title">WiFi Settings: Canceled</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>WiFi Settings Canceled.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a ui-turn-off="modalCancelWiFi" ng-click="resetSettings()"
-                            class="btn btn-default btn-primary">OK</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Reboot Config Modal -->
+	<div class="modal" ui-if="modalReboot" ui-state="modalReboot" ui-turn-off="modalReboot"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
+			<h2>Are you really sure?</h2>
+			<p>Do you wish to reboot the Stratux? Note that the system will reboot immediately and it will
+				stop responding during the reboot.</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalReboot">Cancel</button>
+				<button ng-click="postReboot()" ui-turn-off="modalReboot" ui-turn-on="rebooting"
+					class="sx-danger">Reboot</button>
+			</div>
+		</div>
+	</div>
+	<!-- Reboot required due to settings change Modal -->
+	<div class="modal" ui-if="modalRebootRequired" ui-state="modalRebootRequired" ui-turn-off="modalRebootRequired"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
+			<h2>Reboot required</h2>
+			<p>For this change to take effect, a reboot of the Stratux is required. Do you want to reboot
+				now? You can also reboot manually later.</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalRebootRequired">Cancel</button>
+				<button ng-click="postReboot()" ui-turn-off="modalRebootRequired" ui-turn-on="rebooting"
+					class="sx-danger">Reboot</button>
+			</div>
+		</div>
+	</div>
+	<!-- Shutdown Modal -->
+	<div class="modal" ui-if="modalShutdown" ui-state="modalShutdown" ui-turn-off="modalShutdown"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
+			<h2>Are you really sure?</h2>
+			<p>Do you wish to shutdown the Stratux? Note that the system will shutdown immediately. Please
+				disconnect the power after the shutdown.</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalShutdown">Cancel</button>
+				<button ng-click="postShutdown()" ui-turn-off="modalShutdown" ui-turn-on="shuttingdown"
+					class="sx-danger">Shutdown</button>
+			</div>
+		</div>
+	</div>
+	<!-- Calibrate Forward Modal -->
+	<div class="modal" ui-if="modalCalibrateForward" ui-state="modalCalibrateForward" ui-turn-off="modalCalibrateForward"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<h2>Set AHRS Sensor Orientation: Forward Direction</h2>
+			<p>Point the Stratux so that the end that will be pointing toward the
+				<strong>nose</strong> of the airplane is pointing toward the sky and press the
+				<strong>Set Forward Direction</strong> button.
+			</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalCalibrateForward">Cancel</button>
+				<button ng-click="setOrientation('forward')" ui-turn-off="modalCalibrateForward"
+					ui-turn-on="modalCalibrateDone">Set Forward Direction</button>
+			</div>
+		</div>
+	</div>
+	<!-- Calibration Success Modal -->
+	<div class="modal" ui-if="modalCalibrateDone" ui-state="modalCalibrateDone" ui-turn-off="modalCalibrateDone"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<h2>Set AHRS Sensor Orientation: Finished</h2>
+			<p>The sensor orientation is set. These settings will be saved for future flights.
+				Place the Stratux in its in-flight orientation and keep it stationary for 5 seconds
+				after you press the <strong>Done</strong> button.</p>
+			<div class="sx-dialog-actions">
+				<button ng-click="setOrientation('done')" ui-turn-off="modalCalibrateDone">Done</button>
+			</div>
+		</div>
+	</div>
+	<!-- Calibration Failed Modal -->
+	<div class="modal" ui-if="modalCalibrateFailed" ui-state="modalCalibrateFailed" ui-turn-off="modalCalibrateFailed"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
+			<h2>Set AHRS Sensor Orientation: Failed!</h2>
+			<p>There was an error: {{Orientation_Failure_Message}}</p>
+			<div id="orientationFailureMessage"></div>
+			<p>The orientation failed. Please try again.</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalCalibrateFailed">OK</button>
+			</div>
+		</div>
+	</div>
+	<!-- WiFi Success Modal -->
+	<div class="modal" ui-if="modalSuccessWiFi" ui-state="modalSuccessWiFi" id="WiFiSuccessModal" ui-turn-off="modalSuccessWiFi"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<h2>Your WiFi settings were successfully changed.</h2>
+			<p>WiFi Mode: <b>{{wifiModeStr()}}</b></p>
+			<p>WiFi Country: <b>{{WiFiCountry || "Unspecified"}}</b></p>
+			<p>WiFi SSID: <b>{{WiFiSSID}}</b></p>
+			<p>WiFi Security: <b>{{WiFiSecurityEnabled}}</b></p>
+			<p>WiFi Passphrase: <b>{{WiFiPassphrase}}</b></p>
+			<p ng-if="WiFiMode==1">WiFi-Direct PIN: <b>{{WiFiDirectPin}}</b></p>
+			<p>WiFi Channel: <b>{{WiFiChannel}}</b></p>
+			<p>Stratux IP: <b>{{WiFiIPAddress}}</b></p>
+			<p style="margin-top:12px;">Your Stratux's WiFi services are now restarting to apply the new settings. This could
+				take up to 30 seconds.<br />
+				You might have to reconnect to your new WiFi SSID. </p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalSuccessWiFi">Close</button>
+			</div>
+		</div>
+	</div>
+	<!-- WiFi Error Modal -->
+	<div class="modal" ui-if="modalErrorWiFi" ui-state="modalErrorWiFi" ui-turn-off="modalErrorWiFi"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
+			<h2>Errors in your WiFi Settings</h2>
+			<p>{{WiFiErrors.WiFiSSID}}</p>
+			<p>{{WiFiErrors.WiFiPassphrase}}</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalErrorWiFi" ng-click="resetSettings()">Close</button>
+			</div>
+		</div>
+	</div>
+	<!-- WiFi Canceled Modal -->
+	<div class="modal" ui-if="modalCancelWiFi" ui-state="modalCancelWiFi" ui-turn-off="modalCancelWiFi"
+		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
+			<h2>WiFi Settings: Canceled</h2>
+			<p>WiFi Settings Canceled.</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="modalCancelWiFi" ng-click="resetSettings()">OK</button>
+			</div>
+		</div>
+	</div>
 </div>

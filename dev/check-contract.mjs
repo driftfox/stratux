@@ -216,7 +216,7 @@ const settingsRequired = [
   'WiFiIPAddress', 'WiFiInternetPassThroughEnabled', 'WiFiClientNetworks',
   'Network.SSID', 'Network.Password',  'OGNAddrType', 'OGNAddr', 'OGNAcftType', 'OGNPilot', 'OGNReg', 'OGNTxPower',
   'DeveloperMode', 'hasTracker', 'gpsHardwareCode', 'BMP_Sensor_Enabled', 'IMU_Sensor_Enabled', 'Pong_Enabled',
-  'visible_serialout', 'WiFiMode', 'update_files', 'uploading_update', 'pong_uploading_update',
+  'visible_serialout', 'WiFiMode', 'update_files', 'uploading_update',
   'updateGLimits', 'updatemodes', 'updatewatchlist', 'updateppm', 'updategain', 'updateBaud', 'updatestaticips',
   'updatealtitudeoffset', 'updateOgnTrackerConfig', 'updateWiFi', 'addWiFiClientNetwork', 'removeWiFiClientNetwork',
   'resetSettings', 'setOrientation', 'postReboot', 'postShutdown', 'setUploadFile', 'uploadFile', 'setPongUploadFile',
@@ -225,8 +225,14 @@ const settingsRequired = [
   'g-limits-input', 'pilotname-input', 'ognreg-input',
   'modalReboot', 'modalRebootRequired', 'modalShutdown', 'modalCalibrateForward', 'modalCalibrateDone',
   'modalCalibrateFailed', 'modalSuccessWiFi', 'modalErrorWiFi', 'modalCancelWiFi', 'rebooting', 'shuttingdown',
-  'WiFiRestart',
 ];
+
+// Checked against the template alone: the controller already contains these
+// names, so the concatenated plate+JS text would pass vacuously.
+const settingsHtmlRequired = ['uploading_pong_update'];
+// §4 drops the WiFiRestart banner (nothing sets it); §5.8 defect 7 is the
+// template's misspelling of the controller's uploading_pong_update.
+const settingsHtmlForbidden = ['WiFiRestart', 'pong_uploading_update'];
 
 const logsRequired = [
   'userAgent', 'deviceViewport', '../logs/stratux.log', '../logs/',
@@ -279,6 +285,12 @@ function plateChecks() {
     const dupForms = duplicateFormNames(readText(`web/plates/${name}.html`));
     if (dupForms.length) failures.push(`FAIL plates/${name}.html: duplicate form name ${dupForms.join(', ')}`);
   }
+
+  const settingsHtml = readText('web/plates/settings.html');
+  const missingHtml = missingFrom(settingsHtml, settingsHtmlRequired);
+  if (missingHtml.length) failures.push(`FAIL plates/settings.html: ${missingHtml.join(', ')}`);
+  const forbidden = settingsHtmlForbidden.filter((s) => settingsHtml.includes(s));
+  if (forbidden.length) failures.push(`FAIL plates/settings.html: must not contain ${forbidden.join(', ')}`);
 
   // Shell (index.html).
   const indexHtml = readText('web/index.html');
