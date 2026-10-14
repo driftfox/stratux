@@ -541,7 +541,8 @@ header {
 }
 
 .sx-header-actions {
-  margin-left:auto;
+  position:relative;
+  float:right;
   display:flex;
   align-items:center;
 }
@@ -1510,13 +1511,6 @@ td {
   grid-template-columns:repeat(2,1fr);
 }
 
-.sx-overlay {
-  position:fixed;
-  inset:0;
-  background:#0008;
-  z-index:20;
-}
-
 .sx-drawer {
   position:absolute;
   top:0;
@@ -1663,13 +1657,28 @@ td {
   background:transparent;
   color:var(--text);
   padding:10px 16px;
+  min-height:44px;
   cursor:pointer;
 }
 
 .sx-dialog-actions .sx-danger {
   background:var(--bad);
   border-color:var(--bad);
-  color:#fff;
+  color:#fff!important;
+}
+
+/* Sits on a class="modal" root, which supplies the fixed full-screen box and the
+   z-index above the navbar. Auto margins centre the dialog while it fits and let
+   it scroll from the top when it does not. */
+.sx-modal-backdrop {
+  display:flex;
+  background:rgba(0,0,0,0.55);
+  overflow-y:auto;
+  padding:16px 0;
+}
+
+.sx-modal-backdrop > .sx-confirm-dialog {
+  margin:auto;
 }
 
 @media(max-width:800px) {

@@ -196,3 +196,8 @@ select {
   --amber: #e0a83d;
   --bad: #e2747d;
 }
+
+/* White on the light --bad fill is under 3:1. */
+.sx-dialog-actions .sx-danger {
+  color: #0b1117!important;
+}

@@ -469,14 +469,13 @@
 <!--                    Modal popups                -->
 <!-- ############################################## -->
 <!-- The .modal class stays on each root: mobile-angular-ui's `modal` directive keys on it to
-     add `has-modal`, which blocks taps on the app behind the dialog. Centering and the dim
-     backdrop are inline because the stylesheet is frozen for this pass, and they avoid
-     `inset` and #rrggbbaa colours, which the 2015 tablet floor does not parse. Tapping the
-     backdrop closes the dialog, standing in for the old header close button. -->
+     add `has-modal`, which blocks taps on the app behind the dialog, and its z-index clears
+     the navbar. sx-modal-backdrop must stay floor-safe (no `inset`, no #rrggbbaa; the 2015
+     tablets drop both). Tapping the backdrop closes the dialog, standing in for the old
+     header close button. -->
 <div ui-content-for="modals">
 	<!-- Reboot Config Modal -->
-	<div class="modal" ui-if="modalReboot" ui-state="modalReboot" ui-turn-off="modalReboot"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalReboot" ui-state="modalReboot" ui-turn-off="modalReboot">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
 			<h2>Are you really sure?</h2>
@@ -490,8 +489,7 @@
 		</div>
 	</div>
 	<!-- Reboot required due to settings change Modal -->
-	<div class="modal" ui-if="modalRebootRequired" ui-state="modalRebootRequired" ui-turn-off="modalRebootRequired"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalRebootRequired" ui-state="modalRebootRequired" ui-turn-off="modalRebootRequired">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
 			<h2>Reboot required</h2>
@@ -505,8 +503,7 @@
 		</div>
 	</div>
 	<!-- Shutdown Modal -->
-	<div class="modal" ui-if="modalShutdown" ui-state="modalShutdown" ui-turn-off="modalShutdown"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalShutdown" ui-state="modalShutdown" ui-turn-off="modalShutdown">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
 			<h2>Are you really sure?</h2>
@@ -520,8 +517,7 @@
 		</div>
 	</div>
 	<!-- Calibrate Forward Modal -->
-	<div class="modal" ui-if="modalCalibrateForward" ui-state="modalCalibrateForward" ui-turn-off="modalCalibrateForward"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalCalibrateForward" ui-state="modalCalibrateForward" ui-turn-off="modalCalibrateForward">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<h2>Set AHRS Sensor Orientation: Forward Direction</h2>
 			<p>Point the Stratux so that the end that will be pointing toward the
@@ -536,8 +532,7 @@
 		</div>
 	</div>
 	<!-- Calibration Success Modal -->
-	<div class="modal" ui-if="modalCalibrateDone" ui-state="modalCalibrateDone" ui-turn-off="modalCalibrateDone"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalCalibrateDone" ui-state="modalCalibrateDone" ui-turn-off="modalCalibrateDone">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<h2>Set AHRS Sensor Orientation: Finished</h2>
 			<p>The sensor orientation is set. These settings will be saved for future flights.
@@ -549,8 +544,7 @@
 		</div>
 	</div>
 	<!-- Calibration Failed Modal -->
-	<div class="modal" ui-if="modalCalibrateFailed" ui-state="modalCalibrateFailed" ui-turn-off="modalCalibrateFailed"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalCalibrateFailed" ui-state="modalCalibrateFailed" ui-turn-off="modalCalibrateFailed">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
 			<h2>Set AHRS Sensor Orientation: Failed!</h2>
@@ -563,8 +557,7 @@
 		</div>
 	</div>
 	<!-- WiFi Success Modal -->
-	<div class="modal" ui-if="modalSuccessWiFi" ui-state="modalSuccessWiFi" id="WiFiSuccessModal" ui-turn-off="modalSuccessWiFi"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalSuccessWiFi" ui-state="modalSuccessWiFi" id="WiFiSuccessModal" ui-turn-off="modalSuccessWiFi">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<h2>Your WiFi settings were successfully changed.</h2>
 			<p>WiFi Mode: <b>{{wifiModeStr()}}</b></p>
@@ -584,8 +577,7 @@
 		</div>
 	</div>
 	<!-- WiFi Error Modal -->
-	<div class="modal" ui-if="modalErrorWiFi" ui-state="modalErrorWiFi" ui-turn-off="modalErrorWiFi"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalErrorWiFi" ui-state="modalErrorWiFi" ui-turn-off="modalErrorWiFi">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
 			<h2>Errors in your WiFi Settings</h2>
@@ -597,8 +589,7 @@
 		</div>
 	</div>
 	<!-- WiFi Canceled Modal -->
-	<div class="modal" ui-if="modalCancelWiFi" ui-state="modalCancelWiFi" ui-turn-off="modalCancelWiFi"
-		style="display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.55);">
+	<div class="modal sx-modal-backdrop" ui-if="modalCancelWiFi" ui-state="modalCancelWiFi" ui-turn-off="modalCancelWiFi">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
 			<h2>WiFi Settings: Canceled</h2>
 			<p>WiFi Settings Canceled.</p>

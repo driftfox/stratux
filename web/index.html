@@ -83,16 +83,20 @@
 	<!-- Needed for modal confirmation dialogs -->
 	<div ui-yield-to="modals"></div>
 
-	<!-- Shutdown confirmation modal (directive-only; POSTs to /shutdown) -->
-	<div class="sx-overlay" ui-if="uiShutdownConfirm" ui-state="uiShutdownConfirm" ng-click="Ui.turnOff('uiShutdownConfirm')">
+	<!-- Shutdown confirmation. /shutdown powers off on any HTTP method, so the form posts
+	     into the hidden iframe: the tab never navigates there and a reload or restored tab
+	     cannot repeat the request. The submit button must not close the dialog, because
+	     removing the form before the submit completes cancels it. -->
+	<iframe name="sx-shutdown-sink" title="Shutdown request" tabindex="-1" hidden></iframe>
+	<div class="modal sx-modal-backdrop" ui-if="uiShutdownConfirm" ui-state="uiShutdownConfirm" ui-turn-off="uiShutdownConfirm">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="sx-shutdown-title" ng-click="$event.stopPropagation()">
 			<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
 			<h2 id="sx-shutdown-title">Shut down receiver?</h2>
 			<p>Stratux will stop receiving traffic and weather. Please disconnect the power after shutdown.</p>
-			<div class="sx-dialog-actions">
-				<button ui-turn-off="uiShutdownConfirm">Cancel</button>
-				<a href="/shutdown" class="sx-danger">Shut down</a>
-			</div>
+			<form class="sx-dialog-actions" method="post" action="/shutdown" target="sx-shutdown-sink">
+				<button type="button" ui-turn-off="uiShutdownConfirm">Cancel</button>
+				<button type="submit" class="sx-danger">Shut down</button>
+			</form>
 		</div>
 	</div>
 
@@ -145,17 +149,19 @@
 
 		<!-- Header Navbar -->
 		<div class="navbar navbar-app navbar-absolute-top">
-			<div class="btn-group pull-left">
-				<div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle sx-icon-button" aria-label="Menu">
-					<i class="fa fa-bars"></i> Menu
-				</div>
-			</div>
+			<!-- The brand is a full-width absolute box below 992px; the positioned controls
+			     must follow it in source order so they paint, and take taps, above it. -->
 			<div class="navbar-brand navbar-brand-center" ui-yield-to="title">
 				<a href="#/">
 					<span class="sx-brand-mark">S</span>
 					&nbsp;
 					<span class="sx-brand">STRATUX</span>
 				</a>
+			</div>
+			<div class="btn-group pull-left">
+				<div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle sx-icon-button" aria-label="Menu">
+					<i class="fa fa-bars"></i> Menu
+				</div>
 			</div>
 			<div class="sx-header-actions">
 				<button class="sx-icon-button" ng-click="updateTheme(!DarkMode)" aria-label="Toggle theme">
