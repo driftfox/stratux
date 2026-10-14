@@ -65,6 +65,14 @@ assert.equal(cssBannedHits('@container (min-width:1px){a{color:red}}').length, 1
 assert.equal(cssBannedHits('a{place-items:center}').length, 1);
 assert.equal(cssBannedHits('a{color-scheme:dark}').length, 1);
 assert.equal(cssBannedHits('a{width:min(340px,90vw)}').length, 1);
+assert.equal(cssBannedHits('a{inset:0}').length, 1);
+assert.equal(cssBannedHits('a{inset:55px 0 0}').length, 1);
+assert.equal(cssBannedHits('a{box-shadow:inset 0 1px 2px #000}').length, 0, 'inset keyword in box-shadow');
+assert.equal(cssBannedHits('a{background:#0008}').length, 1, '#rgba');
+assert.equal(cssBannedHits('a{background:#0d1720d9}').length, 1, '#rrggbbaa');
+assert.equal(cssBannedHits('a{box-shadow:0 0 30px #0005}').length, 1, '#rgba in a list');
+assert.equal(cssBannedHits('a{color:#fff;background:#0d1720}').length, 0, '#rgb and #rrggbb');
+assert.equal(cssBannedHits('#face,#c0ffee00x{color:red}').length, 0, 'id selectors are not colours');
 
 // R9: the ban is on fetching a network font, so only an absolute http(s)
 // @font-face src is a hit. The bundled FontAwesome face must pass.

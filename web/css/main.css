@@ -446,6 +446,9 @@ input.ng-invalid:not(.grayout){
 }
 
 
+/* The 2015 tablet floor has no custom properties: load-bearing surfaces (page,
+   panel, dialog, drawer, switch, primary, danger) put a literal before each var(),
+   and dark-mode.css repeats them with dark values. */
 :root {
   font-family:Arial,Helvetica,sans-serif;
   font-size:14px;
@@ -466,7 +469,9 @@ input.ng-invalid:not(.grayout){
 
 body {
   margin:0;
+  background:#f3f5f7;
   background:var(--bg);
+  color:#17202a;
   color:var(--text);
 }
 
@@ -476,7 +481,9 @@ button,input {
 
 .sx-app {
   min-height:100vh;
+  background:#f3f5f7;
   background:var(--bg);
+  color:#17202a;
   color:var(--text);
   font-size:14px;
 }
@@ -628,7 +635,9 @@ header {
 }
 
 .sx-panel {
+  background:#fff;
   background:var(--panel);
+  border:1px solid #dce2e7;
   border:1px solid var(--line);
   border-radius:6px;
   overflow:hidden;
@@ -725,12 +734,12 @@ header {
 
 .sx-badge.sx-ok {
   color:#36bd71;
-  background:#36bd7117;
+  background:rgba(54,189,113,0.09);
 }
 
 .sx-badge.sx-info {
   color:#70a1ef;
-  background:#70a1ef17;
+  background:rgba(112,161,239,0.09);
 }
 
 .sx-rate-list {
@@ -950,7 +959,9 @@ td {
 .sx-horizon:before {
   content:'';
   position:absolute;
-  inset:50% 0 auto;
+  top:50%;
+  right:0;
+  left:0;
   height:2px;
   background:#f6f0d0;
 }
@@ -980,7 +991,7 @@ td {
   top:16px;
   left:50%;
   transform:translateX(-50%);
-  background:#0d1720d9;
+  background:rgba(13,23,32,0.85);
   color:#ffd765;
   padding:6px 10px;
   font-size:10px;
@@ -1119,6 +1130,7 @@ td {
 }
 
 .sx-primary {
+  background:#2d6cdf;
   background:var(--accent);
   color:white;
   border:0;
@@ -1153,6 +1165,7 @@ td {
 .sx-switch {
   width:36px;
   height:20px;
+  background:#dce2e7;
   background:var(--line);
   border-radius:20px;
   position:relative;
@@ -1167,11 +1180,13 @@ td {
   left:3px;
   top:3px;
   border-radius:50%;
+  background:#66727d;
   background:var(--muted);
   transition:.2s;
 }
 
 .sx-switch-row input:checked+.sx-switch {
+  background:#159447;
   background:var(--good);
 }
 
@@ -1347,7 +1362,7 @@ td {
 
 .sx-map-head {
   height:55px;
-  background:#0d1519e8;
+  background:rgba(13,21,25,0.91);
   padding:0 15px;
   display:flex;
   justify-content:space-between;
@@ -1376,7 +1391,10 @@ td {
 
 .sx-map-grid {
   position:absolute;
-  inset:55px 0 0;
+  top:55px;
+  right:0;
+  bottom:0;
+  left:0;
   background-color:#294846;
   background-image:linear-gradient(18deg,transparent 47%,#54736a 48%,transparent 49%),linear-gradient(84deg,transparent 48%,#54736a 49%,transparent 50%),linear-gradient(153deg,transparent 49%,#40615a 50%,transparent 51%);
   background-size:280px 190px,320px 240px,500px 400px;
@@ -1403,7 +1421,7 @@ td {
   font:10px monospace;
   color:#f1eee1;
   white-space:nowrap;
-  background:#0d1618b8;
+  background:rgba(13,22,24,0.72);
   padding:3px;
 }
 
@@ -1516,8 +1534,9 @@ td {
   top:0;
   bottom:0;
   width:340px;
+  background:#fff;
   background:var(--panel);
-  box-shadow:0 0 30px #0005;
+  box-shadow:0 0 30px rgba(0,0,0,0.33);
 }
 
 .sx-drawer.sx-left {
@@ -1562,6 +1581,7 @@ td {
 
 .sx-nav-item.sx-active {
   color:var(--accent);
+  background:rgba(45,108,223,0.1);
   background:color-mix(in srgb,var(--accent) 10%,transparent);
   border-left:3px solid var(--accent);
 }
@@ -1607,21 +1627,26 @@ td {
 }
 
 .sx-shutdown-action {
+  color:#c43d48;
   color:var(--bad);
 }
 
 .sx-shutdown-action:hover {
+  color:#c43d48;
   color:var(--bad);
+  background:rgba(196,61,72,0.12);
   background:color-mix(in srgb,var(--bad) 12%,transparent);
 }
 
 .sx-confirm-dialog {
   width:420px;
   max-width:calc(100vw - 32px);
+  background:#fff;
   background:var(--panel);
+  border:1px solid #dce2e7;
   border:1px solid var(--line);
   padding:28px;
-  box-shadow:0 24px 80px #0008;
+  box-shadow:0 24px 80px rgba(0,0,0,0.53);
 }
 
 .sx-dialog-icon {
@@ -1630,7 +1655,9 @@ td {
   display:grid;
   align-items:center;
   justify-content:center;
+  color:#c43d48;
   color:var(--bad);
+  border:1px solid rgba(196,61,72,0.45);
   border:1px solid color-mix(in srgb,var(--bad) 45%,var(--line));
   margin-bottom:18px;
 }
@@ -1662,6 +1689,7 @@ td {
 }
 
 .sx-dialog-actions .sx-danger {
+  background:#c43d48;
   background:var(--bad);
   border-color:var(--bad);
   color:#fff!important;

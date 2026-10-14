@@ -82,8 +82,15 @@ export function cssBannedHits(css) {
     /\bplace-items\s*:/gi,
     /\bcolor-scheme\s*:/gi,
     /\bmin\s*\(/gi,
+    /\binset\s*:/gi,
   ]) {
     for (const m of src.matchAll(rx)) hits.push(m[0].trim());
+  }
+
+  // #rgba / #rrggbbaa colours: the floor drops the whole declaration. Only
+  // declaration blocks are searched, so id selectors cannot match.
+  for (const block of src.matchAll(/\{[^{}]*\}/g)) {
+    for (const m of block[0].matchAll(/#(?:[0-9a-f]{8}|[0-9a-f]{4})(?![\w-])/gi)) hits.push(m[0]);
   }
 
   // @font-face may not fetch a network font. Local src URLs are allowed (R9).

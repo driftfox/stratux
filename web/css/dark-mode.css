@@ -197,7 +197,48 @@ select {
   --bad: #e2747d;
 }
 
+/* ---- Literal fallbacks (dark) ----
+   Browsers without custom properties drop every var() declaration, so the
+   load-bearing surfaces repeat the dark token values literally. */
+body,
+.sx-app {
+  background: #0b1117;
+  color: #e9eef3;
+}
+
+.sx-panel,
+.sx-confirm-dialog {
+  background: #121a22;
+  border-color: #26323d;
+}
+
+.sx-drawer {
+  background: #121a22;
+}
+
+.sx-switch {
+  background: #26323d;
+}
+
+.sx-switch:after {
+  background: #8e9aa6;
+}
+
+.sx-switch-row input:checked+.sx-switch {
+  background: #4cc376;
+}
+
+.sx-primary {
+  background: #6ea2ff;
+}
+
+.sx-shutdown-action,
+.sx-dialog-icon {
+  color: #e2747d;
+}
+
 /* White on the light --bad fill is under 3:1. */
 .sx-dialog-actions .sx-danger {
+  background: #e2747d;
   color: #0b1117!important;
 }
