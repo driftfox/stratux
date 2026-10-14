@@ -936,6 +936,72 @@ button,input {
   }
 }
 
+.sx-traffic-table {
+  min-width:0;
+}
+
+.sx-traffic-table th,.sx-traffic-table td {
+  padding:10px;
+}
+
+.sx-traffic-table .sx-line-break {
+  display:none;
+}
+
+/* Narrow screens: each aircraft takes two lines under a matching two-line
+   header, as the original UI did. The break cell before Altitude starts the
+   second line; header and body cells share their show/hide conditions, so
+   the lines stay aligned whichever display options are on. */
+@media (max-width:767px) {
+  .sx-traffic-table,.sx-traffic-table thead,.sx-traffic-table tbody {
+    display:block;
+  }
+
+  .sx-traffic-table tr {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    border-bottom:1px solid #dce2e7;
+    border-bottom:1px solid var(--line);
+  }
+
+  .sx-traffic-table th,.sx-traffic-table td {
+    flex:1 1 40px;
+    min-width:0;
+    padding:6px 4px;
+    border-bottom:0;
+    white-space:normal;
+  }
+
+  .sx-traffic-table th:first-child,.sx-traffic-table td:first-child,
+  .sx-traffic-table .sx-line-break + th,.sx-traffic-table .sx-line-break + td {
+    padding-left:10px;
+  }
+
+  .sx-traffic-table th {
+    letter-spacing:0;
+  }
+
+  .sx-traffic-table th:first-child,.sx-traffic-table td:first-child {
+    flex:1 1 100px;
+  }
+
+  .sx-traffic-table .sx-callout {
+    white-space:nowrap;
+  }
+
+  .sx-traffic-table .sx-line-break + th,.sx-traffic-table .sx-line-break + td {
+    flex-grow:2.4;
+  }
+
+  .sx-traffic-table .sx-line-break {
+    display:block;
+    flex:0 0 100%;
+    height:0;
+    padding:0;
+  }
+}
+
 table {
   border-collapse:collapse;
   width:100%;

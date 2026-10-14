@@ -14,7 +14,7 @@
 			</div>
 
 			<div class="sx-table-wrap">
-				<table>
+				<table class="sx-traffic-table">
 					<thead>
 						<tr>
 							<th>{{showReg ? "Tail Num" : "Callsign"}}</th>
@@ -24,8 +24,8 @@
 							<th ng-hide="GPS_connected && RelDist">Location</th>
 							<th ng-show="GPS_connected && RelDist">Distance</th>
 							<th ng-show="GPS_connected && RelDist">Bearing</th>
+							<th class="sx-line-break"></th>
 							<th>Altitude</th>
-							<th>Vertical speed</th>
 							<th>Speed</th>
 							<th>Course</th>
 							<th>Power</th>
@@ -53,8 +53,8 @@
 							<td ng-hide="GPS_connected && RelDist">{{aircraft.lat}} {{aircraft.lon}}</td>
 							<td ng-show="GPS_connected && RelDist">{{aircraft.dist.toFixed(1)}} NM</td>
 							<td ng-show="GPS_connected && RelDist">{{aircraft.bearing}}&deg;</td>
-							<td>{{aircraft.alt}} ft</td>
-							<td>
+							<td class="sx-line-break"></td>
+							<td>{{aircraft.alt}} ft
 								<span class="sx-subtle">
 									<span ng-show="aircraft.vspeed > 0"><span class="fa fa-ascent"></span>{{aircraft.vspeed}}</span>
 									<span ng-show="aircraft.vspeed < 0"><span class="fa fa-descent"></span>{{0-aircraft.vspeed}}</span>
@@ -96,7 +96,7 @@
 			</div>
 
 			<div class="sx-table-wrap">
-				<table>
+				<table class="sx-traffic-table">
 					<thead>
 						<tr>
 							<th>{{showReg ? "Tail Num" : "Callsign"}}</th>
@@ -104,8 +104,8 @@
 							<th ng-show="showCategory">Category</th>
 							<th>DistEst</th>
 							<th>Squawk</th>
+							<th class="sx-line-break"></th>
 							<th>Altitude</th>
-							<th>Vertical speed</th>
 							<th>Speed</th>
 							<th>Course</th>
 							<th>Power</th>
@@ -123,8 +123,8 @@
 							</td>
 							<td>{{aircraft.distEst.toFixed(1)}} NM</td>
 							<td><span ng-show="aircraft.squawk < 1000">0</span><span ng-show="aircraft.squawk < 100">0</span><span ng-show="aircraft.squawk < 10">0</span>{{aircraft.squawk}}</td>
-							<td>{{aircraft.alt}} ft</td>
-							<td>
+							<td class="sx-line-break"></td>
+							<td>{{aircraft.alt}} ft
 								<span class="sx-subtle">
 									<span ng-show="aircraft.vspeed > 0"><span class="fa fa-ascent"></span>{{aircraft.vspeed}}</span>
 									<span ng-show="aircraft.vspeed < 0"><span class="fa fa-descent"></span>{{0-aircraft.vspeed}}</span>
