@@ -673,11 +673,6 @@ button,input {
   margin-top:0;
 }
 
-.sx-panel .sx-rows > hr {
-  padding:0;
-  margin:0 18px;
-}
-
 .sx-metrics {
   display:grid;
   gap:14px;
@@ -1334,11 +1329,6 @@ td {
 
 .sx-settings-grid .sx-panel .sx-rows > * {
   padding:4px 18px;
-}
-
-.sx-settings-grid .sx-panel .sx-rows > hr {
-  padding:0;
-  margin:6px 18px;
 }
 
 .sx-settings-grid .sx-wide-button,
