@@ -1,25 +1,34 @@
-<div class="col-sm-12">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<span class="panel_label">Traffic-Radar</span> 
-			<span ng-show="ConnectState == 'Connected'" class="label label-success">{{ConnectState}}</span>
-			<span ng-hide="ConnectState == 'Connected'" class="label label-danger">{{ConnectState}}</span>
-		         <span ng-show="BaroAltValid == 'Baro'" class="label label-success">Baro-Alt</span>
-		         <span ng-show="BaroAltValid == 'GPS'" class="label label-warning">No Baro-Alt, using GPS-Alt</span>
-		         <span ng-show="BaroAltValid == 'AdsbEstimated'" class="label label-warning">No Baro-Alt, using ADSB</span>
-		         <span ng-show="BaroAltValid == 'Invalid'" class="label label-danger">No Altitude!</span>
-		         <span ng-show="GPSValid == 'Invalid'" class="label label-danger">No GPS!</span>
-			 <span ng-show="CPUTemp < 70" class="label label-info">{{CPUTemp}}°C</span>
-			 <span ng-hide="(CPUTemp < 70) || (CPUTemp >= 80)" class="label label-warning">{{CPUTemp}}°C</span>
-			 <span ng-hide="CPUTemp < 80" class="label label-danger">{{CPUTemp}}°C</span>
-		</div>
-
-		<div class="panel-body">
-			<div class="row">
-				<span class="col-xs-12">
-					<div id="radar_display"></div>
-				</span>
+<div class="sx-single">
+	<section class="sx-panel">
+		<div class="sx-section-head">
+			<h2>Traffic-Radar</h2>
+			<!-- Status strip. sx-instrument-top is the prototype's own badge row for an
+			     instrument: flex, right aligned, 8px between badges (no `gap` needed). -->
+			<div class="sx-instrument-top" style="flex-wrap:wrap;justify-content:flex-end;">
+				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
+				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
+				<span ng-show="BaroAltValid == 'Baro'" class="sx-badge sx-ok">Baro-Alt</span>
+				<!-- Degraded altitude sources. The amber is inline because no sx- warn
+				     class exists yet and the stylesheet is frozen for this task; it is the
+				     same #ffd765 the design uses for every other warning. -->
+				<span ng-show="BaroAltValid == 'GPS'" class="sx-badge" style="color:#ffd765;">No Baro-Alt, using GPS-Alt</span>
+				<span ng-show="BaroAltValid == 'AdsbEstimated'" class="sx-badge" style="color:#ffd765;">No Baro-Alt, using ADSB</span>
+				<span ng-show="BaroAltValid == 'Invalid'" class="sx-badge sx-danger">No Altitude!</span>
+				<span ng-show="GPSValid == 'Invalid'" class="sx-badge sx-danger">No GPS!</span>
+				<!-- CPU tiers: info < 70, warning 70-79, danger >= 80. Expressions kept
+				     verbatim from the original plate so the tiers cannot drift. -->
+				<span ng-show="CPUTemp < 70" class="sx-badge sx-info">{{CPUTemp}}°C</span>
+				<span ng-hide="(CPUTemp < 70) || (CPUTemp >= 80)" class="sx-badge" style="color:#ffd765;">{{CPUTemp}}°C</span>
+				<span ng-hide="CPUTemp < 80" class="sx-badge sx-danger">{{CPUTemp}}°C</span>
 			</div>
 		</div>
-	</div>
+
+		<!-- Black instrument bezel. #radar_display keeps its id and its block parent,
+		     because RadarRenderer.resize() measures this.parentElement.offsetWidth and
+		     svg.js sizes the scope to 100% of it. The chrome is a plain black wrapper,
+		     so nothing here can wash out the black-backed scope in either theme. -->
+		<div class="sx-instrument">
+			<div id="radar_display"></div>
+		</div>
+	</section>
 </div>
