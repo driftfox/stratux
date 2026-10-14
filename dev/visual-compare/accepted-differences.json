@@ -1,0 +1,20 @@
+[
+  { "screen": "traffic", "id": "traffic.adsb.th", "metric": "x", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "traffic", "id": "traffic.adsb.th", "metric": "w", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "traffic", "id": "traffic.adsb.td", "metric": "x", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "traffic", "id": "traffic.adsb.td", "metric": "w", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "traffic", "id": "traffic.modes.th", "metric": "x", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "traffic", "id": "traffic.modes.th", "metric": "w", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "traffic", "id": "traffic.modes.td", "metric": "x", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "traffic", "id": "traffic.modes.td", "metric": "w", "theme": "*", "reason": "prototype defect §6.9.1: values shifted one column left" },
+  { "screen": "towers", "id": "towers.th", "metric": "x", "theme": "*", "reason": "prototype defect §6.9.2: towers reused the traffic table" },
+  { "screen": "towers", "id": "towers.th", "metric": "w", "theme": "*", "reason": "prototype defect §6.9.2: towers reused the traffic table" },
+  { "screen": "towers", "id": "towers.td", "metric": "x", "theme": "*", "reason": "prototype defect §6.9.2: towers reused the traffic table" },
+  { "screen": "towers", "id": "towers.td", "metric": "w", "theme": "*", "reason": "prototype defect §6.9.2: towers reused the traffic table" },
+  { "screen": "weather", "id": "weather.badge-taf", "metric": "*", "theme": "*", "reason": "prototype defect §6.9.3: pills rendered unstyled" },
+  { "screen": "weather", "id": "weather.badge-pirep", "metric": "*", "theme": "*", "reason": "prototype defect §6.9.3: pills rendered unstyled" },
+  { "screen": "status", "id": "status.title-badge", "metric": "*", "theme": "*", "reason": "redesign Task 4: fabricated ALL SYSTEMS NOMINAL badge removed" },
+  { "screen": "traffic", "id": "traffic.adsb.badge", "metric": "*", "theme": "*", "reason": "prototype defect §6.9.4: hard-coded 12 targets" },
+  { "screen": "logs", "id": "logs.user-agent", "metric": "w", "theme": "*", "reason": "prototype hard-codes user agent and viewport; reskin binds them" },
+  { "screen": "logs", "id": "logs.viewport", "metric": "w", "theme": "*", "reason": "prototype hard-codes user agent and viewport; reskin binds them" }
+]

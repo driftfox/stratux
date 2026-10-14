@@ -585,6 +585,27 @@ Expected: exit 0, zero failures.
 
 For each screen in §6.3–§6.8, tick every box. Compare side-by-side with the original UI (git stash the redesign, load, unstash) to confirm **no data was lost** — the §6 rule.
 
+- [ ] **Step 2a: Prototype layout comparison**
+
+Measures layout and spacing drift against the v0 prototype at 1024×768 (iPad landscape). Design: `docs/superpowers/specs/2026-10-13-visual-compare-design.md`; tool: `dev/visual-compare/`.
+
+Prerequisites (one-time, none committed):
+- Prototype unpacked and built at `/home/dev/code/stratux-aviation-dashboard-prototype` per `docs/superpowers/plans/2026-10-13-visual-compare.md` Task 2 Step 1 (`.next/BUILD_ID` exists).
+- In `dev/visual-compare`: `npm install` and `npx playwright install webkit chromium`.
+- On a host without the browsers' system libraries and without `sudo`: `bash dev/visual-compare/setup-browser-libs.sh` once, then pass `--browser-root ~/.cache/vc-browser-root` (or set `VC_BROWSER_ROOT`).
+
+Run: `node dev/visual-compare/compare.mjs --prototype /home/dev/code/stratux-aviation-dashboard-prototype`
+Exit 0 clean; 1 unexplained drift, missing elements, or map misses; 2 the run could not complete. Findings: `dev/visual-compare/out/report.html`.
+
+Fix loop:
+- Fix drift in the templates, or in the shared rules in `web/css/main.css` / `web/css/dark-mode.css`, within the spec's *What a drift fix may change* (R10 and R16 still apply; no controller edits).
+- Run `node dev/check-contract.mjs` (exit 0) after every fix.
+- Rerun the full comparison after any shared-rule change, not just `--only` the screen being fixed.
+- Never edit the tolerances in `dev/visual-compare/lib/tolerances.mjs`.
+- A new entry in `dev/visual-compare/accepted-differences.json` needs a one-line reason and a human review before the final run.
+
+Done when the full comparison exits 0.
+
 - [ ] **Step 3: Confirm the two reverts are untouched**
 
 Run: `git diff master -- web/plates/gps.html web/plates/map.html`
@@ -605,6 +626,12 @@ git add -A
 git commit -m "feat: complete ui redesign"
 ```
 
-Report: §6 checklist status, checker output, and the before/after screenshots from Task 2 Step 1.
+Report: §6 checklist status, checker output, and `dev/visual-compare/out/report.html` with its paired prototype/reskin screenshots (both themes), attached for the human visual sign-off. This amends R12 for Task 15: the screenshots come from the comparison run, not from Task 2 Step 1.
+
+- [ ] **Step 7: Remove the comparison tool**
+
+After the human sign-off:
+1. On `ui-redesign`, in one commit, delete `dev/visual-compare/`, `docs/superpowers/specs/2026-10-13-visual-compare-design.md`, and `docs/superpowers/plans/2026-10-13-visual-compare.md`.
+2. Run `git diff c24d64df --stat` and confirm it lists none of them.
 
 **Then:** only committed work reaches an image. Build with `image_build/build.sh` (submodules must be initialized first: `git submodule update --init --recursive`) and run on the Pi.

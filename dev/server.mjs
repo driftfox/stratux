@@ -57,10 +57,10 @@ const BOOT_TIME = new Date(Date.now() - (6 * 3600 + 17 * 60) * 1000);
 const iso = (d) => (d instanceof Date ? d : new Date(d)).toISOString();
 const isoNow = () => new Date().toISOString();
 
-/** "DDHHMM" in UTC, the short datetime format FIS-B reports use. */
+/** "DDHHMMZ" in UTC, the short datetime format FIS-B reports use. */
 function shortUtc(d) {
   const p = (n) => String(n).padStart(2, '0');
-  return p(d.getUTCDate()) + p(d.getUTCHours()) + p(d.getUTCMinutes());
+  return p(d.getUTCDate()) + p(d.getUTCHours()) + p(d.getUTCMinutes()) + 'Z';
 }
 
 /** Seconds elapsed since midnight UTC. */
