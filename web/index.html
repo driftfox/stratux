@@ -90,8 +90,10 @@
 	<iframe name="sx-shutdown-sink" title="Shutdown request" tabindex="-1" hidden></iframe>
 	<div class="modal sx-modal-backdrop" ui-if="uiShutdownConfirm" ui-state="uiShutdownConfirm" ui-turn-off="uiShutdownConfirm">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="sx-shutdown-title" ng-click="$event.stopPropagation()">
-			<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
-			<h2 id="sx-shutdown-title">Shut down Stratux?</h2>
+			<div class="sx-dialog-head">
+				<h2 id="sx-shutdown-title">Shut down Stratux?</h2>
+				<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
+			</div>
 			<p>Stratux will stop receiving traffic and weather. Please disconnect the power after shutdown.</p>
 			<form class="sx-dialog-actions" method="post" action="/shutdown" target="sx-shutdown-sink">
 				<button type="button" ui-turn-off="uiShutdownConfirm">Cancel</button>

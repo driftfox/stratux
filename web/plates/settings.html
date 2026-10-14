@@ -472,8 +472,10 @@
 	<!-- Reboot Config Modal -->
 	<div class="modal sx-modal-backdrop" ui-if="modalReboot" ui-state="modalReboot" ui-turn-off="modalReboot">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
-			<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
-			<h2>Are you really sure?</h2>
+			<div class="sx-dialog-head">
+				<h2>Are you really sure?</h2>
+				<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
+			</div>
 			<p>Do you wish to reboot the Stratux? Note that the system will reboot immediately and it will
 				stop responding during the reboot.</p>
 			<div class="sx-dialog-actions">
@@ -486,8 +488,10 @@
 	<!-- Reboot required due to settings change Modal -->
 	<div class="modal sx-modal-backdrop" ui-if="modalRebootRequired" ui-state="modalRebootRequired" ui-turn-off="modalRebootRequired">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
-			<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
-			<h2>Reboot required</h2>
+			<div class="sx-dialog-head">
+				<h2>Reboot required</h2>
+				<div class="sx-dialog-icon"><i class="fa fa-refresh"></i></div>
+			</div>
 			<p>For this change to take effect, a reboot of the Stratux is required. Do you want to reboot
 				now? You can also reboot manually later.</p>
 			<div class="sx-dialog-actions">
@@ -500,8 +504,10 @@
 	<!-- Shutdown Modal -->
 	<div class="modal sx-modal-backdrop" ui-if="modalShutdown" ui-state="modalShutdown" ui-turn-off="modalShutdown">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
-			<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
-			<h2>Are you really sure?</h2>
+			<div class="sx-dialog-head">
+				<h2>Are you really sure?</h2>
+				<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
+			</div>
 			<p>Do you wish to shutdown the Stratux? Note that the system will shutdown immediately. Please
 				disconnect the power after the shutdown.</p>
 			<div class="sx-dialog-actions">
@@ -541,8 +547,10 @@
 	<!-- Calibration Failed Modal -->
 	<div class="modal sx-modal-backdrop" ui-if="modalCalibrateFailed" ui-state="modalCalibrateFailed" ui-turn-off="modalCalibrateFailed">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
-			<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
-			<h2>Set AHRS Sensor Orientation: Failed!</h2>
+			<div class="sx-dialog-head">
+				<h2>Set AHRS Sensor Orientation: Failed!</h2>
+				<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
+			</div>
 			<p>There was an error: {{Orientation_Failure_Message}}</p>
 			<div id="orientationFailureMessage"></div>
 			<p>The orientation failed. Please try again.</p>
@@ -574,8 +582,10 @@
 	<!-- WiFi Error Modal -->
 	<div class="modal sx-modal-backdrop" ui-if="modalErrorWiFi" ui-state="modalErrorWiFi" ui-turn-off="modalErrorWiFi">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" ng-click="$event.stopPropagation()">
-			<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
-			<h2>Errors in your WiFi Settings</h2>
+			<div class="sx-dialog-head">
+				<h2>Errors in your WiFi Settings</h2>
+				<div class="sx-dialog-icon"><i class="fa fa-exclamation-triangle"></i></div>
+			</div>
 			<p>{{WiFiErrors.WiFiSSID}}</p>
 			<p>{{WiFiErrors.WiFiPassphrase}}</p>
 			<div class="sx-dialog-actions">

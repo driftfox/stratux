@@ -2052,6 +2052,22 @@ td {
   font-size:20px;
 }
 
+.sx-dialog-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.sx-dialog-head h2 {
+  margin:0;
+}
+
+.sx-dialog-head .sx-dialog-icon {
+  flex:none;
+  margin:0 0 0 16px;
+}
+
 .sx-confirm-dialog p {
   margin:0;
   color:var(--muted);
