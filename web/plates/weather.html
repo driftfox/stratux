@@ -35,7 +35,7 @@
 						     because TAFs are issued every 6 hours while METAR/SPECI are
 						     hourly and PIREP/WINDS have no published cycle. -->
 						<time class="sx-badge"
-							ng-class="weather.age > watch_list[0].age - (weather.type == 'TAF' ? 360 : (weather.type == 'PIREP' || weather.type == 'WINDS' ? 90 : 60)) * 60000 ? 'sx-ok' : 'sx-danger'"
+							ng-class="weather.age > data_list[0].age - (weather.type == 'TAF' ? 360 : (weather.type == 'PIREP' || weather.type == 'WINDS' ? 90 : 60)) * 60000 ? 'sx-ok' : 'sx-danger'"
 							ng-style="{'background-color': weather.backcolor}">{{weather.time}}</time>
 					</div>
 					<code>{{weather.data}}</code>
