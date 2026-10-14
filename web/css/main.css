@@ -1215,11 +1215,18 @@ td {
   width:auto;
 }
 
-.sx-file-actions .sx-wide-button {
-  display:inline-flex;
-  align-items:center;
-  min-height:44px;
-  padding:7px 10px;
+.sx-wide-button,.sx-wide-button:hover,.sx-wide-button:focus {
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.sx-file-link:hover,.sx-file-link:focus,.sx-nav-item:hover,.sx-nav-item:focus {
+  text-decoration:none;
+}
+
+.sx-wide-button:hover,.sx-wide-button:focus {
+  color:#17202a;
+  color:var(--text);
 }
 
 .sx-primary {
@@ -1238,10 +1245,11 @@ td {
   border-color:#a8444d!important;
 }
 
-/* Settings actions share one size and stay inset from the panel edge,
-   however deeply each one is nested. */
+/* Settings and Developer actions share one size and stay inset from the
+   panel edge, however deeply each one is nested. */
 .sx-settings-grid .sx-wide-button,
-.sx-settings-grid .sx-primary {
+.sx-settings-grid .sx-primary,
+.sx-dev-grid .sx-wide-button {
   display:inline-block;
   -ms-flex-item-align:start;
   align-self:flex-start;
