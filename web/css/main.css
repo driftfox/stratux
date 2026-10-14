@@ -1322,9 +1322,32 @@ td {
   border:1px solid #283844;
 }
 
-.sx-radar-display {
-  max-width:600px;
-  margin:12px auto;
+.sx-radar-screen {
+  display:flex;
+  flex-direction:column;
+  height:calc(100vh - 68px);
+  min-height:0;
+  padding:8px 12px 12px;
+  border-width:0;
+}
+
+.sx-instrument-title {
+  margin-right:auto;
+  font-size:14px;
+}
+
+.sx-radar-fill {
+  position:relative;
+  flex:1;
+  margin-top:8px;
+}
+
+.sx-radar-fill > svg {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
 }
 
 .sx-instrument-top {
