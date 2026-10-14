@@ -522,115 +522,116 @@ data set. Confirm nothing was lost in the revert and move on:
 
 ### 6.3 Settings (v0 kept — largest gap)
 
-- [ ] **Diagnostics panel** (DeveloperMode): Show Traffic Source in Callsign,
+- [x] **Diagnostics panel** (DeveloperMode): Show Traffic Source in Callsign,
   Verbose Message Log, Record Replay Logs, Record Trace Logs, Record AHRS
   Logs, Persistent logging — *none of these exist in the prototype; the entire
   logging pipeline currently has no switch.*
-- [ ] **Pong Firmware Update** file picker with Install / Uploading states
+- [x] **Pong Firmware Update** file picker with Install / Uploading states
   (`ng-show="Pong_Enabled"`).
-- [ ] **Raw Configuration** panel — `stratux.conf` pretty-printed JSON.
-- [ ] **WiFi:** WiFi-Direct Pin, Internet Passthrough, **Add WiFi Client
+- [x] **Raw Configuration** panel — `stratux.conf` pretty-printed JSON.
+- [x] **WiFi:** WiFi-Direct Pin, Internet Passthrough, **Add WiFi Client
   Network** + repeatable Client SSID / Passphrase / Remove rows. Without these
   AP+Client and WiFi-Direct modes are unusable.
-- [ ] **Convert free-text inputs back to selects:** WiFi Mode (3 options),
+- [x] **Convert free-text inputs back to selects:** WiFi Mode (3 options),
   WiFi Country (~240 codes), WiFi Channel (1–11), SDR Dump 1090 ES Gain (28
   discrete values, `37.2 DEFAULT`), Tracker Address Type (Random/ICAO/Flarm/OGN).
-- [ ] **Modals:** reboot confirmation, reboot-required, the 3-step AHRS
+- [x] **Modals:** reboot confirmation, reboot-required, the 3-step AHRS
   orientation calibration including the failure modal with
   `{{Orientation_Failure_Message}}`, WiFi success recap, WiFi error modal.
-- [ ] **System Update states:** select → `Install {{name}}` → `Uploading…`.
-- [ ] **Field hint text:** Ownship "Hex, comma separated", Watch List
+- [x] **System Update states:** select → `Install {{name}}` → `Uploading…`.
+- [x] **Field hint text:** Ownship "Hex, comma separated", Watch List
   "space-delimited 4-letter identifiers", Static IPs, G Limits placeholder,
   Transmit Power "-32 = no transmission…", fan duty 0–100.
-- [ ] **Gating:** Hardware and Diagnostics panels are `ng-show="DeveloperMode"`
+- [x] **Gating:** Hardware and Diagnostics panels are `ng-show="DeveloperMode"`
   — the prototype shows Hardware to everyone. Preserve the gate.
-- [ ] Tracker rows conditional on `gpsHardwareCode` (13/15 hide Pilot Name,
+- [x] Tracker rows conditional on `gpsHardwareCode` (13/15 hide Pilot Name,
   Registration, Transmit Power and some aircraft types).
-- [ ] Post-action status messages: rebooting / shutting down / WiFi restarting.
+- [x] Post-action status messages: rebooting / shutting down / WiFi restarting.
+  *(WiFi restarting dropped per §4 — dead banner, defect 4.)*
 
 ### 6.4 Status (v0 kept)
 
-- [ ] **Errors panel** — red list, present only when `Errors` is non-empty.
+- [x] **Errors panel** — red list, present only when `Errors` is non-empty.
   The prototype can only ever render `● ALL SYSTEMS NOMINAL`; a device with a
   failed SDR must be able to look broken.
-- [ ] **GPS hardware + protocol** row (detected type, protocol, network-IP link).
-- [ ] **OGN Statistics:** Background Noise@Gain, **Receiver Gain (dB)**,
+- [x] **GPS hardware + protocol** row (detected type, protocol, network-IP link).
+- [x] **OGN Statistics:** Background Noise@Gain, **Receiver Gain (dB)**,
   **RF Spectrogram download link**.
-- [ ] OGN noise bar: `range loss: {{OGN_range_loss_factor}}x` and the
+- [x] OGN noise bar: `range loss: {{OGN_range_loss_factor}}x` and the
   "Half range for each 6 dB noise" caption.
-- [ ] Separate **Ping device** and **Pong device** status labels — not one
+- [x] Separate **Ping device** and **Pong device** status labels — not one
   combined "Ping / Pong OK".
-- [ ] `(disconnected)` suffix on AIS and OGN rate rows when that receiver is down.
-- [ ] **Developer Mode** badge.
-- [ ] First-boot **Region (US / EU) modal** (`ui-content-for="modals"`).
-- [ ] CPU temperature min/max range `[min - max]` (DeveloperMode only).
-- [ ] Version + build line, remaining tappable (8 taps / 3 s → `/develmodetoggle`).
+- [x] `(disconnected)` suffix on AIS and OGN rate rows when that receiver is down.
+- [x] **Developer Mode** badge.
+- [x] First-boot **Region (US / EU) modal** (`ui-content-for="modals"`).
+- [x] CPU temperature min/max range `[min - max]` (DeveloperMode only).
+- [x] Version + build line, remaining tappable (8 taps / 3 s → `/develmodetoggle`).
 
 ### 6.5 Traffic (v0 kept)
 
 The prototype ships all four toggles with no data behind them.
 
-- [ ] **Code column** — ICAO hex with the `(TFID)` marker for `addr_type == 3`.
-- [ ] **Squawk column** — zero-padded 4 digits, `0` renders `----`; swapped in
+- [x] **Code column** — ICAO hex with the `(TFID)` marker for `addr_type == 3`.
+- [x] **Squawk column** — zero-padded 4 digits, `0` renders `----`; swapped in
   for Code by `showSquawk`.
-- [ ] **Category column** — emitter category *and* AIS vessel categories;
+- [x] **Category column** — emitter category *and* AIS vessel categories;
   swapped in by `showCategory`.
-- [ ] **Tail Num ↔ Callsign switching** (`reg` vs `tail`, `[--N/A--]` fallback)
+- [x] **Tail Num ↔ Callsign switching** (`reg` vs `tail`, `[--N/A--]` fallback)
   driven by `showReg`.
-- [ ] **Bearing column** (degrees true) and the **lat/lon fallback** when GPS
+- [x] **Bearing column** (degrees true) and the **lat/lon fallback** when GPS
   is unavailable or `RelDist` is off — `showDistance`'s `ng-hide` on
   `GPS_connected` must be represented.
-- [ ] **Unit suffixes:** `ft`, `KTS`, `dB`, `s`, `NM`, and `---` for invalid.
-- [ ] **Source fidelity:** six variants — ADSB1090, ADSR1090, TISB1090,
+- [x] **Unit suffixes:** `ft`, `KTS`, `dB`, `s`, `NM`, and `---` for invalid.
+- [x] **Source fidelity:** six variants — ADSB1090, ADSR1090, TISB1090,
   ADSB978, ADSR978, TISB978 — with their glyphs (aircraft / antenna / ship)
   and the Stratux-own-traffic marker.
-- [ ] **Mode S table** gets real values: altitude, speed, course, vertical
+- [x] **Mode S table** gets real values: altitude, speed, course, vertical
   speed, squawk, category, estimated distance — the prototype fills every one
   with `—`.
-- [ ] Sort primary table by distance, secondary by ICAO.
+- [x] Sort primary table by distance, secondary by ICAO.
 
 ### 6.6 Radar (v0 kept — fix inside v0's design)
 
-- [ ] **Bearingless / no-position targets** drawn as distance-estimated
+- [x] **Bearingless / no-position targets** drawn as distance-estimated
   circles sized by `DistanceEstimated`, labeled with altitude difference,
   climb arrow, and tail. *This is the core alarm feature for Mode-S-only
   traffic; the prototype has none of it.*
-- [ ] **Trail polylines** behind each contact.
-- [ ] **Sound toggle cycles four states** with visible label change:
+- [x] **Trail polylines** behind each contact.
+- [x] **Sound toggle cycles four states** with visible label change:
   `BpSp → Beep → Spch → SnOff`.
-- [ ] Degraded badges: `No GPS!`, `No Baro-Alt, using GPS-Alt`,
+- [x] Degraded badges: `No GPS!`, `No Baro-Alt, using GPS-Alt`,
   `No Baro-Alt, using ADSB`, `No Altitude!` — not just happy-path `Baro-Alt`.
-- [ ] CPU temperature **color tiers** (info < 70 °C, warning 70–79, danger ≥ 80).
-- [ ] Altitude-diff label fallbacks: absolute altitude / `u/s` when own altitude
+- [x] CPU temperature **color tiers** (info < 70 °C, warning 70–79, danger ≥ 80).
+- [x] Altitude-diff label fallbacks: absolute altitude / `u/s` when own altitude
   is invalid.
-- [ ] Symbols rotated to track, labels counter-rotated to stay horizontal.
-- [ ] Range steps 2 → 5 → 10 → 20 → 40 nm; altitude bands
+- [x] Symbols rotated to track, labels counter-rotated to stay horizontal.
+- [x] Range steps 2 → 5 → 10 → 20 → 40 nm; altitude bands
   ±500 → ±1,000 → ±2,000 → ±5,000 → ±10,000 → ±50,000 ft.
 
 ### 6.7 Weather, Towers, Logs, Developer
 
-- [ ] **Weather:** `Watching {{watching}} ({{watch_count}})` — the actual
+- [x] **Weather:** `Watching {{watching}} ({{watch_count}})` — the actual
   configured identifiers and count — plus `Recent Reports ({{data_count}})`,
   and staleness color on the age cell.
-- [ ] **Towers:** its own column headers — Location / Current Power (dB) /
+- [x] **Towers:** its own column headers — Location / Current Power (dB) /
   Avg Power (dB) / Max Power (dB) / Msgs Last Minute. The prototype reuses the
   traffic table's headers, so dB values render under "Altitude".
-- [ ] **Logs:** complete as-is (verify hrefs resolve to `../logs/stratux.log`
+- [x] **Logs:** complete as-is (verify hrefs resolve to `../logs/stratux.log`
   and `../logs/`).
-- [ ] **Developer:** complete as-is; remember the screen is DeveloperMode-gated.
+- [x] **Developer:** complete as-is; remember the screen is DeveloperMode-gated.
 
 ### 6.8 Shell and cross-cutting
 
-- [ ] **Nav gating:** Weather and Towers hidden unless
+- [x] **Nav gating:** Weather and Towers hidden unless
   `UAT_Enabled || Ping_Enabled || Pong_Enabled`; Developer hidden unless
   `DeveloperMode`.
-- [ ] **Contextual help** — every `-help.html` partial's substance must
+- [x] **Contextual help** — every `-help.html` partial's substance must
   survive. The prototype reduces each to one sentence. Non-negotiable
   content: the traffic-source color/symbol legend, the G/S/R constellation
   prefixes, the "reference only — must not be used for flight operations"
   warning, the AHRS calibration procedure, fan-duty tuning, the alarm-circle
   explanation, the 60-second current-vs-peak definition.
-- [ ] Help drawer, menu, and theme toggle wired to real scope state
+- [x] Help drawer, menu, and theme toggle wired to real scope state
   (`helppage`, `DeveloperMode`, `DarkMode`).
 
 ### 6.9 Defects inside the prototype itself
