@@ -1593,7 +1593,6 @@ td {
 .sx-nav-item.sx-active {
   color:var(--accent);
   background:rgba(45,108,223,0.1);
-  background:color-mix(in srgb,var(--accent) 10%,transparent);
   border-left:3px solid var(--accent);
 }
 
@@ -1646,7 +1645,6 @@ td {
   color:#c43d48;
   color:var(--bad);
   background:rgba(196,61,72,0.12);
-  background:color-mix(in srgb,var(--bad) 12%,transparent);
 }
 
 .sx-confirm-dialog {
@@ -1668,8 +1666,7 @@ td {
   justify-content:center;
   color:#c43d48;
   color:var(--bad);
-  border:1px solid rgba(196,61,72,0.45);
-  border:1px solid color-mix(in srgb,var(--bad) 45%,var(--line));
+  border:1px solid #d1989f;
   margin-bottom:18px;
 }
 

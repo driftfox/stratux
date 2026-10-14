@@ -65,6 +65,7 @@ assert.equal(cssBannedHits('@container (min-width:1px){a{color:red}}').length, 1
 assert.equal(cssBannedHits('a{place-items:center}').length, 1);
 assert.equal(cssBannedHits('a{color-scheme:dark}').length, 1);
 assert.equal(cssBannedHits('a{width:min(340px,90vw)}').length, 1);
+assert.equal(cssBannedHits('a{background:color-mix(in srgb,#2d6cdf 10%,transparent)}').length, 1);
 assert.equal(cssBannedHits('a{inset:0}').length, 1);
 assert.equal(cssBannedHits('a{inset:55px 0 0}').length, 1);
 assert.equal(cssBannedHits('a{box-shadow:inset 0 1px 2px #000}').length, 0, 'inset keyword in box-shadow');

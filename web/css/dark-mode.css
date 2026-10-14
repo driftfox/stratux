@@ -246,6 +246,18 @@ body,
   color: #e2747d;
 }
 
+.sx-nav-item.sx-active {
+  background: rgba(110,162,255,0.1);
+}
+
+.sx-shutdown-action:hover {
+  background: rgba(226,116,125,0.12);
+}
+
+.sx-dialog-icon {
+  border-color: #7b505a;
+}
+
 /* White on this theme's pale --bad fill is under 3:1. */
 .sx-dialog-actions .sx-danger {
   background: #e2747d;

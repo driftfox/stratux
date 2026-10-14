@@ -83,6 +83,7 @@ export function cssBannedHits(css) {
     /\bcolor-scheme\s*:/gi,
     /\bmin\s*\(/gi,
     /\binset\s*:/gi,
+    /\bcolor-mix\s*\(/gi,
   ]) {
     for (const m of src.matchAll(rx)) hits.push(m[0].trim());
   }
