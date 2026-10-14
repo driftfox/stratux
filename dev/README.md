@@ -105,6 +105,37 @@ Faithfulness is deliberate: the mock is not more forgiving than the backend.
   OSM layer. This matters: `map.js` attaches its aircraft layers *inside* the
   tilesets callback, so that endpoint must answer or the map shows no aircraft.
 
+## Putting the UI on a real Stratux
+
+`dev/deploy-ui.sh` copies the committed `web/` UI onto a running Stratux over
+SSH, so a UI change does not need a new image. One-time setup on the machine
+that runs it:
+
+```bash
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519   # skip if you already have a key
+ssh-copy-id pi@<stratux-ip>                         # asks for the Pi password once
+```
+
+Then:
+
+```bash
+dev/deploy-ui.sh pi@<stratux-ip>             # install the UI from the last commit
+dev/deploy-ui.sh --restore pi@<stratux-ip>   # put back the UI the Pi first had
+```
+
+The host can also come from `STRATUX_HOST`; it defaults to
+`pi@192.168.10.1`, the Stratux access point. Only committed files are sent,
+the same as an image build.
+
+On the Pi it unlocks the read-only SD card with `overlayctl` (as Stratux's
+own updater does), saves the first UI it replaces as
+`/opt/stratux/www.original` and the one before each install as
+`www.previous`, swaps in the new files, stamps `stratux.appcache` so browsers
+drop their cached copy, locks the card, reboots, and waits until the Pi
+serves the new UI. `--no-reboot` skips the reboot; the new files may not show
+until the next one. An official Stratux update (`.deb`) later replaces the UI
+with the one it carries.
+
 ## Not shipped
 
 `dev/` is at the repo root, outside `web/`. `web/Makefile` copies an explicit
