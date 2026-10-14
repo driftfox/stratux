@@ -146,6 +146,22 @@ export function appcacheMissing(onDisk, listed) {
   return (onDisk || []).filter((entry) => !have.has(norm(entry)));
 }
 
+// Returns the local url() references in `css` (a stylesheet at `sheetPath`,
+// relative to web/) as root-relative manifest paths. The query string is kept
+// because AppCache matches it; the fragment is dropped because AppCache does.
+export function cssLocalUrls(css, sheetPath) {
+  const out = [];
+  for (const m of String(css ?? '').matchAll(/url\(\s*(?:"([^"]*)"|'([^']*)'|([^)\s]*))\s*\)/gi)) {
+    const ref = (m[1] ?? m[2] ?? m[3] ?? '').split('#')[0];
+    if (!ref || /^[a-z][\w+.-]*:/i.test(ref) || ref.startsWith('//')) continue;
+    const q = ref.indexOf('?');
+    const file = q === -1 ? ref : ref.slice(0, q);
+    const query = q === -1 ? '' : ref.slice(q);
+    out.push(path.posix.join('/', path.posix.dirname(sheetPath), file) + query);
+  }
+  return out;
+}
+
 // ---------------------------------------------------------------------------
 // Main contract run.
 // ---------------------------------------------------------------------------
@@ -383,13 +399,18 @@ function plateChecks() {
   return failures;
 }
 
+// First-party stylesheets: exclude vendored ol/addtohomescreen sheets.
+const VENDORED_CSS = new Set(['ol.css', 'ol-layerswitcher.css', 'addtohomescreen.css']);
+
+function firstPartyCss(cssDir) {
+  return fs.readdirSync(path.join(ROOT, cssDir))
+    .filter((f) => f.endsWith('.css') && !VENDORED_CSS.has(f));
+}
+
 function cssChecks() {
   const failures = [];
   const cssDir = 'web/css';
-  // First-party stylesheets: exclude vendored ol/addtohomescreen sheets.
-  const vendoredCss = new Set(['ol.css', 'ol-layerswitcher.css', 'addtohomescreen.css']);
-  const files = fs.readdirSync(path.join(ROOT, cssDir))
-    .filter((f) => f.endsWith('.css') && !vendoredCss.has(f));
+  const files = firstPartyCss(cssDir);
   for (const f of files) {
     const css = readText(`${cssDir}/${f}`);
     const hits = cssBannedHits(css);
@@ -415,8 +436,12 @@ function appcacheCheck() {
   const manifest = readText('web/stratux.appcache');
   const listed = manifest.split(/\r?\n/).map((l) => l.trim())
     .filter((l) => l && !l.startsWith('#') && !/^(CACHE MANIFEST|NETWORK:|CACHE:|FALLBACK:)/i.test(l));
-  const missing = appcacheMissing(onDisk, listed);
-  return missing.map((p) => `FAIL appcache: ${p}`);
+  const missing = appcacheMissing(onDisk, listed).map((p) => `FAIL appcache: ${p}`);
+  for (const f of firstPartyCss('web/css')) {
+    const urls = cssLocalUrls(readText(`web/css/${f}`), `css/${f}`);
+    for (const u of appcacheMissing(urls, listed)) missing.push(`FAIL appcache: ${u} (url() in web/css/${f})`);
+  }
+  return missing;
 }
 
 export function main() {

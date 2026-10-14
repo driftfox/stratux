@@ -2,6 +2,7 @@ CACHE MANIFEST
 
 /index.html
 /maui/fonts/fontawesome-webfont.woff
+/maui/fonts/fontawesome-webfont.woff?v=4.4.0
 /maui/js/mobile-angular-ui.gestures.min.js
 /maui/js/mobile-angular-ui.min.js
 /maui/js/angular-ui-router.min.js

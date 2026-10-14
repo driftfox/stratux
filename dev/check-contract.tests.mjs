@@ -11,7 +11,7 @@
 // exercised by running the checker itself against the tree.
 import assert from 'node:assert';
 import {
-  missingFrom, cssBannedHits, appcacheMissing, duplicateFormNames, inertSectionInvisible,
+  missingFrom, cssBannedHits, appcacheMissing, cssLocalUrls, duplicateFormNames, inertSectionInvisible,
 } from './check-contract.mjs';
 
 // missingFrom returns the subset of `required` absent from `text`.
@@ -83,6 +83,16 @@ assert.deepEqual(appcacheMissing(['web/css/main.css'], ['/css/main.css']), []);
 assert.deepEqual(appcacheMissing(['web/css/main.css'], ['css/main.css']), []);
 assert.deepEqual(appcacheMissing(['./web/css/main.css'], ['/css/main.css']), []);
 assert.deepEqual(appcacheMissing(['web/css/x.css'], ['/css/y.css']), ['web/css/x.css']);
+
+// cssLocalUrls resolves a stylesheet's local url() references to manifest
+// paths. AppCache matches the query string, so it is kept; fragments are not.
+assert.deepEqual(cssLocalUrls("a{src:url('../maui/f.woff?v=4.4.0') format('woff')}", 'css/main.css'), ['/maui/f.woff?v=4.4.0']);
+assert.deepEqual(cssLocalUrls('a{background:url(../img/w.png)}', 'css/main.css'), ['/img/w.png']);
+assert.deepEqual(cssLocalUrls('a{background:url( "x.png" )}', 'css/main.css'), ['/css/x.png']);
+assert.deepEqual(cssLocalUrls("a{src:url('../f.svg?v=1#icon')}", 'css/main.css'), ['/f.svg?v=1']);
+assert.deepEqual(cssLocalUrls('a{b:url(data:image/png;base64,AAAA)}', 'css/main.css'), []);
+assert.deepEqual(cssLocalUrls('a{b:url(https://x/y.png)} c{d:url(//x/y.png)}', 'css/main.css'), []);
+assert.deepEqual(cssLocalUrls('a{b:url(#grad)}', 'css/main.css'), []);
 
 // §5.8 defect 9: two forms sharing a name collide on the scope as one
 // FormController. Only <form name> counts; inputs may legitimately share names.
