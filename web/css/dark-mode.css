@@ -182,3 +182,17 @@ select {
 .modal-footer {
 	border-color: #9b9b9b;
 }
+
+
+/* ---- Design tokens (dark) ---- */
+:root {
+  --bg: #0b1117;
+  --panel: #121a22;
+  --text: #e9eef3;
+  --muted: #8e9aa6;
+  --line: #26323d;
+  --accent: #6ea2ff;
+  --good: #159447;
+  --amber: #c88b16;
+  --bad: #c43d48;
+}
