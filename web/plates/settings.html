@@ -1,349 +1,315 @@
-<div class="col-sm-12">
-    <!-- Begin Left Col -->
-    <div class="col-sm-6">
-        <!-- AHRS Options -->
-        <div class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">AHRS</div>
-                <div class="panel-body">
-                    <div class="col-xs-12">
-                        <span style="position:relative; overflow: hidden;">
-                            <button class="btn btn-primary btn-block" ui-turn-on="modalCalibrateForward"
-                                ng-disabled="!IMU_Sensor_Enabled">Set AHRS Sensor Orientation</button>
-                        </span>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-3">G Limits</label>
-                        <form name="GLimitForm" ng-submit="updateGLimits()"  novalidate>
-                            <input class="col-xs-9" type="text" g-limits-input ng-model="GLimits"
-                                ng-blur="updateGLimits()" ng-disabled="!IMU_Sensor_Enabled"
-                                ng-class="{grayout: !IMU_Sensor_Enabled}"
-                                placeholder="Space-separated negative and positive G meter limits" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- App Commands -->
-        <div class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Commands</div>
-                <div class="panel-body">
-                    <!-- Upload. Temporary. -->
-                    <div class="col-xs-12">
-                        <span ng-show="update_files == '' && !uploading_update">
-                            <!-- default: offer file selection -->
-                            <span style="position:relative; overflow: hidden;">
-                                <span class="fake-btn fake-btn-block">Click to select System Update file</span>
-                                <input style="opacity:0.0; position: absolute; top: 0; right: 0;" class="col-xs-12"
-                                    type="file" name="update_file"
-                                    onchange="angular.element(this).scope().setUploadFile(this.files)" />
-                            </span>
-                        </span>
-                        <span ng-show="update_files != '' && !uploading_update">
-                            <!-- once selected, btn to upload -->
-                            <button class="btn btn-block" onclick="angular.element(this).scope().uploadFile()">
-                                Install {{update_files[0].name}}</button>
-                        </span>
-                        <span ng-show="update_files != '' && uploading_update">
-                            <!-- "uploading.." -->
-                            <button class="btn btn-block">
-                                Uploading {{update_files[0].name}}. Please wait...</button>
-                        </span>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <div class="col-xs-12">
-                            <button class="btn btn-primary btn-block" ui-turn-on="modalReboot">Reboot</button>
-                        </div>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <div class="col-xs-12">
-                            <button class="btn btn-primary btn-block" ui-turn-on="modalShutdown">Shutdown</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- App Theme -->
-        <div class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Theme</div>
-                <div class="panel-body">
-                    <!-- Dark Mode -->
-                    <div class="form-group">
-                        <label class="control-label col-xs-7">Dark Mode</label>
-                        <div class="col-xs-5">
-                            <ui-switch ng-model='DarkMode' settings-change></ui-switch>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- OGN Tracker config -->
-        <div class="panel-group col-sm-12" ng-show="hasTracker">
-            <!-- TODO -->
-            <div class="panel panel-default">
-                <div class="panel-heading">Tracker Configuration</div>
-                <div class="panel-body">
-                    <form name="OGNTrackerSettings" novalidate>
-                        <!-- Address Type -->
-                        <div class="form-group reset-flow">
-                            <label class="control-label col-xs-5">Tracker Address Type</label>
-                            <select class="col-xs-7 custom-select" ng-model="OGNAddrType">
-                                <option value="0" ng-selected="OGNAddrType=='0'" ng-hide="gpsHardwareCode==15">Random</option>
-                                <option value="1" ng-selected="OGNAddrType=='1'">ICAO</option>
-                                <option value="2" ng-selected="OGNAddrType=='2'">Flarm</option>
-                                <option value="3" ng-selected="OGNAddrType=='3'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">OGN</option>
-                            </select>
-                        </div>
+<div class="sx-content">
+	<div class="sx-title-row">
+		<div>
+			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
+			<h1>Settings</h1>
+		</div>
+	</div>
 
-                        <!-- Address -->
-                        <div class="form-group reset-flow" ng-hide="gpsHardwareCode==13 && OGNAddrType != '1'">
-                            <label class="control-label col-xs-5">Tracker Address (Hex)</label>
-                            <input class="col-xs-7" type="text" maxlength="6" hex-input ng-model="OGNAddr" />
-                        </div>
+	<div class="sx-settings-grid">
+		<!-- Left column -->
+		<div class="sx-single">
+			<!-- AHRS Options -->
+			<section class="sx-panel">
+				<div class="sx-section-head">
+					<h2>AHRS</h2>
+				</div>
+				<div>
+					<div class="sx-field">
+						<button class="sx-wide-button sx-primary" ui-turn-on="modalCalibrateForward"
+							ng-disabled="!IMU_Sensor_Enabled">Set AHRS Sensor Orientation</button>
+					</div>
+					<form class="sx-field" name="GLimitForm" ng-submit="updateGLimits()" novalidate>
+						<label>G Limits</label>
+						<input type="text" g-limits-input ng-model="GLimits"
+							ng-blur="updateGLimits()" ng-disabled="!IMU_Sensor_Enabled"
+							ng-class="{grayout: !IMU_Sensor_Enabled}"
+							placeholder="Space-separated negative and positive G meter limits" />
+					</form>
+				</div>
+			</section>
 
-                        <!-- Aircraft Type -->
-                        <div class="form-group reset-flow">
-                            <label class="control-label col-xs-5">Aircraft Type</label>
-                            <select class="col-xs-7 custom-select" ng-model="OGNAcftType">
-                                <!-- hardware 13 = SoftRF, 15 = GXAirCom. They are both lacking some types-->
-                                <option value="1" ng-selected="OGNAcftType=='1'">Glider/Motorglider</option>
-                                <option value="2" ng-selected="OGNAcftType=='2'" ng-hide="gpsHardwareCode==15">Tow plane</option>
-                                <option value="3" ng-selected="OGNAcftType=='3'">Helicopter</option>
-                                <option value="4" ng-selected="OGNAcftType=='4'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Parachute</option>
-                                <option value="5" ng-selected="OGNAcftType=='5'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Drop plane</option>
-                                <option value="6" ng-selected="OGNAcftType=='6'">Hang glider</option>
-                                <option value="7" ng-selected="OGNAcftType=='7'">Para glider</option>
-                                <option value="8" ng-selected="OGNAcftType=='8'">Powered Aircraft</option>
-                                <option value="9" ng-selected="OGNAcftType=='9'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Jet Aircraft</option>
-                                <option value="10" ng-selected="OGNAcftType=='10'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">UFO</option>
-                                <option value="11" ng-selected="OGNAcftType=='11'">Balloon</option>
-                                <option value="12" ng-selected="OGNAcftType=='12'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Airship</option>
-                                <option value="13" ng-selected="OGNAcftType=='13'">UAV</option>
-                                <option value="14" ng-selected="OGNAcftType=='14'" ng-hide="gpsHardwareCode==15">Ground support</option>
-                                <option value="15" ng-selected="OGNAcftType=='15'" ng-hide="gpsHardwareCode==15">Static object</option>
-                            </select>
-                        </div>
+			<!-- App Commands -->
+			<section class="sx-panel">
+				<div class="sx-section-head">
+					<h2>Commands</h2>
+				</div>
+				<div class="sx-single">
+					<div>
+						<!-- The transparent file input sits over the fake button so the
+						     native picker opens on tap without a visible file control. -->
+						<div ng-show="update_files == '' && !uploading_update" style="position:relative; overflow:hidden;">
+							<div class="sx-wide-button">Click to select System Update file</div>
+							<input style="opacity:0.0; position:absolute; top:0; right:0; width:100%; height:100%;"
+								type="file" name="update_file"
+								onchange="angular.element(this).scope().setUploadFile(this.files)" />
+						</div>
+						<div ng-show="update_files != '' && !uploading_update">
+							<button class="sx-wide-button" onclick="angular.element(this).scope().uploadFile()">
+								Install {{update_files[0].name}}</button>
+						</div>
+						<div ng-show="update_files != '' && uploading_update">
+							<button class="sx-wide-button">
+								Uploading {{update_files[0].name}}. Please wait...</button>
+						</div>
+					</div>
+					<button class="sx-wide-button" ui-turn-on="modalReboot">Reboot</button>
+					<button class="sx-wide-button sx-danger" ui-turn-on="modalShutdown">Shutdown</button>
+				</div>
+			</section>
 
-                        <!-- Pilot name -->
-                        <div class="form-group reset-flow" ng-hide="gpsHardwareCode==13">
-                            <label class="control-label col-xs-5">Pilot Name</label>
-                            <input class="col-xs-7" type="text" maxlength="15" pilotname-input ng-model="OGNPilot" />
-                        </div>
-                        <!-- Registration -->
-                        <div class="form-group reset-flow" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">
-                            <label class="control-label col-xs-5">Registration</label>
-                            <input class="col-xs-7" type="text" maxlength="15" ognreg-input ng-model="OGNReg" />
-                        </div>
-                        <!-- TX Power -->
-                        <div class="form-group reset-flow" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">
-                            <label class="control-label col-xs-5">Transmit Power (dBm)<br/><small>-32 = no transmission, actual power depends on hardware</small></label>
-                            <input class="col-xs-7" type="number" min="-32" max="31" ng-model="OGNTxPower" />
-                        </div>
+			<!-- App Theme -->
+			<section class="sx-panel">
+				<div class="sx-section-head">
+					<h2>Theme</h2>
+				</div>
+				<div class="sx-switch-list">
+					<label class="sx-switch-row">
+						<span>Dark Mode</span>
+						<input type="checkbox" ng-model="DarkMode" />
+						<span class="sx-switch"></span>
+					</label>
+				</div>
+			</section>
 
-                        <div class="form-group reset-flow">
-                            <button class="btn btn-primary btn-block" ng-click="updateOgnTrackerConfig()">Configure Tracker</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Left Col -->
-    <!-- Begin Right Col -->
-    <div class="col-sm-6">
-        <!-- System Configuration -->
-        <div class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Configuration</div>
-                <div class="panel-body">
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">Ownship Mode S/OGN Codes<br /><small>(Hex, comma separated
-                                for multiple codes)</small></label>
-                        <form name="modeForm" ng-submit="updatemodes()" novalidate>
-                            <input class="col-xs-7" type="text" hex-input ng-model="OwnshipModeS"
-                                placeholder="FAA HEX code" ng-blur="updatemodes()" />
-                        </form>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">Watch List</label>
-                        <form name="watchForm" ng-submit="updatewatchlist()" novalidate>
-                            <input class="col-xs-7" type="text" watchlist-input ng-model="WatchList"
-                                placeholder="space-delimited 4-letter identifiers" ng-blur="updatewatchlist()" />
-                        </form>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">PPM Correction</label>
-                        <form name="ppmForm" ng-submit="updateppm()" novalidate>
-                            <!-- type="number" not supported except on mobile -->
-                            <input class="col-xs-7" type="number" ng-model="PPM" placeholder="integer"
-                                ng-blur="updateppm()" />
-                        </form>
-                    </div>
-                    <div ng-show="DeveloperMode" class="form-group reset-flow">
-                        <label class="control-label col-xs-5">SDR Dump 1090 ES Gain</label>
-                        <form name="gainForm" ng-submit="updategain()" novalidate>
-                                <select class="custom-select" ng-model="Dump1090Gain" ng-blur="updategain()">
-                                    <option value="0.9"  ng-selected="Dump1090Gain.toFixed(1)==0.9">0.9</option>
-                                    <option value="1.4"  ng-selected="Dump1090Gain.toFixed(1)==1.4">1.4</option>
-                                    <option value="2.7"  ng-selected="Dump1090Gain.toFixed(1)==2.7">2.7</option>
-                                    <option value="3.7"  ng-selected="Dump1090Gain.toFixed(1)==3.7">3.7</option>
-                                    <option value="7.7"  ng-selected="Dump1090Gain.toFixed(1)==7.7">7.7</option>
-                                    <option value="8.7"  ng-selected="Dump1090Gain.toFixed(1)==8.7">8.7</option>
-                                    <option value="12.5" ng-selected="Dump1090Gain.toFixed(1)==12.5">12.5</option>
-                                    <option value="14.4" ng-selected="Dump1090Gain.toFixed(1)==14.4">14.4</option>
-                                    <option value="15.7" ng-selected="Dump1090Gain.toFixed(1)==15.7">15.7</option>
-                                    <option value="16.6" ng-selected="Dump1090Gain.toFixed(1)==16.6">16.6</option>
-                                    <option value="19.7" ng-selected="Dump1090Gain.toFixed(1)==19.7">19.7</option>
-                                    <option value="20.7" ng-selected="Dump1090Gain.toFixed(1)==20.7">20.7</option>
-                                    <option value="22.9" ng-selected="Dump1090Gain.toFixed(1)==22.9">22.9</option>
-                                    <option value="25.4" ng-selected="Dump1090Gain.toFixed(1)==25.4">25.4</option>
-                                    <option value="28.0" ng-selected="Dump1090Gain.toFixed(1)==28.0">28.0</option>
-                                    <option value="29.7" ng-selected="Dump1090Gain.toFixed(1)==29.7">29.7</option>
-                                    <option value="32.8" ng-selected="Dump1090Gain.toFixed(1)==32.8">32.8</option>
-                                    <option value="33.8" ng-selected="Dump1090Gain.toFixed(1)==33.8">33.8</option>
-                                    <option value="36.4" ng-selected="Dump1090Gain.toFixed(1)==36.4">36.4</option>
-                                    <option value="37.2" ng-selected="Dump1090Gain.toFixed(1)==37.2">37.2 DEFAULT</option>
-                                    <option value="38.6" ng-selected="Dump1090Gain.toFixed(1)==38.6">38.6</option>
-                                    <option value="40.2" ng-selected="Dump1090Gain.toFixed(1)==40.2">40.2</option>
-                                    <option value="42.1" ng-selected="Dump1090Gain.toFixed(1)==42.1">42.1</option>
-                                    <option value="43.4" ng-selected="Dump1090Gain.toFixed(1)==43.4">43.4</option>
-                                    <option value="43.9" ng-selected="Dump1090Gain.toFixed(1)==43.9">43.9</option>
-                                    <option value="44.5" ng-selected="Dump1090Gain.toFixed(1)==44.5">44.5</option>
-                                    <option value="48.0" ng-selected="Dump1090Gain.toFixed(1)==48.0">48.0</option>
-                                    <option value="49.6" ng-selected="Dump1090Gain.toFixed(1)==49.6">49.6</option>
-                            </select>
+			<!-- OGN Tracker config -->
+			<section class="sx-panel" ng-show="hasTracker">
+				<div class="sx-section-head">
+					<h2>Tracker Configuration</h2>
+				</div>
+				<form name="OGNTrackerSettings" novalidate>
+					<div class="sx-field">
+						<label>Tracker Address Type</label>
+						<select ng-model="OGNAddrType">
+							<option value="0" ng-selected="OGNAddrType=='0'" ng-hide="gpsHardwareCode==15">Random</option>
+							<option value="1" ng-selected="OGNAddrType=='1'">ICAO</option>
+							<option value="2" ng-selected="OGNAddrType=='2'">Flarm</option>
+							<option value="3" ng-selected="OGNAddrType=='3'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">OGN</option>
+						</select>
+					</div>
 
-                        </form>
-                    </div>
-                    <div class="form-group reset-flow" ng-class="{ 'section_invisible': (!visible_serialout)}">
-                        <label class="control-label col-xs-5">Serial Output Baudrate</label>
-                        <form name="ppmForm" ng-submit="updateBaud()" novalidate>
-                            <!-- type="number" not supported except on mobile -->
-                            <input class="col-xs-7" type="number" ng-model="Baud" placeholder="integer"
-                                ng-blur="updateBaud()" />
-                        </form>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">Static IPs</label>
-                        <form name="staticipForm" ng-submit="updatestaticips()" novalidate>
-                            <input class="col-xs-7" type="text" ip-list-input ng-model="StaticIps" ng-list=" "
-                                ng-trim="false" placeholder="space-delimited ip's to send network data"
-                                ng-blur="updatestaticips()" />
-                        </form>
-                    </div>
-                    <div class="form-group reset-flow" ng-show="BMP_Sensor_Enabled">
-                        <label class="control-label col-xs-5">Pressure altitude Offset</label>
-                        <form name="altForm" ng-submit="updatealtitudeoffset()" novalidate>
-                            <!-- type="number" not supported except on mobile -->
-                            <input class="col-xs-7" type="number" ng-model="AltitudeOffset" placeholder="integer"
-                                ng-blur="updatealtitudeoffset()" />
-                        </form>
-                    </div>
-                    <div class="form-group reset-flow">
-                        <label class="control-label col-xs-5">GDL90 bearingless target circle emulation</label>
-                        <div class="col-xs-5">
-                            <ui-switch ng-model='EstimateBearinglessDist' settings-change></ui-switch>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- WiFi Settings -->
-        <div class="panel-group col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">WiFi Settings</div>
-                <div class="panel-body">
-                    <form name="WiFiSettings">
-                        <div class="form-group reset-flow">
-                            <label class="control-label col-xs-5">WiFi Mode</label>
-                            <select class="custom-select" ng-model="WiFiMode"
-                                ng-change="WiFiSecurityEnabled=(WiFiSecurityEnabled || WiFiMode=='1')">
-                                <option value="0" ng-selected="WiFiMode=='0'">AccessPoint</option>
-                                <option value="1" ng-selected="WiFiMode=='1'">WiFi-Direct</option>
-                                <option value="2" ng-selected="WiFiMode=='2'">AP+Client</option>
-                            </select>
-                        </div>
-                        <div class="form-group reset-flow">
-                            <label class="control-label col-xs-5">WiFi Country</label>
-                            <select class="custom-select" ng-model="WiFiCountry"
-                                    ng-options="country.key as country.value for country in sortedCountries">
-                                <option value="" label="Unspecified">Unspecified</option>
-                            </select>
-                        </div>
-                        <div class="form-group reset-flow">
-                            <label class="control-label col-xs-5">WiFi SSID</label>
-                            <input class="col-xs-7" type="text" ssid-input ng-model="WiFiSSID"
-                                placeholder="WiFi Network Name" />
-                        </div>
-                        <div class="form-group reset-flow" ng-show="(WiFiMode=='0' || WiFiMode=='2')">
-                            <label class="control-label col-xs-5">Network Security</label>
-                            <div class="col-xs-5">
-                                <ui-switch ng-model="WiFiSecurityEnabled" settings-change></ui-switch>
-                            </div>
-                        </div>
-                        <div class="form-group reset-flow">
-                            <label class="control-label col-xs-5">WiFi Passphrase</label>
-                            <input class="col-xs-7" type="text" wpa-input ng-model="WiFiPassphrase"
-                                ng-disabled="!WiFiSecurityEnabled" ng-class="{grayout: !WiFiSecurityEnabled}"
-                                ng-required="WiFiSecurityEnabled" placeholder="WiFi Passphrase" />
-                        </div>
-                        <div class="form-group reset-flow" ng-show="WiFiMode=='1'">
-                            <label class="control-label col-xs-5">WiFi-Direct Pin</label>
-                            <input class="col-xs-7" type="text" pin-input ng-model="WiFiDirectPin"
-                                placeholder="WiFi-Direct PIN" ng-required="WiFiMode=='1'" />
-                        </div>
-                        <div class="form-group reset-flow" ng-show="WiFiMode=='0'">
-                            <label class="control-label col-xs-5">WiFi Channel</label>
-                            <select id="WiFiChannel" class="input-small col-sm-2 form-control-sm" ng-model="WiFiChannel"
-                                ng-options="x for x in Channels"></select>
-                        </div>
-                        <div class="form-group reset-flow">
-                            <label class="control-label col-xs-5">Stratux IP Address</label>
-                            <input class="col-xs-7" type="text" ip-addr-input ng-model="WiFiIPAddress"
-                                placeholder="192.168.10.1" />
-                        </div>
-                        <div class="form-group reset-flow" ng-show="WiFiMode=='2'">
-                            <label class="control-label col-xs-5">Internet Passthrough</label>
-                            <div class="col-xs-5">
-                                <ui-switch ng-model="WiFiInternetPassThroughEnabled" settings-change></ui-switch>
-                            </div>
-                        </div>
+					<div class="sx-field" ng-hide="gpsHardwareCode==13 && OGNAddrType != '1'">
+						<label>Tracker Address (Hex)</label>
+						<input type="text" maxlength="6" hex-input ng-model="OGNAddr" />
+					</div>
 
-                        <div class="form-group reset-flow" ng-show="WiFiMode=='2'">
-                            <button class="btn btn-info btn-block" ng-click="addWiFiClientNetwork()">Add
-                                WiFi Client Network</button>
-                        </div>
+					<div class="sx-field">
+						<label>Aircraft Type</label>
+						<select ng-model="OGNAcftType">
+							<!-- hardware 13 = SoftRF, 15 = GXAirCom. They are both lacking some types-->
+							<option value="1" ng-selected="OGNAcftType=='1'">Glider/Motorglider</option>
+							<option value="2" ng-selected="OGNAcftType=='2'" ng-hide="gpsHardwareCode==15">Tow plane</option>
+							<option value="3" ng-selected="OGNAcftType=='3'">Helicopter</option>
+							<option value="4" ng-selected="OGNAcftType=='4'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Parachute</option>
+							<option value="5" ng-selected="OGNAcftType=='5'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Drop plane</option>
+							<option value="6" ng-selected="OGNAcftType=='6'">Hang glider</option>
+							<option value="7" ng-selected="OGNAcftType=='7'">Para glider</option>
+							<option value="8" ng-selected="OGNAcftType=='8'">Powered Aircraft</option>
+							<option value="9" ng-selected="OGNAcftType=='9'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Jet Aircraft</option>
+							<option value="10" ng-selected="OGNAcftType=='10'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">UFO</option>
+							<option value="11" ng-selected="OGNAcftType=='11'">Balloon</option>
+							<option value="12" ng-selected="OGNAcftType=='12'" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">Airship</option>
+							<option value="13" ng-selected="OGNAcftType=='13'">UAV</option>
+							<option value="14" ng-selected="OGNAcftType=='14'" ng-hide="gpsHardwareCode==15">Ground support</option>
+							<option value="15" ng-selected="OGNAcftType=='15'" ng-hide="gpsHardwareCode==15">Static object</option>
+						</select>
+					</div>
 
-                        <hr>
+					<div class="sx-field" ng-hide="gpsHardwareCode==13">
+						<label>Pilot Name</label>
+						<input type="text" maxlength="15" pilotname-input ng-model="OGNPilot" />
+					</div>
+					<div class="sx-field" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">
+						<label>Registration</label>
+						<input type="text" maxlength="15" ognreg-input ng-model="OGNReg" />
+					</div>
+					<div class="sx-field" ng-hide="gpsHardwareCode==13 || gpsHardwareCode==15">
+						<label>Transmit Power (dBm)<br/><small>-32 = no transmission, actual power depends on hardware</small></label>
+						<input type="number" min="-32" max="31" ng-model="OGNTxPower" />
+					</div>
 
-                        <div ng-show="WiFiMode=='2'" ng-repeat="Network in WiFiClientNetworks">
-                            <div class="form-group reset-flow">
-                                <label class="control-label col-xs-5">WiFi Client SSID</label>
-                                <input class="col-xs-7" type="text" ssid-input ng-model="Network.SSID" />
-                            </div>
-                            <div class="form-group reset-flow">
-                                <label class="control-label col-xs-5">WiFi Client Passphrase</label>
-                                <input class="col-xs-7" type="text" wpa-input ng-model="Network.Password" />
-                            </div>
-                            <div class="form-group reset-flow">
-                                <button class="btn btn-info btn-block" ng-click="removeWiFiClientNetwork(Network)">Remove
-                                    WiFi Client Network</button>
-                            </div>
-                            <hr>
-                        </div>
+					<button class="sx-wide-button sx-primary" ng-click="updateOgnTrackerConfig()">Configure Tracker</button>
+				</form>
+			</section>
+		</div>
 
-                        <div class="form-group reset-flow">
-                            <button class="btn btn-primary btn-block" ng-click="updateWiFi()">Submit WiFi
-                                Changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Right Col -->
+		<!-- Right column -->
+		<div class="sx-single">
+			<!-- System Configuration -->
+			<section class="sx-panel">
+				<div class="sx-section-head">
+					<h2>Configuration</h2>
+				</div>
+				<div>
+					<form class="sx-field" name="modeForm" ng-submit="updatemodes()" novalidate>
+						<label>Ownship Mode S/OGN Codes<br /><small>(Hex, comma separated for multiple codes)</small></label>
+						<input type="text" hex-input ng-model="OwnshipModeS"
+							placeholder="FAA HEX code" ng-blur="updatemodes()" />
+					</form>
+					<form class="sx-field" name="watchForm" ng-submit="updatewatchlist()" novalidate>
+						<label>Watch List</label>
+						<input type="text" watchlist-input ng-model="WatchList"
+							placeholder="space-delimited 4-letter identifiers" ng-blur="updatewatchlist()" />
+					</form>
+					<form class="sx-field" name="ppmForm" ng-submit="updateppm()" novalidate>
+						<label>PPM Correction</label>
+						<!-- type="number" not supported except on mobile -->
+						<input type="number" ng-model="PPM" placeholder="integer"
+							ng-blur="updateppm()" />
+					</form>
+					<form ng-show="DeveloperMode" class="sx-field" name="gainForm" ng-submit="updategain()" novalidate>
+						<label>SDR Dump 1090 ES Gain</label>
+						<select ng-model="Dump1090Gain" ng-blur="updategain()">
+							<option value="0.9"  ng-selected="Dump1090Gain.toFixed(1)==0.9">0.9</option>
+							<option value="1.4"  ng-selected="Dump1090Gain.toFixed(1)==1.4">1.4</option>
+							<option value="2.7"  ng-selected="Dump1090Gain.toFixed(1)==2.7">2.7</option>
+							<option value="3.7"  ng-selected="Dump1090Gain.toFixed(1)==3.7">3.7</option>
+							<option value="7.7"  ng-selected="Dump1090Gain.toFixed(1)==7.7">7.7</option>
+							<option value="8.7"  ng-selected="Dump1090Gain.toFixed(1)==8.7">8.7</option>
+							<option value="12.5" ng-selected="Dump1090Gain.toFixed(1)==12.5">12.5</option>
+							<option value="14.4" ng-selected="Dump1090Gain.toFixed(1)==14.4">14.4</option>
+							<option value="15.7" ng-selected="Dump1090Gain.toFixed(1)==15.7">15.7</option>
+							<option value="16.6" ng-selected="Dump1090Gain.toFixed(1)==16.6">16.6</option>
+							<option value="19.7" ng-selected="Dump1090Gain.toFixed(1)==19.7">19.7</option>
+							<option value="20.7" ng-selected="Dump1090Gain.toFixed(1)==20.7">20.7</option>
+							<option value="22.9" ng-selected="Dump1090Gain.toFixed(1)==22.9">22.9</option>
+							<option value="25.4" ng-selected="Dump1090Gain.toFixed(1)==25.4">25.4</option>
+							<option value="28.0" ng-selected="Dump1090Gain.toFixed(1)==28.0">28.0</option>
+							<option value="29.7" ng-selected="Dump1090Gain.toFixed(1)==29.7">29.7</option>
+							<option value="32.8" ng-selected="Dump1090Gain.toFixed(1)==32.8">32.8</option>
+							<option value="33.8" ng-selected="Dump1090Gain.toFixed(1)==33.8">33.8</option>
+							<option value="36.4" ng-selected="Dump1090Gain.toFixed(1)==36.4">36.4</option>
+							<option value="37.2" ng-selected="Dump1090Gain.toFixed(1)==37.2">37.2 DEFAULT</option>
+							<option value="38.6" ng-selected="Dump1090Gain.toFixed(1)==38.6">38.6</option>
+							<option value="40.2" ng-selected="Dump1090Gain.toFixed(1)==40.2">40.2</option>
+							<option value="42.1" ng-selected="Dump1090Gain.toFixed(1)==42.1">42.1</option>
+							<option value="43.4" ng-selected="Dump1090Gain.toFixed(1)==43.4">43.4</option>
+							<option value="43.9" ng-selected="Dump1090Gain.toFixed(1)==43.9">43.9</option>
+							<option value="44.5" ng-selected="Dump1090Gain.toFixed(1)==44.5">44.5</option>
+							<option value="48.0" ng-selected="Dump1090Gain.toFixed(1)==48.0">48.0</option>
+							<option value="49.6" ng-selected="Dump1090Gain.toFixed(1)==49.6">49.6</option>
+						</select>
+					</form>
+					<form class="sx-field" ng-class="{ 'section_invisible': (!visible_serialout)}" name="ppmForm" ng-submit="updateBaud()" novalidate>
+						<label>Serial Output Baudrate</label>
+						<!-- type="number" not supported except on mobile -->
+						<input type="number" ng-model="Baud" placeholder="integer"
+							ng-blur="updateBaud()" />
+					</form>
+					<form class="sx-field" name="staticipForm" ng-submit="updatestaticips()" novalidate>
+						<label>Static IPs</label>
+						<input type="text" ip-list-input ng-model="StaticIps" ng-list=" "
+							ng-trim="false" placeholder="space-delimited ip's to send network data"
+							ng-blur="updatestaticips()" />
+					</form>
+					<form class="sx-field" ng-show="BMP_Sensor_Enabled" name="altForm" ng-submit="updatealtitudeoffset()" novalidate>
+						<label>Pressure altitude Offset</label>
+						<!-- type="number" not supported except on mobile -->
+						<input type="number" ng-model="AltitudeOffset" placeholder="integer"
+							ng-blur="updatealtitudeoffset()" />
+					</form>
+					<div class="sx-switch-list">
+						<label class="sx-switch-row">
+							<span>GDL90 bearingless target circle emulation</span>
+							<input type="checkbox" ng-model="EstimateBearinglessDist" />
+							<span class="sx-switch"></span>
+						</label>
+					</div>
+				</div>
+			</section>
+
+			<!-- WiFi Settings -->
+			<section class="sx-panel">
+				<div class="sx-section-head">
+					<h2>WiFi Settings</h2>
+				</div>
+				<form name="WiFiSettings">
+					<div class="sx-field">
+						<label>WiFi Mode</label>
+						<select ng-model="WiFiMode"
+							ng-change="WiFiSecurityEnabled=(WiFiSecurityEnabled || WiFiMode=='1')">
+							<option value="0" ng-selected="WiFiMode=='0'">AccessPoint</option>
+							<option value="1" ng-selected="WiFiMode=='1'">WiFi-Direct</option>
+							<option value="2" ng-selected="WiFiMode=='2'">AP+Client</option>
+						</select>
+					</div>
+					<div class="sx-field">
+						<label>WiFi Country</label>
+						<select ng-model="WiFiCountry"
+								ng-options="country.key as country.value for country in sortedCountries">
+							<option value="" label="Unspecified">Unspecified</option>
+						</select>
+					</div>
+					<div class="sx-field">
+						<label>WiFi SSID</label>
+						<input type="text" ssid-input ng-model="WiFiSSID"
+							placeholder="WiFi Network Name" />
+					</div>
+					<div class="sx-switch-list" ng-show="(WiFiMode=='0' || WiFiMode=='2')">
+						<label class="sx-switch-row">
+							<span>Network Security</span>
+							<input type="checkbox" ng-model="WiFiSecurityEnabled" />
+							<span class="sx-switch"></span>
+						</label>
+					</div>
+					<div class="sx-field">
+						<label>WiFi Passphrase</label>
+						<input type="text" wpa-input ng-model="WiFiPassphrase"
+							ng-disabled="!WiFiSecurityEnabled" ng-class="{grayout: !WiFiSecurityEnabled}"
+							ng-required="WiFiSecurityEnabled" placeholder="WiFi Passphrase" />
+					</div>
+					<div class="sx-field" ng-show="WiFiMode=='1'">
+						<label>WiFi-Direct Pin</label>
+						<input type="text" pin-input ng-model="WiFiDirectPin"
+							placeholder="WiFi-Direct PIN" ng-required="WiFiMode=='1'" />
+					</div>
+					<div class="sx-field" ng-show="WiFiMode=='0'">
+						<label>WiFi Channel</label>
+						<select id="WiFiChannel" ng-model="WiFiChannel"
+							ng-options="x for x in Channels"></select>
+					</div>
+					<div class="sx-field">
+						<label>Stratux IP Address</label>
+						<input type="text" ip-addr-input ng-model="WiFiIPAddress"
+							placeholder="192.168.10.1" />
+					</div>
+					<div class="sx-switch-list" ng-show="WiFiMode=='2'">
+						<label class="sx-switch-row">
+							<span>Internet Passthrough</span>
+							<input type="checkbox" ng-model="WiFiInternetPassThroughEnabled" />
+							<span class="sx-switch"></span>
+						</label>
+					</div>
+
+					<div class="sx-field" ng-show="WiFiMode=='2'">
+						<button class="sx-wide-button" ng-click="addWiFiClientNetwork()">Add
+							WiFi Client Network</button>
+					</div>
+
+					<hr>
+
+					<div ng-show="WiFiMode=='2'" ng-repeat="Network in WiFiClientNetworks">
+						<div class="sx-field">
+							<label>WiFi Client SSID</label>
+							<input type="text" ssid-input ng-model="Network.SSID" />
+						</div>
+						<div class="sx-field">
+							<label>WiFi Client Passphrase</label>
+							<input type="text" wpa-input ng-model="Network.Password" />
+						</div>
+						<div class="sx-field">
+							<button class="sx-wide-button sx-danger" ng-click="removeWiFiClientNetwork(Network)">Remove
+								WiFi Client Network</button>
+						</div>
+						<hr>
+					</div>
+
+					<button class="sx-wide-button sx-primary" ng-click="updateWiFi()">Submit WiFi
+						Changes</button>
+				</form>
+			</section>
+		</div>
+	</div>
 </div>
 <!-- Developer mode area -->
 <div ng-show="DeveloperMode" class="col-sm-12" >
