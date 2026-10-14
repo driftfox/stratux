@@ -4,7 +4,6 @@
 			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
 			<h1>Status</h1>
 		</div>
-		<span class="sx-badge sx-ok">● ALL SYSTEMS NOMINAL</span>
 	</div>
 
 	<div class="sx-screen-grid">
@@ -16,7 +15,7 @@
 				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
 				<span ng-show="DeveloperMode == true" class="sx-badge sx-info">Developer Mode</span>
 			</div>
-			<div class="sx-metrics sx-four">
+			<div class="sx-metrics sx-three">
 				<div class="sx-metric">
 					<span>Recent clients</span>
 					<strong>{{Connected_Users}}</strong>
@@ -26,12 +25,8 @@
 					<strong>{{Devices}}</strong>
 				</div>
 				<div class="sx-metric" ng-class="{'section_invisible': !visible_pong}">
-					<span>Pong heartbeats</span>
-					<strong>{{Pong_Heartbeats}}</strong>
-				</div>
-				<div class="sx-metric">
-					<span>Ping / Pong</span>
-					<strong class="sx-good">OK</strong>
+					<span ng-show="Pong_connected == true">Pong heartbeats</span>
+					<strong ng-show="Pong_connected == true">{{Pong_Heartbeats}}</strong>
 				</div>
 			</div>
 			<div class="sx-row" ng-class="{'section_invisible': !visible_ping}">
