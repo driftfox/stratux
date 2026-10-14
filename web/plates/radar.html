@@ -1,31 +1,31 @@
-<div class="sx-single">
-	<section class="sx-panel">
-		<div class="sx-section-head">
-			<h2>Traffic-Radar</h2>
-			<!-- Status strip. sx-instrument-top is the prototype's own badge row for an
-			     instrument: flex, right aligned, 8px between badges (no `gap` needed). -->
-			<div class="sx-instrument-top" style="flex-wrap:wrap;justify-content:flex-end;">
-				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
-				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
-				<span ng-show="BaroAltValid == 'Baro'" class="sx-badge sx-ok">Baro-Alt</span>
-				<span ng-show="BaroAltValid == 'GPS'" class="sx-badge sx-warn">No Baro-Alt, using GPS-Alt</span>
-				<span ng-show="BaroAltValid == 'AdsbEstimated'" class="sx-badge sx-warn">No Baro-Alt, using ADSB</span>
-				<span ng-show="BaroAltValid == 'Invalid'" class="sx-badge sx-danger">No Altitude!</span>
-				<span ng-show="GPSValid == 'Invalid'" class="sx-badge sx-danger">No GPS!</span>
-				<!-- CPU tiers: info < 70, warning 70-79, danger >= 80. Expressions kept
-				     verbatim from the original plate so the tiers cannot drift. -->
-				<span ng-show="CPUTemp < 70" class="sx-badge sx-info">{{CPUTemp}}°C</span>
-				<span ng-hide="(CPUTemp < 70) || (CPUTemp >= 80)" class="sx-badge sx-warn">{{CPUTemp}}°C</span>
-				<span ng-hide="CPUTemp < 80" class="sx-badge sx-danger">{{CPUTemp}}°C</span>
-			</div>
+<div class="sx-crumb"><span>RECEIVER /</span><b>Radar</b></div>
+<div class="sx-content">
+	<div class="sx-title-row">
+		<div>
+			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
+			<h1>Radar</h1>
 		</div>
+	</div>
 
-		<!-- Black instrument bezel. #radar_display keeps its id and its block parent,
-		     because RadarRenderer.resize() measures this.parentElement.offsetWidth and
-		     svg.js sizes the scope to 100% of it. The chrome is a plain black wrapper,
-		     so nothing here can wash out the black-backed scope in either theme. -->
-		<div class="sx-instrument">
-			<div id="radar_display"></div>
+	<!-- Black instrument bezel. #radar_display keeps its id and its block parent,
+	     because RadarRenderer.resize() measures this.parentElement.offsetWidth and
+	     svg.js sizes the scope to 100% of it. The chrome is a plain black wrapper,
+	     so nothing here can wash out the black-backed scope in either theme. -->
+	<div class="sx-instrument">
+		<div class="sx-instrument-top" style="flex-wrap:wrap;">
+			<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
+			<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
+			<span ng-show="BaroAltValid == 'Baro'" class="sx-badge sx-ok">Baro-Alt</span>
+			<span ng-show="BaroAltValid == 'GPS'" class="sx-badge sx-warn">No Baro-Alt, using GPS-Alt</span>
+			<span ng-show="BaroAltValid == 'AdsbEstimated'" class="sx-badge sx-warn">No Baro-Alt, using ADSB</span>
+			<span ng-show="BaroAltValid == 'Invalid'" class="sx-badge sx-danger">No Altitude!</span>
+			<span ng-show="GPSValid == 'Invalid'" class="sx-badge sx-danger">No GPS!</span>
+			<!-- CPU tiers: info < 70, warning 70-79, danger >= 80. Expressions kept
+			     verbatim from the original plate so the tiers cannot drift. -->
+			<span ng-show="CPUTemp < 70" class="sx-badge sx-info">{{CPUTemp}}°C</span>
+			<span ng-hide="(CPUTemp < 70) || (CPUTemp >= 80)" class="sx-badge sx-warn">{{CPUTemp}}°C</span>
+			<span ng-hide="CPUTemp < 80" class="sx-badge sx-danger">{{CPUTemp}}°C</span>
 		</div>
-	</section>
+		<div id="radar_display" class="sx-radar-display"></div>
+	</div>
 </div>

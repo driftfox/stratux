@@ -128,6 +128,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="sx-drawer-footer">STRATUX · OFFLINE FIRST<br /><span>open-source avionics</span></div>
 	</div>
 
 	<!-- Right (Help) Sidebar / Drawer -->
@@ -148,34 +149,30 @@
 	<div class="app sx-app" ui-swipe-right='Ui.turnOn("uiSidebarLeft")' ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
 
 		<!-- Header Navbar -->
-		<div class="navbar navbar-app navbar-absolute-top">
-			<!-- The brand is a full-width absolute box below 992px; the positioned controls
-			     must follow it in source order so they paint, and take taps, above it. -->
-			<div class="navbar-brand navbar-brand-center" ui-yield-to="title">
-				<a href="#/">
+		<div class="navbar navbar-app navbar-absolute-top sx-header">
+			<button type="button" ui-toggle="uiSidebarLeft" class="sx-icon-button" aria-label="Menu">
+				<i class="fa fa-bars"></i>
+			</button>
+			<div class="sx-header-brand" ui-yield-to="title">
+				<a href="#/" class="sx-brand">
 					<span class="sx-brand-mark">S</span>
-					&nbsp;
-					<span class="sx-brand">STRATUX</span>
+					<span>STRATUX</span>
+					<small>OPEN AVIONICS</small>
 				</a>
 			</div>
-			<div class="btn-group pull-left">
-				<div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle sx-icon-button" aria-label="Menu">
-					<i class="fa fa-bars"></i> Menu
-				</div>
+			<div class="btn-group" ui-yield-to="navbarAction">
 			</div>
 			<div class="sx-header-actions">
 				<button class="sx-icon-button" ng-click="updateTheme(!DarkMode)" aria-label="Toggle theme">
 					<i class="fa fa-moon-o" ng-hide="DarkMode"></i>
 					<i class="fa fa-sun-o" ng-show="DarkMode"></i>
 				</button>
-				<div ui-toggle="uiSidebarRight" class="btn sx-icon-button" aria-label="Help">
-					<i class="fa fa-info-circle"></i> Help
-				</div>
+				<button type="button" ui-toggle="uiSidebarRight" class="sx-icon-button" aria-label="Help">
+					<i class="fa fa-question-circle"></i>
+				</button>
 				<button class="sx-icon-button sx-shutdown-action" ui-turn-on="uiShutdownConfirm" aria-label="Shut down">
 					<i class="fa fa-power-off"></i>
 				</button>
-			</div>
-			<div class="btn-group pull-right" ui-yield-to="navbarAction">
 			</div>
 		</div>
 

@@ -1,11 +1,12 @@
+<div class="sx-crumb"><span>RECEIVER /</span><b>Weather</b></div>
 <div class="sx-content">
 	<div class="sx-title-row">
 		<div>
 			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
 			<h1>Weather</h1>
 		</div>
-		<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
-		<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
+		<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">&#9679; {{ConnectState}}</span>
+		<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">&#9679; {{ConnectState}}</span>
 	</div>
 
 	<div class="sx-single" ui-state="weatherAccordion" ui-default="1">

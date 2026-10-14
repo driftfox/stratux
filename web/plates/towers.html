@@ -1,37 +1,47 @@
-<div class="sx-single">
-	<section class="sx-panel">
-		<div class="sx-section-head">
-			<h2>UAT towers heard in last minute</h2>
-			<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
-			<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
+<div class="sx-crumb"><span>RECEIVER /</span><b>Towers</b></div>
+<div class="sx-content">
+	<div class="sx-title-row">
+		<div>
+			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
+			<h1>Towers</h1>
 		</div>
+	</div>
 
-		<!-- Dedicated towers headers. The prototype reused the traffic table's
-		     header row here, so dB readings rendered under "Altitude"; these
-		     five columns are the towers data set only. -->
-		<div class="sx-table-wrap">
-			<table>
-				<thead>
-					<tr>
-						<th>Location</th>
-						<th>Current Power (dB)</th>
-						<th>Avg Power (dB)</th>
-						<th>Max Power (dB)</th>
-						<th>Msgs Last Minute</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="tower in data_list | orderBy: messages">
-						<td>{{tower.lat}} {{tower.lon}}</td>
-						<td>{{tower.power}}</td>
-						<td>{{tower.power_last_min}}</td>
-						<td>{{tower.power_max}}</td>
-						<td>{{tower.messages}}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</section>
+	<div class="sx-single">
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>UAT towers heard in last minute</h2>
+				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">&#9679; {{ConnectState}}</span>
+				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">&#9679; {{ConnectState}}</span>
+			</div>
+
+			<!-- Dedicated towers headers. The prototype reused the traffic table's
+			     header row here, so dB readings rendered under "Altitude"; these
+			     five columns are the towers data set only. -->
+			<div class="sx-table-wrap">
+				<table>
+					<thead>
+						<tr>
+							<th>Location</th>
+							<th>Current Power (dB)</th>
+							<th>Avg Power (dB)</th>
+							<th>Max Power (dB)</th>
+							<th>Msgs Last Minute</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="tower in data_list | orderBy: messages">
+							<td>{{tower.lat}} {{tower.lon}}</td>
+							<td>{{tower.power}}</td>
+							<td>{{tower.power_last_min}}</td>
+							<td>{{tower.power_max}}</td>
+							<td>{{tower.messages}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
 </div>
 <!--
 <div class="col-sm-12">

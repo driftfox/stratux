@@ -216,7 +216,8 @@ body,
 }
 
 .sx-panel,
-.sx-confirm-dialog {
+.sx-confirm-dialog,
+.sx-header {
   background: #121a22;
   border-color: #26323d;
 }

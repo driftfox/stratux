@@ -1,3 +1,4 @@
+<div class="sx-crumb"><span>RECEIVER /</span><b>Settings</b></div>
 <div class="sx-content">
 	<div class="sx-title-row">
 		<div>
@@ -21,11 +22,9 @@
 				<div class="sx-section-head">
 					<h2>AHRS</h2>
 				</div>
-				<div>
-					<div class="sx-field">
-						<button class="sx-wide-button sx-primary" ui-turn-on="modalCalibrateForward"
-							ng-disabled="!IMU_Sensor_Enabled">Set AHRS Sensor Orientation</button>
-					</div>
+				<div class="sx-rows">
+					<button class="sx-wide-button sx-primary" ui-turn-on="modalCalibrateForward"
+						ng-disabled="!IMU_Sensor_Enabled">Set AHRS Sensor Orientation</button>
 					<form class="sx-field" name="GLimitForm" ng-submit="updateGLimits()" novalidate>
 						<label>G Limits</label>
 						<input type="text" g-limits-input ng-model="GLimits"
@@ -41,8 +40,8 @@
 				<div class="sx-section-head">
 					<h2>Commands</h2>
 				</div>
-				<div class="sx-single">
-					<div>
+				<div class="sx-single sx-rows">
+					<div class="sx-flush">
 						<!-- The transparent file input sits over the fake button so the
 						     native picker opens on tap without a visible file control. -->
 						<div ng-show="update_files == '' && !uploading_update" style="position:relative; overflow:hidden;">
@@ -60,8 +59,10 @@
 								Uploading {{update_files[0].name}}. Please wait...</button>
 						</div>
 					</div>
-					<button class="sx-wide-button" ui-turn-on="modalReboot">Reboot</button>
-					<button class="sx-wide-button sx-danger" ui-turn-on="modalShutdown">Shutdown</button>
+					<div class="sx-button-row">
+						<button class="sx-wide-button" ui-turn-on="modalReboot">Reboot</button>
+						<button class="sx-wide-button sx-danger" ui-turn-on="modalShutdown">Shutdown</button>
+					</div>
 				</div>
 			</section>
 
@@ -70,13 +71,11 @@
 				<div class="sx-section-head">
 					<h2>Theme</h2>
 				</div>
-				<div class="sx-switch-list">
-					<label class="sx-switch-row">
-						<span>Dark Mode</span>
-						<input type="checkbox" ng-model="DarkMode" />
-						<span class="sx-switch"></span>
-					</label>
-				</div>
+				<label class="sx-switch-row">
+					<span>Dark Mode</span>
+					<input type="checkbox" ng-model="DarkMode" />
+					<span class="sx-switch"></span>
+				</label>
 			</section>
 
 			<!-- OGN Tracker config -->
@@ -147,9 +146,9 @@
 				<div class="sx-section-head">
 					<h2>Configuration</h2>
 				</div>
-				<div>
+				<div class="sx-rows">
 					<form class="sx-field" name="modeForm" ng-submit="updatemodes()" novalidate>
-						<label>Ownship Mode S/OGN Codes<br /><small>(Hex, comma separated for multiple codes)</small></label>
+						<label>Ownship Mode S/OGN Codes <small>(Hex, comma separated for multiple codes)</small></label>
 						<input type="text" hex-input ng-model="OwnshipModeS"
 							placeholder="FAA HEX code" ng-blur="updatemodes()" />
 					</form>
@@ -215,13 +214,11 @@
 						<input type="number" ng-model="AltitudeOffset" placeholder="integer"
 							ng-blur="updatealtitudeoffset()" />
 					</form>
-					<div class="sx-switch-list">
-						<label class="sx-switch-row">
-							<span>GDL90 bearingless target circle emulation</span>
-							<input type="checkbox" ng-model="EstimateBearinglessDist" />
-							<span class="sx-switch"></span>
-						</label>
-					</div>
+					<label class="sx-switch-row">
+						<span>GDL90 bearingless target circle emulation</span>
+						<input type="checkbox" ng-model="EstimateBearinglessDist" />
+						<span class="sx-switch"></span>
+					</label>
 				</div>
 			</section>
 
@@ -230,7 +227,7 @@
 				<div class="sx-section-head">
 					<h2>WiFi Settings</h2>
 				</div>
-				<form name="WiFiSettings">
+				<form class="sx-rows" name="WiFiSettings">
 					<div class="sx-field">
 						<label>WiFi Mode</label>
 						<select ng-model="WiFiMode"
@@ -252,13 +249,11 @@
 						<input type="text" ssid-input ng-model="WiFiSSID"
 							placeholder="WiFi Network Name" />
 					</div>
-					<div class="sx-switch-list" ng-show="(WiFiMode=='0' || WiFiMode=='2')">
-						<label class="sx-switch-row">
-							<span>Network Security</span>
-							<input type="checkbox" ng-model="WiFiSecurityEnabled" />
-							<span class="sx-switch"></span>
-						</label>
-					</div>
+					<label class="sx-switch-row" ng-show="(WiFiMode=='0' || WiFiMode=='2')">
+						<span>Network Security</span>
+						<input type="checkbox" ng-model="WiFiSecurityEnabled" />
+						<span class="sx-switch"></span>
+					</label>
 					<div class="sx-field">
 						<label>WiFi Passphrase</label>
 						<input type="text" wpa-input ng-model="WiFiPassphrase"
@@ -280,13 +275,11 @@
 						<input type="text" ip-addr-input ng-model="WiFiIPAddress"
 							placeholder="192.168.10.1" />
 					</div>
-					<div class="sx-switch-list" ng-show="WiFiMode=='2'">
-						<label class="sx-switch-row">
-							<span>Internet Passthrough</span>
-							<input type="checkbox" ng-model="WiFiInternetPassThroughEnabled" />
-							<span class="sx-switch"></span>
-						</label>
-					</div>
+					<label class="sx-switch-row" ng-show="WiFiMode=='2'">
+						<span>Internet Passthrough</span>
+						<input type="checkbox" ng-model="WiFiInternetPassThroughEnabled" />
+						<span class="sx-switch"></span>
+					</label>
 
 					<div class="sx-field" ng-show="WiFiMode=='2'">
 						<button class="sx-wide-button" ng-click="addWiFiClientNetwork()">Add
@@ -311,7 +304,7 @@
 						<hr>
 					</div>
 
-					<button class="sx-wide-button sx-primary" ng-click="updateWiFi()">Submit WiFi
+					<button class="sx-primary" ng-click="updateWiFi()">Submit WiFi
 						Changes</button>
 				</form>
 			</section>
@@ -326,7 +319,7 @@
 				<div class="sx-section-head">
 					<h2>Hardware</h2>
 				</div>
-				<div>
+				<div class="sx-rows">
 					<div class="sx-switch-list">
 						<label class="sx-switch-row">
 							<span>GPS</span>

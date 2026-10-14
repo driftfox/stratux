@@ -1,3 +1,4 @@
+<div class="sx-crumb"><span>RECEIVER /</span><b>Status</b><span class="sx-version" ng-show="Version">{{Version}} · {{Uptime}} uptime</span></div>
 <div class="sx-content">
 	<div class="sx-title-row">
 		<div>
@@ -11,11 +12,11 @@
 		<section class="sx-panel">
 			<div class="sx-section-head">
 				<h2>Receiver health</h2>
-				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
-				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
+				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">&#9679; {{ConnectState}}</span>
+				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">&#9679; {{ConnectState}}</span>
 				<span ng-show="DeveloperMode == true" class="sx-badge sx-info">Developer Mode</span>
 			</div>
-			<div class="sx-metrics sx-three">
+			<div class="sx-metrics sx-four">
 				<div class="sx-metric">
 					<span>Recent clients</span>
 					<strong>{{Connected_Users}}</strong>
@@ -162,10 +163,6 @@
 			<div class="sx-section-head">
 				<h2>GPS</h2>
 			</div>
-			<div class="sx-row">
-				<span>GPS hardware</span>
-				<span>{{GPS_hardware}} <a href="http://{{GPS_NetworkRemoteIp}}" ng-show="GPS_hardware=='Network'">{{GPS_NetworkRemoteIp}}</a> ({{GPS_protocol}})</span>
-			</div>
 			<div class="sx-metrics sx-four">
 				<div class="sx-metric">
 					<span>Solution</span>
@@ -185,6 +182,10 @@
 				</div>
 			</div>
 			<div class="sx-subtle">{{GPS_satellites_locked}} in solution; {{GPS_satellites_seen}} seen; {{GPS_satellites_tracked}} tracked</div>
+			<div class="sx-row">
+				<span>GPS hardware</span>
+				<span>{{GPS_hardware}} <a href="http://{{GPS_NetworkRemoteIp}}" ng-show="GPS_hardware=='Network'">{{GPS_NetworkRemoteIp}}</a> ({{GPS_protocol}})</span>
+			</div>
 		</section>
 
 		<!-- System -->
@@ -199,7 +200,7 @@
 				</div>
 				<div class="sx-metric">
 					<span>CPU temperature</span>
-					<strong>{{CPUTemp}} <span ng-show="DeveloperMode == true">[{{CPUTempMin}} - {{CPUTempMax}}]</span></strong>
+					<strong>{{CPUTemp}}<small ng-show="DeveloperMode == true"> [{{CPUTempMin}} - {{CPUTempMax}}]</small></strong>
 				</div>
 				<div class="sx-metric">
 					<span>Free storage</span>

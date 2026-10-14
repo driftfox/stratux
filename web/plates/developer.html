@@ -1,50 +1,60 @@
 <div ui-content-for="title">Developer</div>
 
-<div class="sx-screen-grid sx-dev-grid">
-	<!-- Delete actions are intentionally unconfirmed: the original screen posted
-	     straight to /deletelogfile and /deleteahrslogfiles on a single click, and
-	     that behaviour is preserved deliberately (spec 5.8 defect 8). -->
-	<section class="sx-panel">
-		<div class="sx-section-head">
-			<h2>Restart Stratux application</h2>
-		</div>
-
+<div class="sx-crumb"><span>RECEIVER /</span><b>Developer</b></div>
+<div class="sx-content">
+	<div class="sx-title-row">
 		<div>
-			<a ng-click="postRestart()" class="sx-wide-button" style="margin-bottom:1em;">Restart Application</a>
+			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
+			<h1>Developer</h1>
 		</div>
-	</section>
+	</div>
 
-	<section class="sx-panel">
-		<div class="sx-section-head">
-			<h2>Logfile (Size: {{Logfile_Size}})</h2>
-		</div>
+	<div class="sx-screen-grid sx-dev-grid">
+		<!-- Delete actions are intentionally unconfirmed: the original screen posted
+		     straight to /deletelogfile and /deleteahrslogfiles on a single click, and
+		     that behaviour is preserved deliberately (spec 5.8 defect 8). -->
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>Restart Stratux application</h2>
+			</div>
 
-		<!-- The hrefs stay: postDownloadLog posts the request and the anchor
-		     navigation is what hands the file to the browser. -->
-		<div class="sx-button-row">
-			<a href="./downloadlog" ng-click="postDownloadLog()" class="sx-wide-button">Download Logfile</a>
-			<a ng-click="postDeleteLog()" class="sx-wide-button sx-danger">Delete Logfile</a>
-		</div>
-	</section>
+			<a ng-click="postRestart()" class="sx-wide-button">Restart Application</a>
+		</section>
 
-	<section class="sx-panel">
-		<div class="sx-section-head">
-			<h2>AHRS Log Files (Size: {{AHRS_LogFiles_Size}})</h2>
-		</div>
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>Logfile</h2>
+			</div>
 
-		<div class="sx-button-row">
-			<a href="./downloadahrslogs" download="ahrs_logs.zip" ng-click="postDownloadAHRSLogs()" class="sx-wide-button">Download AHRS Logs</a>
-			<a ng-click="postDeleteAHRSLogs()" class="sx-wide-button sx-danger">Delete AHRS Logs</a>
-		</div>
-	</section>
+			<!-- The hrefs stay: postDownloadLog posts the request and the anchor
+			     navigation is what hands the file to the browser. -->
+			<div class="sx-file-actions">
+				<b>{{Logfile_Size}}</b>
+				<a href="./downloadlog" ng-click="postDownloadLog()" class="sx-wide-button">Download</a>
+				<a ng-click="postDeleteLog()" class="sx-wide-button sx-danger">Delete</a>
+			</div>
+		</section>
 
-	<section class="sx-panel">
-		<div class="sx-section-head">
-			<h2>Database</h2>
-		</div>
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>AHRS Log Files</h2>
+			</div>
 
-		<div>
-			<a href="./downloaddb" ng-click="postDownloadDB()" class="sx-wide-button">Download Database</a>
-		</div>
-	</section>
+			<div class="sx-file-actions">
+				<b>{{AHRS_LogFiles_Size}}</b>
+				<a href="./downloadahrslogs" download="ahrs_logs.zip" ng-click="postDownloadAHRSLogs()" class="sx-wide-button">Download</a>
+				<a ng-click="postDeleteAHRSLogs()" class="sx-wide-button sx-danger">Delete</a>
+			</div>
+		</section>
+
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>Database</h2>
+			</div>
+
+			<div class="sx-file-actions">
+				<a href="./downloaddb" ng-click="postDownloadDB()" class="sx-wide-button">Download</a>
+			</div>
+		</section>
+	</div>
 </div>

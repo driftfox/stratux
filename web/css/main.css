@@ -501,13 +501,41 @@ button,input {
   --accent:#6ea2ff;
 }
 
-header {
+.sx-header {
   height:68px;
+  background:#fff;
   background:var(--panel);
+  border-bottom:1px solid #dce2e7;
   border-bottom:1px solid var(--line);
   display:flex;
   align-items:center;
   padding:0 24px;
+  line-height:1.5;
+}
+
+.sx-header .sx-icon-button .fa {
+  font-size:22px;
+}
+
+.sx-header .sx-brand {
+  color:var(--text);
+  text-decoration:none;
+}
+
+.sx-app .app-body {
+  padding-top:68px;
+}
+
+.sx-app .app-content {
+  margin-top:0;
+}
+
+.sx-crumb,.sx-content,.sx-drawer,.sx-confirm-dialog {
+  line-height:1.5;
+}
+
+.sx-content h2,.sx-content h3,.sx-drawer h2,.sx-drawer h3,.sx-confirm-dialog h2 {
+  line-height:inherit;
 }
 
 .sx-icon-button,.sx-drawer-head button {
@@ -519,6 +547,7 @@ header {
   justify-content:center;
   min-width:44px;
   min-height:44px;
+  padding:0;
   cursor:pointer;
 }
 
@@ -551,9 +580,8 @@ header {
   font-weight:800;
 }
 
-.sx-header-actions {
-  position:relative;
-  float:right;
+.sx-header .sx-header-actions {
+  margin-left:auto;
   display:flex;
   align-items:center;
 }
@@ -666,6 +694,33 @@ header {
   padding:18px;
 }
 
+/* A panel body whose children each sit in their own padded row, as the
+   prototype lays out direct children of a panel. */
+.sx-panel > .sx-rows {
+  padding:0;
+}
+
+.sx-panel .sx-rows > * {
+  padding:18px;
+}
+
+.sx-panel .sx-rows > * + * {
+  margin-top:0;
+}
+
+.sx-panel .sx-rows > hr {
+  padding:0;
+  margin:0 18px;
+}
+
+.sx-panel .sx-rows > .sx-flush {
+  padding:0;
+}
+
+.sx-flush .sx-wide-button {
+  padding:18px;
+}
+
 .sx-metrics {
   display:grid;
   gap:14px;
@@ -748,6 +803,10 @@ header {
 
 .sx-badge.sx-warn {
   color:#9a6700;
+}
+
+.sx-instrument .sx-badge.sx-warn {
+  color:#e0a83d;
 }
 
 .sx-rate-list {
@@ -1125,7 +1184,12 @@ td {
   margin-bottom:13px;
 }
 
-.sx-field input {
+.sx-field label {
+  margin-bottom:0;
+  font-weight:normal;
+}
+
+.sx-field input,.sx-field select {
   background:var(--bg);
   border:1px solid var(--line);
   color:var(--text);
@@ -1135,9 +1199,27 @@ td {
   font-size:13px;
 }
 
+.sx-field select {
+  height:42px;
+  padding-top:0;
+  padding-bottom:0;
+}
+
 .sx-wide-button {
+  display:block;
   width:100%;
   text-align:left;
+}
+
+.sx-button-row .sx-wide-button,.sx-file-actions .sx-wide-button {
+  width:auto;
+}
+
+.sx-file-actions .sx-wide-button {
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:7px 10px;
 }
 
 .sx-primary {
@@ -1212,6 +1294,11 @@ td {
   padding:16px;
   color:#eaf3f5;
   border:1px solid #283844;
+}
+
+.sx-radar-display {
+  max-width:600px;
+  margin:12px auto;
 }
 
 .sx-instrument-top {
@@ -1523,6 +1610,7 @@ td {
 .sx-file-actions {
   display:flex;
   align-items:center;
+  justify-content:flex-end;
 }
 
 .sx-file-actions b {
@@ -1637,7 +1725,10 @@ td {
   color:var(--muted);
 }
 
-.sx-help-copy>svg {
+.sx-help-copy:before {
+  content:"\f059";
+  display:block;
+  font:24px/1 FontAwesome;
   color:var(--accent);
   margin-bottom:28px;
 }
@@ -1740,7 +1831,7 @@ td {
 }
 
 @media(max-width:800px) {
-  header {
+  .sx-header {
     padding:0 12px;
   }
 
@@ -1783,7 +1874,7 @@ td {
   }
 }
 
-header > * + * {
+.sx-header > * + * {
   margin-left:18px;
 }
 
@@ -1832,7 +1923,7 @@ header > * + * {
 }
 
 .sx-field > * + * {
-  margin-top:6px;
+  margin-top:4px;
 }
 
 .sx-switch-list > * + * {
