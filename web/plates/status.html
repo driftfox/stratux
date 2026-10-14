@@ -1,215 +1,261 @@
-<div class="col-sm-12">
-	<div class="text-center">
-		<a ng-click="VersionClick()" class="btn btn-hidden"><strong>Version: <span><tt>{{Version}} ({{Build}})</tt></span></strong></a>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<span class="panel_label">Status</span>
-			<span ng-show="ConnectState == 'Connected'" class="label label-success">{{ConnectState}}</span>
-			<span ng-hide="ConnectState == 'Connected'" class="label label-danger">{{ConnectState}}</span>
-			<span ng-show="DeveloperMode == true" class="label label-warning">Developer Mode</span>
+<div class="sx-content">
+	<div class="sx-title-row">
+		<div>
+			<p class="sx-eyebrow">FLIGHT DATA SYSTEM</p>
+			<h1>Status</h1>
 		</div>
-		<div class="panel-body">
-			<div class="form-horizontal">
-				<div class="row">
-					<div class="col-sm-6 label_adj">
-						<strong class="col-xs-5">Recent Clients:</strong>
-						<span class="col-xs-7">{{Connected_Users}}</span>
-					</div>
-					<span class="col-sm-6 label_adj" ng-class="{'secion_invisible': !visible_pong}">
-						<span ng-show="Pong_connected == true"><strong class="col-xs-5">Pong Heartbeats:</strong></span>
-						<span ng-show="Pong_connected == true" class="col-xs-7">{{Pong_Heartbeats}}</span>
-					</div>
+		<span class="sx-badge sx-ok">● ALL SYSTEMS NOMINAL</span>
+	</div>
+
+	<div class="sx-screen-grid">
+		<!-- Receiver health -->
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>Receiver health</h2>
+				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
+				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
+				<span ng-show="DeveloperMode == true" class="sx-badge sx-info">Developer Mode</span>
+			</div>
+			<div class="sx-metrics sx-four">
+				<div class="sx-metric">
+					<span>Recent clients</span>
+					<strong>{{Connected_Users}}</strong>
 				</div>
-				<div class="row">
-					<div class="col-sm-6 label_adj">
-						<strong class="col-xs-5">SDR devices:</strong>
-						<span class="col-xs-7">{{Devices}}</span>
-					</div>
-					<div class="col-sm-6 label_adj" ng-class="{'section_invisible': !visible_ping}">
-						<strong class="col-xs-5">Ping device:</strong>
-						<span ng-show="Ping_connected == true" class="label label-success">Connected</span>
-						<span ng-hide="Ping_connected == true" class="label label-danger">Disconnected</span>
-					</div>
-					<div class="col-sm-6 label_adj" ng-class="{'section_invisible': !visible_pong}">
-						<strong class="col-xs-5">Pong device:</strong>
-						<span ng-show="Pong_connected == true" class="label label-success">Connected</span>
-						<span ng-hide="Pong_connected == true" class="label label-danger">Disconnected</span>
-					</div>
+				<div class="sx-metric">
+					<span>SDR devices</span>
+					<strong>{{Devices}}</strong>
 				</div>
-				<div class="separator"></div>
-				<div class="row">
-					<label class="col-xs-4">Messages</label>
-					<label class="col-xs-6">Current</label>
-					<label class="col-xs-2 text-right">Peak</label>
+				<div class="sx-metric" ng-class="{'section_invisible': !visible_pong}">
+					<span>Pong heartbeats</span>
+					<strong>{{Pong_Heartbeats}}</strong>
 				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_uat}">
-					<span class="col-xs-1"></span>
-					<label class="col-xs-3">UAT:</label>
-					<span class="col-xs-6"><div class="bar_container">
-						<div class="bar_display" ng-attr-style="background-color: {{uatStyleColor}}; width:{{UAT_messages_max ? 100*UAT_messages_last_minute / UAT_messages_max : 0}}%"></div>
-						<div class="bar_text">{{UAT_messages_last_minute}}</div>
-					</div></span>
-					<span class="col-xs-2 text-right">{{UAT_messages_max}}</span>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_es}">
-					<span class="col-xs-1"></span>
-					<label class="col-xs-3">1090ES:</label>
-					<span class="col-xs-6"><div class="bar_container">
-						<div class="bar_display" ng-attr-style="background-color: {{esStyleColor}}; width:{{ES_messages_max ? 100*ES_messages_last_minute / ES_messages_max : 0}}%;"></div>
-						<div class="bar_text">{{ES_messages_last_minute}}</div>
-					</div></span>
-					<span class="col-xs-2 text-right">{{ES_messages_max}}</span>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_ais}">
-					<span class="col-xs-1"></span>
-					<label class="col-xs-3">AIS{{AIS_connected ? "" : " (disconnected)"}}:</label>
-					<span class="col-xs-6"><div class="bar_container">
-						<div class="bar_display" ng-attr-style="background-color: {{aisStyleColor}}; width:{{AIS_messages_max ? 100*AIS_messages_last_minute / AIS_messages_max : 0}}%;"></div>
-						<div class="bar_text">{{AIS_messages_last_minute}}</div>
-					</div></span>
-					<span class="col-xs-2 text-right">{{AIS_messages_max}}</span>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_ogn}">
-					<span class="col-xs-1"></span>
-					<label class="col-xs-3">OGN{{OGN_connected ? "" : " (disconnected)"}}:</label>
-					<span class="col-xs-6"><div class="bar_container">
-						<div class="bar_display" ng-attr-style="background-color: {{ognStyleColor}}; width:{{OGN_messages_max ? 100*OGN_messages_last_minute / OGN_messages_max : 0}}%;"></div>
-						<div class="bar_text">{{OGN_messages_last_minute}}</div>
-					</div></span>
-					<span class="col-xs-2 text-right">{{OGN_messages_max}}</span>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_ogn}">
-					<span class="col-xs-1"></span>
-					<label class="col-xs-3">OGN Noise@Gain 50:<br/><sup>Half range for each 6 dB noise</sup></label>
-					<span class="col-xs-6"><div class="bar_container">
-						<div class="bar_display" ng-attr-style="background-color: {{ognStyleColor}}; width:{{(Clamp(OGN_noise_db, 0, 25) / 25.0) * 100}}%; background-color: {{OGN_noise_color}}"></div>
-						<div class="bar_text">{{OGN_noise_db}} dB, range loss: {{OGN_range_loss_factor}}x</div>
-					</div></span>
-					<span class="col-xs-2 text-right">25 dB</span>
-				</div>
-				<div class="row" ng-class="{ 'section_invisible': (!visible_gps && !visible_ahrs && !visible_uat)}">
-					<span class="col-xs-1">&nbsp;</span>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_ogn}">
-					<div class="col-sm-6">
-						<span><strong>OGN Statistics</strong></span>
-					</div>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_ogn}">
-					<div class="col-sm-12">
-						<span align="center" class="col-xs-4 row-header">Background Noise@Gain 50</span>
-						<span align="center" class="col-xs-4 row-header">Receiver Gain</span>
-						<span align="center" class="col-xs-4 row-header">RF Spectrogram</span>
-					</div>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_ogn}">
-					<div class="col-sm-12">
-						<span align="center" class="col-xs-4">{{OGN_noise_db}} dB</span>
-						<span align="center" class="col-xs-4">{{OGN_gain_db}} dB</span>
-						<span align="center" class="col-xs-4"><a ng-href="{{OGN_Status_url}}">Download</a></span>
-					</div>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_uat}">
-					<div class="col-sm-6">
-						<span><strong>UAT Statistics</strong></span>
-					</div>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_uat}">
-					<div class="col-sm-12">
-						<span align="center" class="col-xs-3 row-header">Towers</span>
-						<span align="center" class="col-xs-3 row-header">METARS</span>
-						<span align="center" class="col-xs-3 row-header">TAFS</span>
-						<span align="center" class="col-xs-3 row-header">NEXRAD</span>
-					</div>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_uat}">
-					<div class="col-sm-12">
-						<span align="center" class="col-xs-3">{{UAT_Towers}}</span>
-						<span align="center" class="col-xs-3">{{UAT_METAR_total}}</span>
-						<span align="center" class="col-xs-3">{{UAT_TAF_total}}</span>
-						<span align="center" class="col-xs-3">{{UAT_NEXRAD_total}}</span>
-					</div>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_uat}">
-					<div class="col-sm-12">
-						<span align="center" class="col-xs-3 row-header">PIREP</span>
-						<span align="center" class="col-xs-3 row-header">SIGMET</span>
-						<span align="center" class="col-xs-3 row-header">NOTAMS</span>
-						<span align="center" class="col-xs-3 row-header">Other</span>
-					</div>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_uat}">
-					<div class="col-sm-12">
-						<span align="center" class="col-xs-3">{{UAT_PIREP_total}}</span>
-						<span align="center" class="col-xs-3">{{UAT_SIGMET_total}}</span>
-						<span align="center" class="col-xs-3">{{UAT_NOTAM_total}}</span>
-						<span align="center" class="col-xs-3">{{UAT_OTHER_total}}</span>
-					</div>
-				</div>
-				<div class="separator"></div>
-				<div class="row" ng-class="{'section_invisible': !visible_gps}">
-					<label class="col-xs-6">GPS hardware:</label>
-					<span class="col-xs-6">{{GPS_hardware}} <a href="http://{{GPS_NetworkRemoteIp}}" ng-show="GPS_hardware=='Network'">{{GPS_NetworkRemoteIp}}</a> ({{GPS_protocol}})</span>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_gps}">
-					<label class="col-xs-6">GPS solution:</label>
-					<span class="col-xs-6">{{GPS_solution}}{{GPS_position_accuracy}}</span>
-				</div>
-				<div class="row" ng-class="{'section_invisible': !visible_gps}">
-					<label class="col-xs-6">GPS satellites:</label>
-					<span class="col-xs-6">{{GPS_satellites_locked}} in solution; {{GPS_satellites_seen}} seen; {{GPS_satellites_tracked}} tracked</span>
-				</div>
-				<div class="separator"></div>
-				<div class="row">
-					<div class="col-sm-4 label_adj">
-						<span class="col-xs-5"><strong>Uptime:</strong></span>
-						<span class="col-xs-7">{{Uptime}}</span>
-					</div>
-					<div class="col-sm-4 label_adj">
-						<span class="col-xs-5"><strong>CPU Temp:</strong></span>
-						<span class="col-xs-7">{{CPUTemp}} <div ng-show="DeveloperMode == true">[{{CPUTempMin}} - {{CPUTempMax}}]</div></span>
-					</div>
-					<div class="col-sm-4 label_adj">
-						<span class="col-xs-5"><strong>Free Storage:</strong></span>
-						<span class="col-xs-7">{{DiskSpace}} MiB</span>
-					</div>
-				</div>
-				<div class="separator"></div>
-				<div class="row">
-					<div class="cols-sm-4 label_adj" ng-class="{'section_invisible': !visible_uat}">
-						<span class="col-xs-5"><strong>&nbsp;UAT Frames</strong></span>
-						<span class="col-xs-7">{{UAT_messages_total}}</span>
-					</div>
-					<div class="cols-sm-4 label_adj" ng-class="{'section_invisible': !visible_es}">
-						<span class="col-xs-5"><strong>&nbsp;ES Frames</strong></span>
-						<span class="col-xs-7">{{ES_messages_total}}</span>
-					</div>
-					<div class="cols-sm-4 label_adj" ng-class="{'section_invisible': !visible_ais}">
-						<span class="col-xs-5"><strong>&nbsp;AIS Frames</strong></span>
-						<span class="col-xs-7">{{AIS_messages_total}}</span>
-					</div>
-					<div class="cols-sm-4 label_adj" ng-class="{'section_invisible': !visible_ogn}">
-						<span class="col-xs-5"><strong>&nbsp;OGN Frames</strong></span>
-						<span class="col-xs-7">{{OGN_messages_total}}</span>
-					</div>
+				<div class="sx-metric">
+					<span>Ping / Pong</span>
+					<strong class="sx-good">OK</strong>
 				</div>
 			</div>
-		</div>	
+			<div class="sx-row" ng-class="{'section_invisible': !visible_ping}">
+				<span>Ping device</span>
+				<span ng-show="Ping_connected == true" class="sx-good">Connected</span>
+				<span ng-hide="Ping_connected == true" class="sx-danger">Disconnected</span>
+			</div>
+			<div class="sx-row" ng-class="{'section_invisible': !visible_pong}">
+				<span>Pong device</span>
+				<span ng-show="Pong_connected == true" class="sx-good">Connected</span>
+				<span ng-hide="Pong_connected == true" class="sx-danger">Disconnected</span>
+			</div>
+			<div class="sx-row">
+				<a ng-click="VersionClick()"><strong>Version: <tt>{{Version}} ({{Build}})</tt></strong></a>
+				<span>Region <b>{{Region}}</b></span>
+			</div>
+		</section>
+
+		<!-- Message rate -->
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>Message rate</h2>
+			</div>
+			<div class="sx-rate-list">
+				<div class="sx-rate" ng-class="{'section_invisible': !visible_uat}">
+					<b>UAT</b>
+					<div class="sx-track">
+						<i class="sx-bar-uat" ng-attr-style="background-color: {{uatStyleColor}}; width:{{UAT_messages_max ? 100*UAT_messages_last_minute / UAT_messages_max : 0}}%"></i>
+					</div>
+					<strong>{{UAT_messages_last_minute}}<small>/min</small></strong>
+					<span>peak {{UAT_messages_max}}</span>
+				</div>
+				<div class="sx-rate" ng-class="{'section_invisible': !visible_es}">
+					<b>1090ES</b>
+					<div class="sx-track">
+						<i class="sx-bar-es" ng-attr-style="background-color: {{esStyleColor}}; width:{{ES_messages_max ? 100*ES_messages_last_minute / ES_messages_max : 0}}%"></i>
+					</div>
+					<strong>{{ES_messages_last_minute}}<small>/min</small></strong>
+					<span>peak {{ES_messages_max}}</span>
+				</div>
+				<div class="sx-rate" ng-class="{'section_invisible': !visible_ais}">
+					<b>AIS{{AIS_connected ? "" : " (disconnected)"}}:</b>
+					<div class="sx-track">
+						<i class="sx-bar-ais" ng-attr-style="background-color: {{aisStyleColor}}; width:{{AIS_messages_max ? 100*AIS_messages_last_minute / AIS_messages_max : 0}}%"></i>
+					</div>
+					<strong>{{AIS_messages_last_minute}}<small>/min</small></strong>
+					<span>peak {{AIS_messages_max}}</span>
+				</div>
+				<div class="sx-rate" ng-class="{'section_invisible': !visible_ogn}">
+					<b>OGN{{OGN_connected ? "" : " (disconnected)"}}:</b>
+					<div class="sx-track">
+						<i class="sx-bar-ogn" ng-attr-style="background-color: {{ognStyleColor}}; width:{{OGN_messages_max ? 100*OGN_messages_last_minute / OGN_messages_max : 0}}%"></i>
+					</div>
+					<strong>{{OGN_messages_last_minute}}<small>/min</small></strong>
+					<span>peak {{OGN_messages_max}}</span>
+				</div>
+				<div class="sx-rate" ng-class="{'section_invisible': !visible_ogn}">
+					<b>OGN noise</b>
+					<div class="sx-track sx-noise">
+						<i ng-attr-style="width:{{(Clamp(OGN_noise_db, 0, 25) / 25.0) * 100}}%; background-color: {{OGN_noise_color}}"></i>
+					</div>
+					<strong>{{OGN_noise_db}}<small> dB</small></strong>
+					<span>range loss: {{OGN_range_loss_factor}}x</span>
+				</div>
+				<div class="sx-subtle">Half range for each 6 dB noise · 0–25 dB</div>
+			</div>
+		</section>
+
+		<!-- OGN statistics -->
+		<section class="sx-panel" ng-class="{'section_invisible': !visible_ogn}">
+			<div class="sx-section-head">
+				<h2>OGN statistics</h2>
+			</div>
+			<div class="sx-metrics sx-three">
+				<div class="sx-metric">
+					<span>Background noise @ gain 50</span>
+					<strong>{{OGN_noise_db}}<small> dB</small></strong>
+				</div>
+				<div class="sx-metric">
+					<span>Receiver gain</span>
+					<strong>{{OGN_gain_db}}<small> dB</small></strong>
+				</div>
+				<div class="sx-metric">
+					<span>RF spectrogram</span>
+					<a ng-href="{{OGN_Status_url}}">Download</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- UAT statistics -->
+		<section class="sx-panel" ng-class="{'section_invisible': !visible_uat}">
+			<div class="sx-section-head">
+				<h2>UAT statistics</h2>
+			</div>
+			<div class="sx-metrics sx-eight">
+				<div class="sx-metric">
+					<span>Towers</span>
+					<strong>{{UAT_Towers}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>METARs</span>
+					<strong>{{UAT_METAR_total}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>TAFs</span>
+					<strong>{{UAT_TAF_total}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>NEXRAD</span>
+					<strong>{{UAT_NEXRAD_total}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>PIREPs</span>
+					<strong>{{UAT_PIREP_total}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>SIGMETs</span>
+					<strong>{{UAT_SIGMET_total}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>NOTAMs</span>
+					<strong>{{UAT_NOTAM_total}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>Other</span>
+					<strong>{{UAT_OTHER_total}}</strong>
+				</div>
+			</div>
+		</section>
+
+		<!-- GPS -->
+		<section class="sx-panel" ng-class="{'section_invisible': !visible_gps}">
+			<div class="sx-section-head">
+				<h2>GPS</h2>
+			</div>
+			<div class="sx-row">
+				<span>GPS hardware</span>
+				<span>{{GPS_hardware}} <a href="http://{{GPS_NetworkRemoteIp}}" ng-show="GPS_hardware=='Network'">{{GPS_NetworkRemoteIp}}</a> ({{GPS_protocol}})</span>
+			</div>
+			<div class="sx-metrics sx-four">
+				<div class="sx-metric">
+					<span>Solution</span>
+					<strong class="sx-good">{{GPS_solution}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>Accuracy</span>
+					<strong>{{GPS_position_accuracy}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>Satellites locked</span>
+					<strong>{{GPS_satellites_locked}} / {{GPS_satellites_seen}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>Tracked</span>
+					<strong>{{GPS_satellites_tracked}}</strong>
+				</div>
+			</div>
+			<div class="sx-subtle">{{GPS_satellites_locked}} in solution; {{GPS_satellites_seen}} seen; {{GPS_satellites_tracked}} tracked</div>
+		</section>
+
+		<!-- System -->
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>System</h2>
+			</div>
+			<div class="sx-metrics sx-three">
+				<div class="sx-metric">
+					<span>Uptime</span>
+					<strong>{{Uptime}}</strong>
+				</div>
+				<div class="sx-metric">
+					<span>CPU temperature</span>
+					<strong>{{CPUTemp}} <span ng-show="DeveloperMode == true">[{{CPUTempMin}} - {{CPUTempMax}}]</span></strong>
+				</div>
+				<div class="sx-metric">
+					<span>Free storage</span>
+					<strong>{{DiskSpace}}<small> MiB</small></strong>
+				</div>
+			</div>
+		</section>
+
+		<!-- Frame totals -->
+		<section class="sx-panel">
+			<div class="sx-section-head">
+				<h2>Frame totals</h2>
+			</div>
+			<div class="sx-metrics sx-four">
+				<div class="sx-metric" ng-class="{'section_invisible': !visible_es}">
+					<span>1090ES</span>
+					<strong>{{ES_messages_total}}</strong>
+				</div>
+				<div class="sx-metric" ng-class="{'section_invisible': !visible_uat}">
+					<span>UAT</span>
+					<strong>{{UAT_messages_total}}</strong>
+				</div>
+				<div class="sx-metric" ng-class="{'section_invisible': !visible_ogn}">
+					<span>OGN</span>
+					<strong>{{OGN_messages_total}}</strong>
+				</div>
+				<div class="sx-metric" ng-class="{'section_invisible': !visible_ais}">
+					<span>AIS</span>
+					<strong>{{AIS_messages_total}}</strong>
+				</div>
+			</div>
+		</section>
 	</div>
-	<div class="panel panel-default" ng-class="{'section_invisible': !visible_errors}">
-		<div class="panel-heading" ng-class="{'section_invisible': !visible_errors}">
-			<span class="panel_label">Errors</span>
+
+	<div ng-class="{ 'section_invisible': (!visible_gps && !visible_ahrs && !visible_uat)}"></div>
+
+	<!-- Errors panel -->
+	<section class="sx-panel" ng-class="{'section_invisible': !visible_errors}">
+		<div class="sx-section-head" ng-class="{'section_invisible': !visible_errors}">
+			<h2>Errors</h2>
 		</div>
-		<div class="panel-body" ng-class="{'section_invisible': !visible_errors}">
+		<div ng-class="{'section_invisible': !visible_errors}">
 			<ul>
-				<li class="status-error" ng-repeat="err in Errors">
-					<span class="fa fa-exclamation-triangle icon-red"></span> <span class="icon-red">{{err}}</span>
+				<li class="sx-danger" ng-repeat="err in Errors">
+					<span class="fa fa-exclamation-triangle"></span> <span class="sx-danger">{{err}}</span>
 				</li>
 			</ul>
 		</div>
-	</div>
+	</section>
 </div>
+
 <div ui-content-for="modals">
 	<div class="modal" ui-if="RegionSelect" ui-state="RegionSelect">
 		<div class="modal-overlay"></div>
