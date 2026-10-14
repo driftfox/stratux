@@ -226,6 +226,31 @@ body,
   background: #121a22;
 }
 
+.sx-header .sx-brand {
+  color: #e9eef3;
+}
+
+a.list-group-item.sx-nav-item {
+  color: #8e9aa6;
+  background-color: transparent;
+  border-color: #26323d;
+}
+
+a.list-group-item.sx-nav-item:hover,
+a.list-group-item.sx-nav-item:focus {
+  color: #e9eef3;
+  background-color: transparent;
+}
+
+.list-group-item.sx-nav-item.active,
+.list-group-item.sx-nav-item.active:hover,
+.list-group-item.sx-nav-item.active:focus {
+  color: #6ea2ff;
+  background: rgba(110,162,255,0.1);
+  border-color: #26323d;
+  border-left-color: #6ea2ff;
+}
+
 .sx-switch {
   background: #26323d;
 }

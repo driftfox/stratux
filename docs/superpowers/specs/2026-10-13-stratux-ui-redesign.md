@@ -496,7 +496,7 @@ may not show less data than the original did.**
 | Screen | Design source | Consequence |
 |---|---|---|
 | GPS / AHRS / G-Meter | **Original retained** | v0's version discarded |
-| Map | **Original retained** | v0's version discarded |
+| Map | **Original retained** | v0's version discarded; user ruling: the map runs edge to edge below its heading |
 | Radar | **v0's version** | gaps below must be fixed inside it |
 | Status, Weather, Traffic, Towers, Logs, Settings, Developer, shell | **v0's version** | gaps below must be filled |
 

@@ -617,8 +617,11 @@ Done when the full comparison exits 0.
 
 - [ ] **Step 3: Confirm the two reverts are untouched**
 
-Run: `git diff master -- web/plates/gps.html web/plates/map.html`
+Run: `git diff master -- web/plates/gps.html`
 Expected: no output. §6.1 — original retained.
+
+Run: `git diff master -- web/plates/map.html`
+Expected: only the layout wrapper and `sx-` classes that make the map edge to edge (§6.1 user ruling); `id="map_display"` and both `ConnectState` labels unchanged.
 
 - [ ] **Step 4: Both themes, every screen**
 
