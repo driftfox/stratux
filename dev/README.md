@@ -136,6 +136,23 @@ serves the new UI. `--no-reboot` skips the reboot; the new files may not show
 until the next one. An official Stratux update (`.deb`) later replaces the UI
 with the one it carries.
 
+## A UI-only update package
+
+`dev/build-ui-deb.sh [output-dir]` packs the committed `web/` UI into
+`stratux-ui-<version>-all.deb` (package `stratux-ui`, any Pi model). The
+version is the latest tag plus the commit count and hash, e.g.
+`2.0-pre5+ui121.g3b84f34`.
+
+Install it like any Stratux update: **Settings > System Update** uploads it and
+the Pi installs it while rebooting. That path only works on Stratux built from
+upstream `master` after June 2026; v2.0-pre4 and pre5 have a broken package
+installer, so on those use `sudo dpkg -i` with the overlay disabled.
+
+The files live in `/opt/stratux-ui/www` and are copied over `/opt/stratux/www`.
+The first install saves the UI it replaces as `/opt/stratux/www.stock`;
+`dpkg -r stratux-ui` puts it back. A later `stratux` package update overwrites
+the UI with its own, and installing `stratux-ui` again re-applies the redesign.
+
 ## Not shipped
 
 `dev/` is at the repo root, outside `web/`. `web/Makefile` copies an explicit
