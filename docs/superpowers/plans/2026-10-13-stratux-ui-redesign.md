@@ -569,9 +569,11 @@ git commit -m "fix: complete the appcache manifest"
 
 ---
 
-### Task 16: Radar redesign (runs inside Task 15, before Step 6)
+### Task 16: Radar redesign — deferred, optional future change
 
-Added during Task 15 Step 2a at the user's request. Design:
+**Not part of this branch.** Designed and planned during Task 15 Step 2a,
+then deferred by the user before implementation; the Radar screen ships as
+it is. Design:
 `docs/superpowers/specs/2026-10-14-radar-redesign-design.md`. Plan:
 `docs/superpowers/plans/2026-10-14-radar-redesign.md` (Tasks 16.1–16.4).
 Lifts the controller freeze for `web/plates/js/radar.js` only.

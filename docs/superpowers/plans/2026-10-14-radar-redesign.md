@@ -1,5 +1,11 @@
 # Radar redesign Implementation Plan
 
+**Status: deferred — optional future change.** Not executed on `ui-redesign`.
+If picked up later: `dev/visual-compare/` (the harness launcher, dev-server
+starter, and Task 16.4) will be gone after Task 15 Step 7, so recreate a small
+Playwright launcher for the harness and replace Task 16.4 with side-by-side
+screenshots against the prototype.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Rebuild the Radar screen to the prototype's look — full-bleed dark instrument, round scope, control bar below — keeping every radar behaviour and the pre-redesign contact labels.

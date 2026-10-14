@@ -1,7 +1,12 @@
 # Radar redesign to the prototype — design
 
-Task 16 of the Stratux UI redesign (`ui-redesign` branch). Inserted before
-Task 15 Step 6 (visual sign-off), so the layout comparison verifies it.
+**Status: deferred — optional future change.** Approved, then deferred by the
+user before implementation; not part of the `ui-redesign` branch.
+
+Task 16 of the Stratux UI redesign. Originally inserted before Task 15 Step 6
+(visual sign-off). If picked up later, the layout comparison tool it refers to
+will have been removed (Task 15 Step 7); verify with the plan's harness and
+side-by-side screenshots instead.
 
 ## Intent
 
