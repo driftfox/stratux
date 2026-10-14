@@ -480,8 +480,11 @@ button,input {
   font:inherit;
 }
 
+/* No vh units for page height: mobile browsers count the address bar in 100vh,
+   so anything sized from it runs past the visible screen, where the
+   overflow:hidden app shell cuts it off. Heights come from mobile-angular-ui's
+   height:100% chain instead. */
 .sx-app {
-  min-height:100vh;
   background:#f3f5f7;
   background:var(--bg);
   color:#17202a;
@@ -526,6 +529,16 @@ button,input {
 
 .sx-app .app-content {
   margin-top:0;
+}
+
+/* Full-screen pages (Map, Radar) fill the area under the header exactly;
+   .scrollable is mobile-angular-ui's positioned box of that size. */
+.sx-fill-screen {
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:100%;
 }
 
 .sx-content,.sx-drawer,.sx-confirm-dialog {
@@ -1490,7 +1503,6 @@ td {
 .sx-map-page {
   display:flex;
   flex-direction:column;
-  height:calc(100vh - 68px);
 }
 
 .sx-map-panel {
@@ -1520,7 +1532,6 @@ td {
 .sx-radar-screen {
   display:flex;
   flex-direction:column;
-  height:calc(100vh - 68px);
   min-height:0;
   padding:8px 12px 12px;
   border-width:0;
