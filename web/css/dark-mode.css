@@ -251,6 +251,16 @@ a.list-group-item.sx-nav-item:focus {
   border-left-color: #6ea2ff;
 }
 
+.sx-settings-grid .sx-field label,
+.sx-settings-grid .sx-switch-row > span:first-child {
+  color: #e9eef3;
+}
+
+.sx-settings-grid .sx-field label small,
+.sx-settings-grid .sx-switch-row small {
+  color: #8e9aa6;
+}
+
 .sx-switch {
   background: #26323d;
 }

@@ -687,21 +687,9 @@ button,input {
   grid-template-columns:repeat(2,1fr);
 }
 
-.sx-field-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:14px;
-}
-
-.sx-field-grid > .sx-field {
-  min-width:0;
-}
-
 .sx-file-picker {
   position:relative;
   overflow:hidden;
-  display:inline-block;
-  vertical-align:top;
 }
 
 .sx-radar-screen .sx-instrument-top {
@@ -1321,10 +1309,8 @@ td {
   border-color:#a8444d!important;
 }
 
-/* Settings and Developer actions share one size and stay inset from the
-   panel edge, however deeply each one is nested. */
-.sx-settings-grid .sx-wide-button,
-.sx-settings-grid .sx-primary,
+/* Developer actions stay inset from the panel edge, however deeply each one
+   is nested. */
 .sx-dev-grid .sx-wide-button {
   display:inline-block;
   -ms-flex-item-align:start;
@@ -1336,8 +1322,121 @@ td {
   line-height:22px;
 }
 
+/* Settings follows the original layout: compact rows with the label on the
+   left, the input or switch on the right, and full-width action buttons. */
+.sx-settings-grid .sx-panel > :not(.sx-section-head) {
+  padding:10px 18px;
+}
+
+.sx-settings-grid .sx-panel > .sx-rows {
+  padding:6px 0;
+}
+
+.sx-settings-grid .sx-panel .sx-rows > * {
+  padding:4px 18px;
+}
+
+.sx-settings-grid .sx-panel .sx-rows > hr {
+  padding:0;
+  margin:6px 18px;
+}
+
+.sx-settings-grid .sx-wide-button,
+.sx-settings-grid .sx-primary {
+  display:block;
+  width:100%;
+  min-height:44px;
+  padding:10px 16px;
+  font-size:14px;
+  line-height:22px;
+  text-align:center;
+}
+
 .sx-settings-grid .sx-primary {
   border:1px solid transparent;
+}
+
+.sx-settings-grid .sx-field {
+  flex-direction:row;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:0;
+}
+
+.sx-settings-grid .sx-field > * + * {
+  margin-top:0;
+}
+
+.sx-settings-grid .sx-field label,
+.sx-settings-grid .sx-switch-row > span:first-child {
+  flex:0 0 40%;
+  padding-right:12px;
+  color:#17202a;
+  color:var(--text);
+  font-size:13px;
+}
+
+.sx-settings-grid .sx-field label small,
+.sx-settings-grid .sx-switch-row small {
+  display:block;
+  color:#66727d;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.sx-settings-grid .sx-field input,.sx-settings-grid .sx-field select {
+  flex:1 1 0;
+  min-width:0;
+  max-width:100%;
+}
+
+.sx-settings-grid .sx-field > div {
+  flex:0 0 100%;
+  margin-top:8px;
+}
+
+.sx-settings-grid .sx-switch-row {
+  justify-content:flex-start;
+  font-weight:normal;
+}
+
+.sx-settings-grid .sx-panel .sx-switch-row,
+.sx-settings-grid .sx-panel .sx-rows > .sx-switch-row {
+  padding-top:0;
+  padding-bottom:0;
+}
+
+.sx-settings-grid .sx-switch-row > * + * {
+  margin-left:0;
+}
+
+.sx-settings-grid .sx-switch-list > * + * {
+  margin-top:0;
+}
+
+@media (max-width:479px) {
+  .sx-settings-grid .sx-field {
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .sx-settings-grid .sx-field label {
+    flex:none;
+    padding-right:0;
+  }
+
+  .sx-settings-grid .sx-field input,.sx-settings-grid .sx-field select {
+    flex:none;
+    margin-top:4px;
+  }
+
+  .sx-settings-grid .sx-switch-row {
+    justify-content:space-between;
+  }
+
+  .sx-settings-grid .sx-switch-row > span:first-child {
+    flex:1 1 auto;
+  }
 }
 
 .sx-switch-list {
@@ -2008,8 +2107,12 @@ td {
     padding:20px 14px 40px;
   }
 
-  .sx-screen-grid,.sx-settings-grid,.sx-avionics-grid {
+  .sx-screen-grid,.sx-avionics-grid {
     grid-template-columns:1fr;
+  }
+
+  .sx-settings-grid {
+    grid-template-columns:minmax(0,1fr);
   }
 
   .sx-title-row {
@@ -2036,12 +2139,6 @@ td {
   .sx-drawer {
     width:340px;
     max-width:90vw;
-  }
-}
-
-@media (max-width:480px) {
-  .sx-field-grid {
-    grid-template-columns:minmax(0,1fr);
   }
 }
 
