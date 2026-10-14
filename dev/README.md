@@ -4,15 +4,35 @@ Runs the real `web/` UI locally in a browser, fully populated with fixture data,
 without a Raspberry Pi, without Docker, and without building the Go binary.
 
 ```
-node dev/server.mjs              # http://127.0.0.1:8080
+node dev/server.mjs                # http://127.0.0.1:8080
 node dev/server.mjs --port 3000
+node dev/server.mjs --host 0.0.0.0  # listen on all interfaces (containers, LAN, tunnels)
 ```
+
+`--port` / `--host` can also be given as `PORT` / `HOST` environment variables.
+The default bind is loopback only.
 
 Then edit files under `web/` and refresh the browser. There is no build step:
 the UI is plain HTML/CSS/JS (AngularJS 1.x + mobile-angular-ui + OpenLayers) and
 the server hands it off disk.
 
 Requires Node 22+. No dependencies, nothing to install.
+
+## Viewing from another machine
+
+Everything — UI, REST and all WebSockets — is on the one port (8080), so a
+single forwarded port is enough.
+
+- **Inside a Docker container:** start with `--host 0.0.0.0`, otherwise a
+  published port reaches nothing. Publish it (`-p 8080:8080`), or point a
+  container on the same Docker network at `http://<container-name>:8080`.
+- **Cloudflare Tunnel:** target `http://localhost:8080` (or the container
+  address above). WebSockets pass through without extra config. For a
+  throwaway URL with no account:
+  `cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8080`.
+
+Tunnels serve the page over HTTPS; see the `wss://` note below for why the
+live data still works.
 
 ## What it does
 
@@ -50,7 +70,7 @@ Time-dependent values (`Clock`, `Uptime`, `GPSTime`, satellite ages, weather
 report times) are recomputed on every tick so the screens do not go stale while
 you work.
 
-## Deliberate deviation from production
+## Deliberate deviations from production
 
 **`status.Clock` is added.** The real Go `status` struct has no `Clock` field,
 but `plates/js/traffic.js` and `plates/js/radar.js` both read `globalStatus.Clock`
@@ -59,6 +79,14 @@ here so the flaw does not dominate your attention while judging the UI.
 
 Delete the `// CLOCK` line in `server.mjs` for byte-faithful behaviour, or fix
 the Go struct — either is a real change worth making deliberately.
+
+**`js/main.js` is rewritten on the fly to pick `wss://` on HTTPS pages.** The
+file hardcodes `"ws://"` for every WebSocket URL, and browsers block `ws://`
+from an HTTPS page — so behind a tunnel every screen loads but shows no live
+data. (Modern browsers auto-upgrade `http://` links, so using the plain-HTTP
+tunnel URL does not avoid it.) The server substitutes a protocol check when
+serving that one file; over plain HTTP the result is still `ws://`, and the
+file on disk is untouched. Real hardware is HTTP-only, so it never hits this.
 
 ## Known mismatches the UI tolerates (these also exist on real hardware)
 

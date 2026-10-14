@@ -53,6 +53,8 @@ make clean
   Static files plus fixture REST/WebSocket data; no Pi, no Go build, no Docker.
   Endpoints, cadences, fixtures, and known UI/backend mismatches: `dev/README.md`.
   The Go backend will not start without hardware, so this is the only cheap local loop.
+  It binds loopback only; from a container, LAN, or tunnel use `--host 0.0.0.0`
+  (single port — UI, REST and WebSockets all on 8080).
 - **The UI is driven by WebSockets**, not REST: `/status`, `/situation`, `/traffic`,
   `/weather`, `/radar`. REST (`/getStatus`, `/getSettings`, `/getTowers`,
   `/getSatellites`) is secondary. `/getWeather` does not exist.

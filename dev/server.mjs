@@ -32,6 +32,8 @@ const FIXTURES_DIR = path.join(__dirname, 'fixtures');
 const args = process.argv.slice(2);
 const portArg = args.indexOf('--port');
 const PORT = portArg !== -1 && args[portArg + 1] ? Number(args[portArg + 1]) : Number(process.env.PORT || 8080);
+const hostArg = args.indexOf('--host');
+const HOST = hostArg !== -1 && args[hostArg + 1] ? args[hostArg + 1] : (process.env.HOST || '127.0.0.1');
 
 // ---------------------------------------------------------------- fixtures --
 
@@ -547,6 +549,17 @@ const server = http.createServer(async (req, res) => {
     if (!stat) return sendText(res, 404, 'Not found');
 
     const ext = path.extname(filePath).toLowerCase();
+    // main.js hardcodes ws://, which browsers block on HTTPS pages (e.g. behind a tunnel).
+    if (rel === '/js/main.js') {
+      const body = fs.readFileSync(filePath, 'utf8')
+        .replaceAll('"ws://"', '(window.location.protocol === "https:" ? "wss://" : "ws://")');
+      res.writeHead(200, {
+        'Content-Type': MIME[ext],
+        'Cache-Control': 'no-store, must-revalidate',
+        'Content-Length': Buffer.byteLength(body),
+      });
+      return res.end(method === 'HEAD' ? undefined : body);
+    }
     res.writeHead(200, {
       'Content-Type': MIME[ext] || 'application/octet-stream',
       'Cache-Control': 'no-store, must-revalidate',
@@ -623,9 +636,9 @@ setInterval(() => {
   weatherCursor++;
 }, 4000);
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, HOST, () => {
   console.log(`Stratux UI dev server`);
-  console.log(`  UI       http://127.0.0.1:${PORT}/`);
+  console.log(`  UI       http://${HOST}:${PORT}/`);
   console.log(`  static   ${WEB_DIR}`);
   console.log(`  fixtures ${FIXTURES_DIR}`);
   console.log(`\nEdit files under web/ and refresh the browser.`);
