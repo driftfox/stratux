@@ -10,14 +10,43 @@
 // Only the exported helpers are covered here. The full contract run is
 // exercised by running the checker itself against the tree.
 import assert from 'node:assert';
+import fs from 'node:fs';
 import {
-  missingFrom, cssBannedHits, appcacheMissing, cssLocalUrls, duplicateFormNames, inertSectionInvisible,
+  missingFrom, plateMissing, plateRequired, plateJsOnly,
+  cssBannedHits, appcacheMissing, cssLocalUrls, duplicateFormNames, inertSectionInvisible,
 } from './check-contract.mjs';
 
 // missingFrom returns the subset of `required` absent from `text`.
 assert.deepEqual(missingFrom('<div ng-model="DarkMode">', ['DarkMode']), []);
 assert.deepEqual(missingFrom('<div>', ['DarkMode']), ['DarkMode']);
 assert.deepEqual(missingFrom('abc', ['ab', 'zz', 'c']), ['zz']);
+
+// plateMissing checks the template alone; only allowlisted names are looked up
+// in the controller. A controller that still mentions a name must not mask a
+// binding the template dropped.
+assert.deepEqual(plateMissing('<b>{{A}}</b>', '$scope.A = 1', ['A']), []);
+assert.deepEqual(plateMissing('<b></b>', '$scope.A = 1', ['A']), ['A']);
+assert.deepEqual(plateMissing('<b></b>', '$scope.A = 1', ['A'], ['A']), []);
+assert.deepEqual(plateMissing('<b>A</b>', '', ['A'], ['A']), ['A'], 'allowlisted names must be in the JS');
+
+// Mutation tests against the real plates and the real required lists.
+const readWeb = (rel) => fs.readFileSync(new URL(`../web/${rel}`, import.meta.url), 'utf8');
+const plateRun = (name, html) => plateMissing(
+  html, readWeb(`plates/js/${name}.js`), plateRequired[name], plateJsOnly[name],
+);
+assert.deepEqual(plateRun('status', readWeb('plates/status.html')), [], 'status.html as shipped');
+assert.ok(readWeb('plates/js/status.js').includes('GPS_solution'));
+assert.deepEqual(
+  plateRun('status', readWeb('plates/status.html').split('GPS_solution').join('')),
+  ['GPS_solution'],
+  'a binding dropped from status.html fails although status.js still names it',
+);
+assert.deepEqual(plateRun('map', readWeb('plates/map.html')), [], 'map.html as shipped');
+assert.deepEqual(
+  plateRun('map', readWeb('plates/map.html').replace('id="map_display"', 'id="map_view"')),
+  ['id="map_display"'],
+  'a renamed mount id fails although map.js still names it',
+);
 
 // §5.1.2 / R1: `gap` is banned in a flex container, permitted in a grid.
 assert.equal(cssBannedHits('a{display:flex;gap:8px}').length, 1);

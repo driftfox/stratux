@@ -15,6 +15,14 @@ export function missingFrom(text, required) {
   return (required || []).filter((item) => !haystack.includes(String(item)));
 }
 
+// Returns the subset of `required` absent from a plate. Names are looked up in
+// the template `html` alone, except those in `jsOnly`, which legitimately live
+// only in the controller and are looked up in `js` instead.
+export function plateMissing(html, js, required, jsOnly) {
+  const only = new Set(jsOnly || []);
+  return (required || []).filter((item) => !String((only.has(item) ? js : html) ?? '').includes(String(item)));
+}
+
 // Returns an array of banned CSS usage hits found in `css`.
 export function cssBannedHits(css) {
   const src = String(css ?? '');
@@ -223,7 +231,7 @@ const trafficRequired = [
 ];
 
 const mapRequired = [
-  'ConnectState', 'map_display',
+  'ConnectState', 'id="map_display"',
 ];
 
 const gpsRequired = [
@@ -235,12 +243,12 @@ const gpsRequired = [
   'gps_lat', 'gps_lon', 'gps_horizontal_accuracy', 'gps_alt', 'gps_vertical_accuracy', 'gps_vert_speed',
   'gps_height_above_ellipsoid', 'gps_track', 'gps_speed',
   'hideClick', 'AHRSCage', 'AHRSCalibrate', 'GMeterReset',
-  'ahrs_display', 'gMeter_display', 'map_display',
-  'status-calibrating', 'status-gps', 'status-imu', 'status-bmp', 'hider',
+  'id="ahrs_display"', 'id="gMeter_display"', 'id="map_display"',
+  'id="status-calibrating"', 'id="status-gps"', 'id="status-imu"', 'id="status-bmp"', 'hider',
 ];
 
 const radarRequired = [
-  'ConnectState', 'BaroAltValid', 'GPSValid', 'CPUTemp', 'radar_display',
+  'ConnectState', 'BaroAltValid', 'GPSValid', 'CPUTemp', 'id="radar_display"',
 ];
 
 const weatherRequired = [
@@ -273,11 +281,9 @@ const settingsRequired = [
   'g-limits-input', 'pilotname-input', 'ognreg-input',
   'modalReboot', 'modalRebootRequired', 'modalShutdown', 'modalCalibrateForward', 'modalCalibrateDone',
   'modalCalibrateFailed', 'modalSuccessWiFi', 'modalErrorWiFi', 'modalCancelWiFi', 'rebooting', 'shuttingdown',
+  'uploading_pong_update',
 ];
 
-// Checked against the template alone: the controller already contains these
-// names, so the concatenated plate+JS text would pass vacuously.
-const settingsHtmlRequired = ['uploading_pong_update'];
 // §4 drops the WiFiRestart banner (nothing sets it); §5.8 defect 7 is the
 // template's misspelling of the controller's uploading_pong_update.
 const settingsHtmlForbidden = ['WiFiRestart', 'pong_uploading_update'];
@@ -335,34 +341,40 @@ const indexRequiredStrings = [
   'UAT_Enabled || Ping_Enabled || Pong_Enabled', 'DeveloperMode',
 ];
 
+export const plateRequired = {
+  status: statusRequired,
+  traffic: trafficRequired,
+  map: mapRequired,
+  gps: gpsRequired,
+  radar: radarRequired,
+  weather: weatherRequired,
+  towers: towersRequired,
+  settings: settingsRequired,
+  logs: logsRequired,
+  developer: developerRequired,
+};
+
+// Required names the template never mentions, checked against the controller.
+export const plateJsOnly = {
+  // Passed to GMeterRenderer as its reset callback, not bound in the template.
+  gps: ['GMeterReset'],
+  // A flag weather.js sets on each data item; the template has never rendered it.
+  weather: ['update'],
+};
+
 function plateChecks() {
-  const plates = [
-    ['status', statusRequired],
-    ['traffic', trafficRequired],
-    ['map', mapRequired],
-    ['gps', gpsRequired],
-    ['radar', radarRequired],
-    ['weather', weatherRequired],
-    ['towers', towersRequired],
-    ['settings', settingsRequired],
-    ['logs', logsRequired],
-    ['developer', developerRequired],
-  ];
   const failures = [];
-  for (const [name, required] of plates) {
-    let text = readText(`web/plates/${name}.html`);
+  for (const [name, required] of Object.entries(plateRequired)) {
+    const html = readText(`web/plates/${name}.html`);
     const jsRel = `web/plates/js/${name}.js`;
-    const jsAbs = path.join(ROOT, jsRel);
-    if (fs.existsSync(jsAbs)) text += '\n' + readText(jsRel);
-    const missing = missingFrom(text, required);
+    const js = fs.existsSync(path.join(ROOT, jsRel)) ? readText(jsRel) : '';
+    const missing = plateMissing(html, js, required, plateJsOnly[name]);
     if (missing.length) failures.push(`FAIL plates/${name}.html: ${missing.join(', ')}`);
-    const dupForms = duplicateFormNames(readText(`web/plates/${name}.html`));
+    const dupForms = duplicateFormNames(html);
     if (dupForms.length) failures.push(`FAIL plates/${name}.html: duplicate form name ${dupForms.join(', ')}`);
   }
 
   const settingsHtml = readText('web/plates/settings.html');
-  const missingHtml = missingFrom(settingsHtml, settingsHtmlRequired);
-  if (missingHtml.length) failures.push(`FAIL plates/settings.html: ${missingHtml.join(', ')}`);
   const forbidden = settingsHtmlForbidden.filter((s) => settingsHtml.includes(s));
   if (forbidden.length) failures.push(`FAIL plates/settings.html: must not contain ${forbidden.join(', ')}`);
 
