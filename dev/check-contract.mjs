@@ -318,8 +318,8 @@ const helpRequired = [
     'for reference only and must not be used for flight operations',
   ]],
   ['settings', [
-    'Set AHRS Sensor Orientation', 'direction of gravity', 'You only have to do this once',
-    'Minimum fan duty cycle %', 'Start with a value of 50%', 'lowest RPM',
+    'Set AHRS Sensor Orientation', 'direction of gravity', 'You only need to do this once',
+    'Minimum fan duty cycle %', 'start at 50%', 'lowest stable RPM',
     'G Limits', 'Commands', 'WiFi Settings', 'Hardware', 'Diagnostics', 'Configuration',
   ]],
   ['radar', ['green circle', 'rough estimation', 'whenever an aircraft is within the inner circle']],
