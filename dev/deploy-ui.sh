@@ -92,9 +92,13 @@ if findmnt -no OPTIONS "\$mnt" | grep -qw ro; then
 	relock=yes
 fi
 cleanup() {
+	rc=\$?
 	rm -f /tmp/stratux-ui.tar
 	sync
-	if [ "\$relock" = yes ]; then /sbin/overlayctl lock || mount -o remount,ro "\$mnt"; fi
+	if [ "\$relock" = yes ] && ! /sbin/overlayctl lock 2>/dev/null; then
+		echo "The SD card could not be re-locked while files are in use; it is read-only again after the reboot."
+	fi
+	exit \$rc
 }
 trap cleanup EXIT
 
@@ -119,9 +123,10 @@ fi
 
 rm -rf www.previous
 cp -a www www.previous
+# www.old is removed on the next run: deleting files the running overlay still
+# holds open makes the card impossible to re-lock until a reboot.
 mv www www.old
 mv www.new www
-rm -rf www.old
 echo "Previous UI kept as \$dir/www.previous"
 EOF
 
@@ -143,5 +148,7 @@ for _ in $(seq 1 36); do
 	fi
 	sleep 5
 done
-echo "The Pi did not serve the expected UI within 3 minutes (looking for: $expected)." >&2
+echo "Could not confirm the new UI at http://$addr/ within 3 minutes (looking for: $expected)." >&2
+echo "The install itself finished. If the Pi rejoined a different network (for example its own" >&2
+echo "Stratux WiFi when passthrough does not reconnect), check the UI there." >&2
 exit 1
