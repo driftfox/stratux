@@ -408,7 +408,10 @@ function cssChecks() {
 }
 
 function appcacheCheck() {
-  const onDisk = walkFiles('web', new Set(['.css', '.js']), new Set(['maui']));
+  const onDisk = [
+    ...walkFiles('web', new Set(['.css', '.js']), new Set(['maui'])),
+    ...walkFiles('web/plates', new Set(['.html']), new Set()),
+  ];
   const manifest = readText('web/stratux.appcache');
   const listed = manifest.split(/\r?\n/).map((l) => l.trim())
     .filter((l) => l && !l.startsWith('#') && !/^(CACHE MANIFEST|NETWORK:|CACHE:|FALLBACK:)/i.test(l));
