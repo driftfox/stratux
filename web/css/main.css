@@ -2055,7 +2055,6 @@ td {
 .sx-dialog-head {
   display:flex;
   align-items:center;
-  justify-content:space-between;
   margin-bottom:8px;
 }
 
@@ -2065,7 +2064,7 @@ td {
 
 .sx-dialog-head .sx-dialog-icon {
   flex:none;
-  margin:0 0 0 16px;
+  margin:0 14px 0 0;
 }
 
 .sx-confirm-dialog p {
