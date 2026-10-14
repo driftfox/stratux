@@ -24,17 +24,17 @@
 					<span>SDR devices</span>
 					<strong>{{Devices}}</strong>
 				</div>
-				<div class="sx-metric" ng-class="{'section_invisible': !visible_pong}">
+				<div class="sx-metric" ng-show="visible_pong" ng-class="{'section_invisible': !visible_pong}">
 					<span ng-show="Pong_connected == true">Pong heartbeats</span>
 					<strong ng-show="Pong_connected == true">{{Pong_Heartbeats}}</strong>
 				</div>
 			</div>
-			<div class="sx-row" ng-class="{'section_invisible': !visible_ping}">
+			<div class="sx-row" ng-show="visible_ping" ng-class="{'section_invisible': !visible_ping}">
 				<span>Ping device</span>
 				<span ng-show="Ping_connected == true" class="sx-good">Connected</span>
 				<span ng-hide="Ping_connected == true" class="sx-danger">Disconnected</span>
 			</div>
-			<div class="sx-row" ng-class="{'section_invisible': !visible_pong}">
+			<div class="sx-row" ng-show="visible_pong" ng-class="{'section_invisible': !visible_pong}">
 				<span>Pong device</span>
 				<span ng-show="Pong_connected == true" class="sx-good">Connected</span>
 				<span ng-hide="Pong_connected == true" class="sx-danger">Disconnected</span>
@@ -51,7 +51,7 @@
 				<h2>Message rate</h2>
 			</div>
 			<div class="sx-rate-list">
-				<div class="sx-rate" ng-class="{'section_invisible': !visible_uat}">
+				<div class="sx-rate" ng-show="visible_uat" ng-class="{'section_invisible': !visible_uat}">
 					<b>UAT</b>
 					<div class="sx-track">
 						<i class="sx-bar-uat" ng-attr-style="background-color: {{uatStyleColor}}; width:{{UAT_messages_max ? 100*UAT_messages_last_minute / UAT_messages_max : 0}}%"></i>
@@ -59,7 +59,7 @@
 					<strong>{{UAT_messages_last_minute}}<small>/min</small></strong>
 					<span>peak {{UAT_messages_max}}</span>
 				</div>
-				<div class="sx-rate" ng-class="{'section_invisible': !visible_es}">
+				<div class="sx-rate" ng-show="visible_es" ng-class="{'section_invisible': !visible_es}">
 					<b>1090ES</b>
 					<div class="sx-track">
 						<i class="sx-bar-es" ng-attr-style="background-color: {{esStyleColor}}; width:{{ES_messages_max ? 100*ES_messages_last_minute / ES_messages_max : 0}}%"></i>
@@ -67,7 +67,7 @@
 					<strong>{{ES_messages_last_minute}}<small>/min</small></strong>
 					<span>peak {{ES_messages_max}}</span>
 				</div>
-				<div class="sx-rate" ng-class="{'section_invisible': !visible_ais}">
+				<div class="sx-rate" ng-show="visible_ais" ng-class="{'section_invisible': !visible_ais}">
 					<b>AIS{{AIS_connected ? "" : " (disconnected)"}}:</b>
 					<div class="sx-track">
 						<i class="sx-bar-ais" ng-attr-style="background-color: {{aisStyleColor}}; width:{{AIS_messages_max ? 100*AIS_messages_last_minute / AIS_messages_max : 0}}%"></i>
@@ -75,7 +75,7 @@
 					<strong>{{AIS_messages_last_minute}}<small>/min</small></strong>
 					<span>peak {{AIS_messages_max}}</span>
 				</div>
-				<div class="sx-rate" ng-class="{'section_invisible': !visible_ogn}">
+				<div class="sx-rate" ng-show="visible_ogn" ng-class="{'section_invisible': !visible_ogn}">
 					<b>OGN{{OGN_connected ? "" : " (disconnected)"}}:</b>
 					<div class="sx-track">
 						<i class="sx-bar-ogn" ng-attr-style="background-color: {{ognStyleColor}}; width:{{OGN_messages_max ? 100*OGN_messages_last_minute / OGN_messages_max : 0}}%"></i>
@@ -83,7 +83,7 @@
 					<strong>{{OGN_messages_last_minute}}<small>/min</small></strong>
 					<span>peak {{OGN_messages_max}}</span>
 				</div>
-				<div class="sx-rate" ng-class="{'section_invisible': !visible_ogn}">
+				<div class="sx-rate" ng-show="visible_ogn" ng-class="{'section_invisible': !visible_ogn}">
 					<b>OGN noise</b>
 					<div class="sx-track sx-noise">
 						<i ng-attr-style="width:{{(Clamp(OGN_noise_db, 0, 25) / 25.0) * 100}}%; background-color: {{OGN_noise_color}}"></i>
@@ -214,19 +214,19 @@
 				<h2>Frame totals</h2>
 			</div>
 			<div class="sx-metrics sx-four">
-				<div class="sx-metric" ng-class="{'section_invisible': !visible_es}">
+				<div class="sx-metric" ng-show="visible_es" ng-class="{'section_invisible': !visible_es}">
 					<span>1090ES</span>
 					<strong>{{ES_messages_total}}</strong>
 				</div>
-				<div class="sx-metric" ng-class="{'section_invisible': !visible_uat}">
+				<div class="sx-metric" ng-show="visible_uat" ng-class="{'section_invisible': !visible_uat}">
 					<span>UAT</span>
 					<strong>{{UAT_messages_total}}</strong>
 				</div>
-				<div class="sx-metric" ng-class="{'section_invisible': !visible_ogn}">
+				<div class="sx-metric" ng-show="visible_ogn" ng-class="{'section_invisible': !visible_ogn}">
 					<span>OGN</span>
 					<strong>{{OGN_messages_total}}</strong>
 				</div>
-				<div class="sx-metric" ng-class="{'section_invisible': !visible_ais}">
+				<div class="sx-metric" ng-show="visible_ais" ng-class="{'section_invisible': !visible_ais}">
 					<span>AIS</span>
 					<strong>{{AIS_messages_total}}</strong>
 				</div>
@@ -238,7 +238,7 @@
 
 	<!-- Errors panel -->
 	<section class="sx-panel" ng-class="{'section_invisible': !visible_errors}">
-		<div class="sx-section-head" ng-class="{'section_invisible': !visible_errors}">
+		<div class="sx-section-head" ng-show="visible_errors" ng-class="{'section_invisible': !visible_errors}">
 			<h2>Errors</h2>
 		</div>
 		<div ng-class="{'section_invisible': !visible_errors}">

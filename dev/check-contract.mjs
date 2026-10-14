@@ -349,8 +349,6 @@ function plateChecks() {
   if (missingHtml.length) failures.push(`FAIL plates/settings.html: ${missingHtml.join(', ')}`);
   const forbidden = settingsHtmlForbidden.filter((s) => settingsHtml.includes(s));
   if (forbidden.length) failures.push(`FAIL plates/settings.html: must not contain ${forbidden.join(', ')}`);
-  const inert = inertSectionInvisible(settingsHtml, readText('web/css/main.css'));
-  if (inert.length) failures.push(`FAIL plates/settings.html: section_invisible overridden by ${inert.join(', ')}`);
 
   // Help partials (rendered into the help drawer by ng-include="helppage").
   for (const [name, required] of helpRequired) {
@@ -372,6 +370,15 @@ function plateChecks() {
   const indexHtml = readText('web/index.html');
   const missingIndex = missingFrom(indexHtml, indexRequiredStrings);
   if (missingIndex.length) failures.push(`FAIL web/index.html: ${missingIndex.join(', ')}`);
+
+  // dark-mode.css is the #themeStylesheet, loaded after main.css.
+  const themeCss = readText('web/css/main.css') + '\n' + readText('web/css/dark-mode.css');
+  const templates = fs.readdirSync(path.join(ROOT, 'web/plates'))
+    .filter((f) => f.endsWith('.html')).sort().map((f) => [`web/plates/${f}`, `plates/${f}`]);
+  for (const [rel, label] of [...templates, ['web/index.html', 'web/index.html']]) {
+    const inert = inertSectionInvisible(readText(rel), themeCss);
+    if (inert.length) failures.push(`FAIL ${label}: section_invisible overridden by ${inert.join(', ')}`);
+  }
 
   return failures;
 }
