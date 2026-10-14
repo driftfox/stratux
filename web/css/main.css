@@ -528,7 +528,7 @@ button,input {
   margin-top:0;
 }
 
-.sx-crumb,.sx-content,.sx-drawer,.sx-confirm-dialog {
+.sx-content,.sx-drawer,.sx-confirm-dialog {
   line-height:1.5;
 }
 
@@ -558,13 +558,6 @@ button,input {
   align-items:center;
   font-weight:800;
   letter-spacing:.14em;
-}
-
-.sx-brand small {
-  font-size:9px;
-  color:var(--muted);
-  letter-spacing:.1em;
-  margin-left:4px;
 }
 
 .sx-brand-mark {
@@ -597,27 +590,6 @@ button,input {
   border-radius:50%;
   background:var(--good);
   margin-right:6px;
-}
-
-.sx-crumb {
-  height:40px;
-  border-bottom:1px solid var(--line);
-  padding:0 32px;
-  display:flex;
-  align-items:center;
-  font-size:11px;
-  letter-spacing:.1em;
-  color:var(--muted);
-}
-
-.sx-crumb b {
-  color:var(--text);
-  font-size:12px;
-}
-
-.sx-version {
-  margin-left:auto;
-  letter-spacing:0;
 }
 
 .sx-content {
@@ -1840,25 +1812,6 @@ td {
   margin-right:9px;
 }
 
-/* Room to scroll the last menu item clear of the footer. */
-.sx-drawer.sx-left .scrollable-content {
-  padding-bottom:72px;
-}
-
-.sx-drawer-footer {
-  position:absolute;
-  bottom:24px;
-  padding:0 18px;
-  font-size:10px;
-  letter-spacing:.1em;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-.sx-drawer-footer span {
-  color:var(--accent);
-}
-
 .sx-help-copy {
   padding:30px 24px;
   color:var(--muted);
@@ -1974,7 +1927,7 @@ td {
     padding:0 12px;
   }
 
-  .sx-brand small,.sx-connection,.sx-crumb .sx-version {
+  .sx-connection {
     display:none;
   }
 
@@ -2029,10 +1982,6 @@ td {
 
 .sx-header-actions > * + * {
   margin-left:8px;
-}
-
-.sx-crumb > * + * {
-  margin-left:9px;
 }
 
 .sx-single > * + * {

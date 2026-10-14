@@ -91,7 +91,7 @@
 	<div class="modal sx-modal-backdrop" ui-if="uiShutdownConfirm" ui-state="uiShutdownConfirm" ui-turn-off="uiShutdownConfirm">
 		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="sx-shutdown-title" ng-click="$event.stopPropagation()">
 			<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
-			<h2 id="sx-shutdown-title">Shut down receiver?</h2>
+			<h2 id="sx-shutdown-title">Shut down Stratux?</h2>
 			<p>Stratux will stop receiving traffic and weather. Please disconnect the power after shutdown.</p>
 			<form class="sx-dialog-actions" method="post" action="/shutdown" target="sx-shutdown-sink">
 				<button type="button" ui-turn-off="uiShutdownConfirm">Cancel</button>
@@ -128,7 +128,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="sx-drawer-footer">STRATUX · OFFLINE FIRST<br /><span>open-source avionics</span></div>
 	</div>
 
 	<!-- Right (Help) Sidebar / Drawer -->
@@ -157,7 +156,6 @@
 				<a href="#/" class="sx-brand">
 					<span class="sx-brand-mark">S</span>
 					<span>STRATUX</span>
-					<small>OPEN AVIONICS</small>
 				</a>
 			</div>
 			<div class="btn-group" ui-yield-to="navbarAction">
