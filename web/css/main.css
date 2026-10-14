@@ -1322,6 +1322,27 @@ td {
   border:1px solid #283844;
 }
 
+.sx-map-page {
+  display:flex;
+  flex-direction:column;
+  height:calc(100vh - 68px);
+}
+
+.sx-map-panel {
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  margin:0;
+  border-width:0;
+  border-radius:0;
+}
+
+.sx-map-panel > .panel-body-fullsize {
+  flex:1;
+  height:auto;
+  padding:0;
+}
+
 .sx-radar-screen {
   display:flex;
   flex-direction:column;
