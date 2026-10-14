@@ -8,17 +8,14 @@
 				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">{{ConnectState}}</span>
 				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">{{ConnectState}}</span>
 				<span ng-show="BaroAltValid == 'Baro'" class="sx-badge sx-ok">Baro-Alt</span>
-				<!-- Degraded altitude sources. The amber is inline because no sx- warn
-				     class exists yet and the stylesheet is frozen for this task; it is the
-				     same #ffd765 the design uses for every other warning. -->
-				<span ng-show="BaroAltValid == 'GPS'" class="sx-badge" style="color:#ffd765;">No Baro-Alt, using GPS-Alt</span>
-				<span ng-show="BaroAltValid == 'AdsbEstimated'" class="sx-badge" style="color:#ffd765;">No Baro-Alt, using ADSB</span>
+				<span ng-show="BaroAltValid == 'GPS'" class="sx-badge sx-warn">No Baro-Alt, using GPS-Alt</span>
+				<span ng-show="BaroAltValid == 'AdsbEstimated'" class="sx-badge sx-warn">No Baro-Alt, using ADSB</span>
 				<span ng-show="BaroAltValid == 'Invalid'" class="sx-badge sx-danger">No Altitude!</span>
 				<span ng-show="GPSValid == 'Invalid'" class="sx-badge sx-danger">No GPS!</span>
 				<!-- CPU tiers: info < 70, warning 70-79, danger >= 80. Expressions kept
 				     verbatim from the original plate so the tiers cannot drift. -->
 				<span ng-show="CPUTemp < 70" class="sx-badge sx-info">{{CPUTemp}}°C</span>
-				<span ng-hide="(CPUTemp < 70) || (CPUTemp >= 80)" class="sx-badge" style="color:#ffd765;">{{CPUTemp}}°C</span>
+				<span ng-hide="(CPUTemp < 70) || (CPUTemp >= 80)" class="sx-badge sx-warn">{{CPUTemp}}°C</span>
 				<span ng-hide="CPUTemp < 80" class="sx-badge sx-danger">{{CPUTemp}}°C</span>
 			</div>
 		</div>

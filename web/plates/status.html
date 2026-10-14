@@ -169,7 +169,7 @@
 			<div class="sx-metrics sx-four">
 				<div class="sx-metric">
 					<span>Solution</span>
-					<strong class="sx-good">{{GPS_solution}}</strong>
+					<strong ng-class="{'sx-good': GPS_solution && GPS_solution != 'No Fix' && GPS_solution != 'Disconnected' && GPS_solution != 'Unknown'}">{{GPS_solution}}</strong>
 				</div>
 				<div class="sx-metric">
 					<span>Accuracy</span>

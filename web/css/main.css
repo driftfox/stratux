@@ -329,11 +329,15 @@ input[type="number_format"] {
 	text-align: end;
 }
 
-.app-body,
 .panel-default,
 .scrollable-content,
 .form-group {
 	background-color: #ffffff;
+}
+
+.app-body,
+.app-body .scrollable-content {
+	background-color: #f3f5f7;
 }
 
 .app-content {
@@ -742,6 +746,10 @@ header {
   background:rgba(112,161,239,0.09);
 }
 
+.sx-badge.sx-warn {
+  color:#9a6700;
+}
+
 .sx-rate-list {
   display:flex;
   flex-direction:column;
@@ -796,10 +804,6 @@ header {
 
 .sx-track .sx-bar-ogn {
   background:#69b34c;
-}
-
-.sx-track.sx-noise i {
-  background:linear-gradient(90deg,#3aaa68,#d4bd39,#e46b28,#c33d48);
 }
 
 .sx-report-list {
@@ -869,6 +873,9 @@ header {
   font-family:monospace;
   font-size:12px;
   color:var(--muted);
+  background:transparent;
+  padding:0;
+  border-radius:0;
   word-break:break-word;
 }
 
@@ -907,8 +914,12 @@ td {
   display:inline-block;
   padding:6px 8px;
   border-radius:3px;
-  color:white;
+  color:#000;
   font-weight:800;
+}
+
+.sx-callout.sx-swatch {
+  color:#fff;
 }
 
 .sx-callout.sx-es {
