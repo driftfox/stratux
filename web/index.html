@@ -82,67 +82,94 @@
 <body ng-app="stratux" ng-controller="MainCtrl" ui-prevent-touchmove-defaults>
 	<!-- Needed for modal confirmation dialogs -->
 	<div ui-yield-to="modals"></div>
-	<!-- Define Left (Menu) Sidebar Navigation -->
-	<div ui-track-as-search-param='true' class="sidebar sidebar-left">
+
+	<!-- Shutdown confirmation modal (directive-only; POSTs to /shutdown) -->
+	<div class="sx-overlay" ui-if="uiShutdownConfirm" ui-state="uiShutdownConfirm" ng-click="Ui.turnOff('uiShutdownConfirm')">
+		<div class="sx-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="sx-shutdown-title" ng-click="$event.stopPropagation()">
+			<div class="sx-dialog-icon"><i class="fa fa-power-off"></i></div>
+			<h2 id="sx-shutdown-title">Shut down receiver?</h2>
+			<p>Stratux will stop receiving traffic and weather. Please disconnect the power after shutdown.</p>
+			<div class="sx-dialog-actions">
+				<button ui-turn-off="uiShutdownConfirm">Cancel</button>
+				<a href="/shutdown" class="sx-danger">Shut down</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Left (Menu) Sidebar / Drawer -->
+	<div ui-track-as-search-param='true' class="sidebar sidebar-left sx-drawer sx-left">
 		<div class="scrollable">
-			<h3 class="scrollable-header app-name">Menu</h3>
+			<div class="sx-drawer-head">
+				<span class="sx-brand"><span class="sx-brand-mark">S</span> MENU</span>
+				<button ui-toggle="uiSidebarLeft" class="sx-icon-button" aria-label="Close menu"><i class="fa fa-times"></i></button>
+			</div>
 			<div class="scrollable-content">
 				<div class="list-group" ui-turn-off='uiSidebarLeft'>
-					<!-- hrefs are redirected by the state engine in main.js -->
-					<a class="list-group-item" href="#/"><i class="fa fa-home"></i>            Status   <i class="fa fa-chevron-right pull-right"></i></a>
+					<a class="list-group-item sx-nav-item" href="#/"><i class="fa fa-home"></i> Status <i class="fa fa-chevron-right pull-right"></i></a>
 					<div ng-show="UAT_Enabled || Ping_Enabled || Pong_Enabled">
-						<a class="list-group-item" href="#/weather"><i class="fa fa-cloud"></i>    Weather  <i class="fa fa-chevron-right pull-right"></i></a>
+						<a class="list-group-item sx-nav-item" href="#/weather"><i class="fa fa-cloud"></i> Weather <i class="fa fa-chevron-right pull-right"></i></a>
 					</div>
-					<a class="list-group-item" href="#/traffic"><i class="fa fa-plane"></i>    Traffic  <i class="fa fa-chevron-right pull-right"></i></a>
-					<a class="list-group-item" href="#/gps"><i class="fa fa-globe"></i>        GPS/AHRS <i class="fa fa-chevron-right pull-right"></i></a>
+					<a class="list-group-item sx-nav-item" href="#/traffic"><i class="fa fa-plane"></i> Traffic <i class="fa fa-chevron-right pull-right"></i></a>
+					<a class="list-group-item sx-nav-item" href="#/gps"><i class="fa fa-globe"></i> GPS/AHRS <i class="fa fa-chevron-right pull-right"></i></a>
 					<div ng-show="UAT_Enabled || Ping_Enabled || Pong_Enabled">
-						<a class="list-group-item" href="#/towers"><i class="fa fa-signal"></i>    Towers   <i class="fa fa-chevron-right pull-right"></i></a>
+						<a class="list-group-item sx-nav-item" href="#/towers"><i class="fa fa-signal"></i> Towers <i class="fa fa-chevron-right pull-right"></i></a>
 					</div>
-					<a class="list-group-item" href="#/logs"><i class="fa fa-file-text-o"></i> Logs     <i class="fa fa-chevron-right pull-right"></i></a>
-					<a class="list-group-item" href="#/settings"><i class="fa fa-gear"></i>    Settings <i class="fa fa-chevron-right pull-right"></i></a>
-					<a class="list-group-item" href="#/radar"><i class="fa fa-street-view"></i>    Radar <i class="fa fa-chevron-right pull-right"></i></a>
-					<a class="list-group-item" href="#/map"><i class="fa fa-map"></i>    Map <i class="fa fa-chevron-right pull-right"></i></a>
+					<a class="list-group-item sx-nav-item" href="#/logs"><i class="fa fa-file-text-o"></i> Logs <i class="fa fa-chevron-right pull-right"></i></a>
+					<a class="list-group-item sx-nav-item" href="#/settings"><i class="fa fa-gear"></i> Settings <i class="fa fa-chevron-right pull-right"></i></a>
+					<a class="list-group-item sx-nav-item" href="#/radar"><i class="fa fa-street-view"></i> Radar <i class="fa fa-chevron-right pull-right"></i></a>
+					<a class="list-group-item sx-nav-item" href="#/map"><i class="fa fa-map"></i> Map <i class="fa fa-chevron-right pull-right"></i></a>
 					<div ng-show="DeveloperMode">
-					<a class="list-group-item" href="#/developer"><i class="fa fa-tasks"></i>    Developer <i class="fa fa-chevron-right pull-right"></i></a>
+						<a class="list-group-item sx-nav-item" href="#/developer"><i class="fa fa-tasks"></i> Developer <i class="fa fa-chevron-right pull-right"></i></a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Define Right (Help) Sidebar -->
-	<div class="sidebar sidebar-right">
+
+	<!-- Right (Help) Sidebar / Drawer -->
+	<div class="sidebar sidebar-right sx-drawer sx-right">
 		<div class="scrollable">
-			<h3 class="scrollable-header app-name">Help</h3>
+			<div class="sx-drawer-head">
+				<span class="sx-brand">HELP</span>
+				<button ui-toggle="uiSidebarRight" class="sx-icon-button" aria-label="Close help"><i class="fa fa-times"></i></button>
+			</div>
 			<div class="scrollable-content">
-				<div class="list-group" ui-toggle="uiSidebarRight">
+				<div class="list-group">
 					<div ng-include="helppage"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<div class="app sx-app" ui-swipe-right='Ui.turnOn("uiSidebarLeft")' ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
 
-
-	<div class="app" ui-swipe-right='Ui.turnOn("uiSidebarLeft")' ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
-
-		<!-- Create Header Navbar with left Menu Button -->
+		<!-- Header Navbar -->
 		<div class="navbar navbar-app navbar-absolute-top">
-			<div class="navbar-brand navbar-brand-center" ui-yield-to="title">
-				<a href="#/">
-					<img src="img/logo-android3.png" width="24" height="24"/>
-					&nbsp;
-                    Stratux
-            </a>
-			</div>
 			<div class="btn-group pull-left">
-				<div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
+				<div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle sx-icon-button" aria-label="Menu">
 					<i class="fa fa-bars"></i> Menu
 				</div>
 			</div>
-			<div class="btn-group pull-right" ui-yield-to="navbarAction">
-				<div ui-toggle="uiSidebarRight" class="btn">
+			<div class="navbar-brand navbar-brand-center" ui-yield-to="title">
+				<a href="#/">
+					<span class="sx-brand-mark">S</span>
+					&nbsp;
+					<span class="sx-brand">STRATUX</span>
+				</a>
+			</div>
+			<div class="sx-header-actions">
+				<button class="sx-icon-button" ng-click="updateTheme(!DarkMode)" aria-label="Toggle theme">
+					<i class="fa fa-moon-o" ng-hide="DarkMode"></i>
+					<i class="fa fa-sun-o" ng-show="DarkMode"></i>
+				</button>
+				<div ui-toggle="uiSidebarRight" class="btn sx-icon-button" aria-label="Help">
 					<i class="fa fa-info-circle"></i> Help
 				</div>
+				<button class="sx-icon-button sx-shutdown-action" ui-turn-on="uiShutdownConfirm" aria-label="Shut down">
+					<i class="fa fa-power-off"></i>
+				</button>
+			</div>
+			<div class="btn-group pull-right" ui-yield-to="navbarAction">
 			</div>
 		</div>
 
@@ -159,5 +186,4 @@
 
 	</div>
 </body>
-
 </html>
