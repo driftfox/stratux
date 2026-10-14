@@ -1,79 +1,50 @@
 <div ui-content-for="title">Developer</div>
-<div class="col-sm-12">
-    <div class="panel-group col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Restart Stratux application
-            </div>
 
-            <div class="panel-body">
-                <div class="form-group reset-flow" align="center">
-                    <div class="col-xs-12">
-                        <a ng-click="postRestart()" class="btn btn-primary btn-block"
-                           style="margin-bottom:1em;">Restart Application</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="sx-screen-grid sx-dev-grid">
+	<!-- Delete actions are intentionally unconfirmed: the original screen posted
+	     straight to /deletelogfile and /deleteahrslogfiles on a single click, and
+	     that behaviour is preserved deliberately (spec 5.8 defect 8). -->
+	<section class="sx-panel">
+		<div class="sx-section-head">
+			<h2>Restart Stratux application</h2>
+		</div>
 
-    <div class="panel-group col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Logfile (Size: {{Logfile_Size}})
-            </div>
+		<div>
+			<a ng-click="postRestart()" class="sx-wide-button" style="margin-bottom:1em;">Restart Application</a>
+		</div>
+	</section>
 
-            <div class="panel-body">
-                <div class="col-xs-12">
-                    <a href="./downloadlog" ng-click="postDownloadLog()"
-                       class="btn btn-primary btn-block"
-                       style="margin-bottom:0.5em">Download Logfile</a>
-                </div>
+	<section class="sx-panel">
+		<div class="sx-section-head">
+			<h2>Logfile (Size: {{Logfile_Size}})</h2>
+		</div>
 
-                <div class="col-xs-12">
-                    <a ng-click="postDeleteLog()"
-                       class="btn btn-primary btn-block"
-                       style="margin-bottom:0.5em">Delete Logfile</a>
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- The hrefs stay: postDownloadLog posts the request and the anchor
+		     navigation is what hands the file to the browser. -->
+		<div class="sx-button-row">
+			<a href="./downloadlog" ng-click="postDownloadLog()" class="sx-wide-button">Download Logfile</a>
+			<a ng-click="postDeleteLog()" class="sx-wide-button sx-danger">Delete Logfile</a>
+		</div>
+	</section>
 
-    <div class="panel-group col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                AHRS Log Files (Size: {{AHRS_LogFiles_Size}})
-            </div>
+	<section class="sx-panel">
+		<div class="sx-section-head">
+			<h2>AHRS Log Files (Size: {{AHRS_LogFiles_Size}})</h2>
+		</div>
 
-            <div class="panel-body">
-                <div class="col-xs-12">
-                    <a href="./downloadahrslogs" download="ahrs_logs.zip" ng-click="postDownloadAHRSLogs()"
-                       class="btn btn-primary btn-block"
-                       style="margin-bottom:0.5em">Download AHRS Logs</a>
-                </div>
+		<div class="sx-button-row">
+			<a href="./downloadahrslogs" download="ahrs_logs.zip" ng-click="postDownloadAHRSLogs()" class="sx-wide-button">Download AHRS Logs</a>
+			<a ng-click="postDeleteAHRSLogs()" class="sx-wide-button sx-danger">Delete AHRS Logs</a>
+		</div>
+	</section>
 
-                <div class="col-xs-12">
-                    <a ng-click="postDeleteAHRSLogs()"
-                       class="btn btn-primary btn-block"
-                       style="margin-bottom:0.5em">Delete AHRS Logs</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<section class="sx-panel">
+		<div class="sx-section-head">
+			<h2>Database</h2>
+		</div>
 
-    <div class="panel-group col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Database
-            </div>
-
-            <div class="panel-body">
-                <div class="col-xs-12">
-                    <a href="./downloaddb" ng-click="postDownloadDB()"
-                       class="btn btn-primary btn-block"
-                       style="margin-bottom:0.5em;">Download Database</a>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div>
+			<a href="./downloaddb" ng-click="postDownloadDB()" class="sx-wide-button">Download Database</a>
+		</div>
+	</section>
 </div>
