@@ -11,18 +11,6 @@ over Wi-Fi. It is a single long-running Go daemon plus several bundled C program
 alongside a web configuration UI. This repo is the EU-flavored community fork (originally
 cyoung/Stratux) that also targets the US and rest of world.
 
-## Environment limits (this checkout)
-
-- **The Go build does not work on Windows.** `main/sdr.go` calls `syscall.Sysinfo`
-  (Linux-only) and the module pulls cgo deps: `github.com/jpoirier/gortlsdr`
-  (needs librtlsdr) and `github.com/mattn/go-sqlite3`. Do not attempt `go build ./...`
-  here as a verification step — it fails for reasons unrelated to your change.
-- `make` is **not installed** on this machine. `go`, `docker`, and `wsl` are.
-- Real build paths: `make ddpkg` (Docker, Debian bookworm) or native Linux/WSL.
-- Submodules are **not initialized by default** — `git submodule status` shows `-`
-  prefixes. Run `git submodule update --init --recursive` before any build.
-  Affected: `dump1090`, `rtl-ais`, `ogn/ogn-tracker`, `image_build/pi-gen`.
-
 ## Build
 
 Stratux mixes Go and C and pulls C sources in via git submodules. **Always init submodules
@@ -74,32 +62,6 @@ Notes:
 - **VSCode** has preconfigured Build + debug tasks (`.vscode/tasks.json`, `launch.json`).
   ⚠️ These still reference an older `gen_gdl90` binary/target; the current Makefile produces
   `stratuxrun`. If using them, expect to update the program/target name.
-
-## Web UI development (`web/`)
-
-- The entire UI is here: **AngularJS 1.x + ui-router + mobile-angular-ui + OpenLayers**.
-  Plain static HTML/CSS/JS. **No `package.json`, no bundler, no build step** —
-  edit a file, refresh the browser. Do not introduce a toolchain casually; the
-  absence is deliberate and `web/Makefile` assumes plain files.
-- Served off disk by `http.FileServer` in `main/managementinterface.go`
-  (`STRATUX_WWW_DIR`, normally `/opt/stratux/www/`). Not embedded in the binary.
-- **Run it locally with `node dev/server.mjs`** → <http://127.0.0.1:8080>.
-  Static files plus fixture REST/WebSocket data; no Pi, no Go build, no Docker.
-  Endpoints, cadences, fixtures, and known UI/backend mismatches: `dev/README.md`.
-  The Go backend will not start without hardware, so this is the only cheap local loop.
-  It binds loopback only; from a container, LAN, or tunnel use `--host 0.0.0.0`
-  (single port — UI, REST and WebSockets all on 8080).
-- **The UI is driven by WebSockets**, not REST: `/status`, `/situation`, `/traffic`,
-  `/weather`, `/radar`. REST (`/getStatus`, `/getSettings`, `/getTowers`,
-  `/getSatellites`) is secondary. `/getWeather` does not exist.
-- **`/tiles/tilesets` must return JSON**, not 404. `plates/js/map.js` attaches the
-  aircraft layers *inside* that callback, so with no answer the map silently shows
-  zero aircraft.
-- `web/stratux.appcache` enumerates every asset. `web/Makefile` appends the build
-  time and git hash to the *deployed* copy — that is what busts AppCache. If you
-  add a new JS/CSS file, add it to the manifest too.
-- `/developer` in `web/js/main.js` is not implemented server-side; `developer.js`
-  uses `/status` anyway.
 
 ## Architecture
 
@@ -173,7 +135,6 @@ in `web/plates/js/*.js`, talking to the API above.
 - `debian/` — systemd units, udev rules, `.deb` packaging scripts, boot/network templates.
 - `image_build/` — pi-gen stages that produce the Raspberry Pi SD-card image.
 - `test/` — standalone diagnostic tools. `test-data/` — sample logs. `notes/` — design notes.
-- `dev/` — local web UI dev server with fixtures (`dev/README.md`) and `deploy-ui.sh`.
 - `docs/` — developer docs: architecture, building, dev setup, the HTTP/WebSocket API
   (`http-api.md`), the integration guide (`integration/`), the settings reference, and
   hardware support (`hardware/`). Index in `docs/README.md`.
@@ -184,24 +145,6 @@ Semantic `MAJOR.MINOR` (e.g. `3.6`). **OTA updates work only between minor versi
 mechanisms run through the same boot-time path (`debian/stratux-pre-start.sh`): a `.deb` for the
 Stratux app, and a legacy update script (`US`) for system-level changes. Full flow in
 `docs/building.md`.
-
-## Packaging and images
-
-- `image_build/build.sh` **git-clones the repo into pi-gen** rather than using your
-  working tree. **Uncommitted changes will not be in the image.** Commit first.
-- `image_build/pi-gen` is a submodule; the script skips pi-gen stages 3–5 and
-  rsyncs `image_build/stage2/10-stratux/` in as a custom stage.
-- Output: `image_build/pi-gen/deploy/*.img` plus the `.deb`.
-- `web/Makefile` copies an explicit whitelist into the www dir
-  (`css js img maui plates index.html alert.wav stratux.appcache`). Anything outside
-  `web/` — including `dev/` — can never reach the image or the `.deb`.
-
-## CI (`.github/workflows/`)
-
-- `ci.yml` — on push to `master`, on PRs, and manually (`workflow_dispatch`), runner `ubuntu-24.04-arm`, runs
-  `make ddpkg`, uploads the `.deb`. No test, lint, or typecheck step.
-- `release.yml` — on tags `v*.*`, additionally runs `image_build/build.sh` and
-  attaches the image to a draft release.
 
 ## Conventions
 
