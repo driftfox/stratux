@@ -145,6 +145,12 @@ app.controller('MainCtrl', function ($scope, $http) {
             }
         }
     };
+
+    $scope.toggleTheme = function() {
+        var darkMode = !$scope.DarkMode;
+        $scope.updateTheme(darkMode);
+        $http.post(URL_SETTINGS_SET, {DarkMode: darkMode});
+    };
 })
 .service('craftService',function(){ 
 	let trafficSourceColors = {
