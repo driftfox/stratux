@@ -18,7 +18,12 @@ fi
 
 hash="$(git rev-parse HEAD)"
 tag="$(git describe --tags --abbrev=0)"
-version="${tag#v}+ui$(git rev-list --count "$tag..HEAD").g${hash:0:7}"
+count="$(git rev-list --count "$tag..HEAD")"
+# Fork release tags already carry a +uiN suffix (v2.0-pre5+ui2); don't stack another.
+case "$tag" in
+*+ui*) version="${tag#v}.$count.g${hash:0:7}" ;;
+*) version="${tag#v}+ui$count.g${hash:0:7}" ;;
+esac
 maintainer="$(git config user.name) <$(git config user.email)>"
 
 tmp="$(mktemp -d)"

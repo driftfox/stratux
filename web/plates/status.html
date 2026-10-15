@@ -10,9 +10,9 @@
 		<section class="sx-panel">
 			<div class="sx-section-head">
 				<h2>Receiver health</h2>
+				<span ng-show="DeveloperMode == true" class="sx-badge sx-info">Developer Mode</span>
 				<span ng-show="ConnectState == 'Connected'" class="sx-badge sx-ok">&#9679; {{ConnectState}}</span>
 				<span ng-hide="ConnectState == 'Connected'" class="sx-badge sx-danger">&#9679; {{ConnectState}}</span>
-				<span ng-show="DeveloperMode == true" class="sx-badge sx-info">Developer Mode</span>
 			</div>
 			<div class="sx-metrics sx-four">
 				<div class="sx-metric">
@@ -194,11 +194,12 @@
 			<div class="sx-metrics sx-three">
 				<div class="sx-metric">
 					<span>Uptime</span>
-					<strong>{{Uptime}}</strong>
+					<!-- The controller formats uptime as "days/hh:mm:ss". -->
+					<strong>{{Uptime.split('/')[0] > 0 ? Uptime.split('/')[0] + 'd ' : ''}}{{Uptime.split('/')[1]}}</strong>
 				</div>
 				<div class="sx-metric">
 					<span>CPU temperature</span>
-					<strong>{{CPUTemp}}<small ng-show="DeveloperMode == true"> [{{CPUTempMin}} - {{CPUTempMax}}]</small></strong>
+					<strong class="sx-wrap">{{CPUTemp}}<small class="sx-range" ng-show="DeveloperMode == true">[{{CPUTempMin}} - {{CPUTempMax}}]</small></strong>
 				</div>
 				<div class="sx-metric">
 					<span>Free storage</span>

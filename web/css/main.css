@@ -739,6 +739,15 @@ button,input {
   font-weight:500;
 }
 
+.sx-metric strong.sx-wrap {
+  white-space:normal;
+}
+
+.sx-metric .sx-range {
+  display:block;
+  margin-top:2px;
+}
+
 .sx-good {
   color:var(--good);
 }
